@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Account List</h4>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <div id="customerList">
+                    <div class="row g-4 mb-3">
+                        <div class="col-sm-auto">
+                            <div class="d-flex gap-1">
+                                <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal"
+                                    id="create-btn" data-bs-target="#showModal"><i
+                                        class="ri-add-line align-bottom me-1"></i>
+                                    Add</button>
+
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="d-flex justify-content-sm-end">
+                                <div class="search-box ms-2">
+                                    <input type="text" class="form-control search" placeholder="Search...">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive table-card mt-3 mb-1">
+                        <table class="table">
+                            <thead>
+                                <tr class="bg-light text-muted">
+
+                                    <th class="sort" listsortable="customer_name">Account Name</th>
+                                    <th class="sort" listsortable="email">Parent</th>
+                                    <th class="sort" listsortable="phone">Account Class</th>
+                                    <th class="sort" listsortable="date">Account Type</th>
+                                    <th class="sort" listsortable="phone">Account Class</th>
+                                    <th class="sort" listsortable="date">Account SubType</th>
+                                    <th class="sort" listsortable="date">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (account of Accounts; track $index) {
+                                <tr>
+                                    <td>{{ account.Account_Name }} </td>
+                                    <td>
+                                        {{ account.ParentName
+                                        }}
+                                    </td>
+                                    <td>
+                                        {{ accountClassEnumList[account.Account_Class_id] }}
+
+
+                                    </td>
+                                    <td>
+
+                                        {{ account.Account_type
+                                        }}
+
+                                    </td>
+                                    <td>
+                                        {{ account.Sub_Type
+                                        }}
+
+
+                                    </td>
+
+
+                                    <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
+                    </td> -->
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <div class="edit">
+                                                <button class="btn btn-sm btn-primary edit-item-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
+                                            </div>
+                                            <div class="remove">
+                                                <!-- (click)="confirm(deleteModel,data.id)" -->
+                                                <button class="btn btn-sm btn-success remove-item-btn"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteRecordModal">Remove</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>

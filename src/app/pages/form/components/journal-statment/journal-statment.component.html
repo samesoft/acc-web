@@ -1,0 +1,185 @@
+<!-- 
+    <h2>Journal Statement</h2>
+    <form [formGroup]="journalStatementForm">
+        <div class="row">
+          <div class="col-xxl-3 col-md-6">
+            <div class="d-flex align-items-center">
+              <div>
+                <label for="exampleInputdate" class="form-label">From Date:</label>
+                <input type="date" class="form-control" id="exampleInputdate" formControlName="fromDate">
+              </div>
+              <div class="ms-3">
+                <label for="exampleInputdate" class="form-label">To Date:</label>
+                <input type="date" class="form-control" id="exampleInputdate" formControlName="toDate">
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xxl-6 col-md-6">
+                <button class="btn btn-primary btn-border" (click)="getJournalStatementData()">Get</button>
+            </div>
+        </div>
+        </div>
+        
+      </form> -->
+      <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
+        <div class="toast-body">
+          Journal has been Deleted successfully.
+        </div>
+      </ngb-toast>
+
+<h2>Account Statement</h2>
+<div class="live-preview">
+    <form [formGroup]="journalStatementForm" class="row g-3">
+        <div class="col-md-4">
+            <label for="exampleInputdate" class="form-label">From Date:</label>
+            <input type="date" class="form-control" id="exampleInputdate" formControlName="fromDate">
+        </div>
+
+        <div class="col-md-4">
+            <label for="exampleInputdate" class="form-label">To Date:</label>
+            <input type="date" class="form-control" id="exampleInputdate" formControlName="toDate">
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit" (click)="getJournalStatementData()">Get</button>
+        </div>
+    </form>
+
+    <div class="row" *ngIf="journalStatementData.length > 0">
+        <div class="col-lg-12">
+            <div class="card">
+
+
+                <div class="card-body">
+                    <div id="customerList">
+                        <div class="row g-4 mb-3">
+
+                            <div class="col-sm">
+                                <div class="d-flex justify-content-sm-end">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive table-card mt-3 mb-1">
+                            <table class="table">
+                                <thead>
+                                    <tr class="bg-light text-muted">
+
+                                        <th>Journal ID</th>
+                                        <th>Journal Date</th>
+                                        <th>Account Name</th>
+                                        <th>Transaction Type</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th>Memo</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (data of journalStatementData; track $index) {
+                                    <tr>
+                                        <!-- <th scope="row">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}" [(ngModel)]="data.state">
+                      </div>
+                    </th> -->
+                                        <td>{{ data.Journal_id }}</td>
+                                        <td>{{ data.Journal_Date | date }}</td>
+                                        <td>{{ data.Account_Name }}</td>
+                                        <td>{{ data.Tran_Type }}</td>
+                                        <td>{{ data.Debit }}</td>
+                                        <td>{{ data.Credit }}</td>
+                                        <td>{{ data.memo }}</td>
+                                        <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
+                    </td> -->
+                                        <td>
+                                            <div class="d-flex gap-2">
+                                                <div class="edit">
+                                                    <button class="btn btn-sm btn-primary edit-item-btn"
+                                                        data-bs-toggle="modal" data-bs-target="#showModal"
+                                                        (click)="editModa(content,data.Journal_id)">Edit</button>
+                                                </div>
+                                                <div class="remove">
+                                                    <button class="btn btn-sm btn-success remove-item-btn"
+                                                        data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
+                                                        (click)="confirm(deleteModel,data.Journal_id)">Remove</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div><!-- end card -->
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- end col -->
+
+    <!-- end row -->
+
+
+    <ng-template #content role="document" let-modal>
+        <div class="modal-header bg-light p-3">
+            <h5 class="modal-title" id="exampleModalLabel">Journal Statement</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+                (click)="modal?.dismiss('Cross click')"></button>
+        </div>
+        <form [formGroup]="listJsForm" class="tablelist-form" autocomplete="off">
+            <div class="modal-body">
+
+
+                <div class="form-group">
+                    <label for="AccountId">Account</label>
+                    <select id="AccountId" formControlName="Account_code" class="form-control">
+                        <option *ngFor="let item of accounts" [value]="item.Account_Name">{{ item.Account_Name}}
+                        </option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                        (click)="modal.close('Close click')">Close</button>
+                    <button type="submit" class="btn btn-success" id="add-btn" (click)="editSchedule()">Update</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+
+    <ng-template #deleteModel let-modal="modal" let-journal="journal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"
+                    (click)="modal?.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mt-2 text-center">
+
+                    <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4>Are you Sure ?</h4>
+                        <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Journal ?</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                    <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
+                        (click)="modal?.close('Close click')"><i class="ri-close-line me-1 align-middle"></i>
+                        Close</button>
+                    <button type="button" class="btn w-sm btn-danger" id="delete-product" (click)="elete(deleteId)"
+                        (click)="modal?.close('Close click')">Yes, Delete It!</button>
+                </div>
+
+            </div>
+        </div>
+    </ng-template>
+
+   

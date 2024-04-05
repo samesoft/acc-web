@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Cargo Schedule</h4>
+            </div>
+
+            <div class="card-body">
+                <div id="customerList">
+                    <div class="row g-4 mb-3">
+                        <div class="d-flex gap-1">
+                            <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"  ><i class="ri-add-line align-bottom me-1"></i>
+                              Add</button>
+                              <div class="col-sm">
+                                <div class="d-flex justify-content-sm-end">
+                                    <div class="search-box ms-2">
+                                        <input type="text" class="form-control search" placeholder="Search...">
+                                        <i class="ri-search-line search-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                       
+                    </div>
+
+                    <div class="table-responsive table-card mt-3 mb-1">
+                        <table class="table">
+                            <thead>
+                                <tr class="bg-light text-muted">
+                                    
+                                    <th class="sort" listsortable="customer_name">City</th>
+                                    <th class="sort" listsortable="email">Party Name</th>
+                                    <th class="sort" listsortable="phone">Kg</th>
+                                    <th class="sort" listsortable="date">Nbr</th>
+                                    <th class="sort" listsortable="status">Rate</th>
+                                    <th class="sort" listsortable="status">Flight</th>
+                                    <th class="sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of schedules">
+
+                                    <td>{{ getCityName(item.CityID) }}</td>
+                                    <td>{{ getPartyName(item.Party_ID) }}</td>
+                                    <td> {{ item.Kg }}</td>
+                                    <td>{{ item.Nbr }}</td>
+                                    <td>{{ item.Rate }}</td>
+                                    <td>{{ item.flight }}</td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <div class="edit">
+                                                <button class="btn btn-sm btn-primary edit-item-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#showModal" >Edit</button>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- <ng-template #content role="document" let-modal>
+    <div class="modal-header bg-light p-3">
+      <h5 class="modal-title" id="exampleModalLabel">Add Customer</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form  [formGroup]="Form" class="tablelist-form" autocomplete="off">
+      <div class="modal-body">
+  
+        <input type="hidden" name="id" value="" formControlName="ids" />
+  
+        <div class="mb-3" id="modal-id" style="display: none;">
+          <label for="id-field" class="form-label">ID</label>
+          <input type="text" id="id-field" class="form-control" placeholder="ID" readonly />
+        </div>
+  
+        <div class="mb-3">
+          <label for="customername-field" class="form-label">Customer Name</label>
+          <input type="text" id="customername-field" class="form-control" placeholder="Enter Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
+          <div class="invalid-feedback">Please enter a customer name.</div>
+        </div>
+  
+        <div class="mb-3">
+          <label for="email-field" class="form-label">Email</label>
+          <input type="email" id="email-field" class="form-control" placeholder="Enter Email" required formControlName="email" [ngClass]="{ 'is-invalid': submitted && form['email'].errors }" />
+          <div class="invalid-feedback">Please enter an email.</div>
+        </div>
+  
+       
+       
+      </div>
+      <div class="modal-footer">
+        <div class="hstack gap-2 justify-content-end">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="modal.close('Close click')">Close</button>
+          <button type="submit" class="btn btn-success" id="add-btn">Add Customer</button>
+        </div>
+      </div>
+    </form>
+  </ng-template> -->

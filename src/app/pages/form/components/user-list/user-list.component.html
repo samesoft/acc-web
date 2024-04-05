@@ -1,0 +1,140 @@
+
+<ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
+    <div class="toast-body">
+        User has been Added successfully.
+    </div>
+</ngb-toast>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">User List</h4>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <div id="customerList">
+                    <div class="row g-4 mb-3">
+                        <div class="col-sm-auto">
+                            <div class="d-flex gap-1">
+                                <button (click)="openModal(Add)" type="button" class="btn btn-primary add-btn" data-bs-toggle="modal"
+                                    id="create-btn" data-bs-target="#showModal" ><i
+                                        class="ri-add-line align-bottom me-1" ></i>
+                                    Add</button>
+
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm">
+                            <div class="d-flex justify-content-sm-end">
+                                <div class="search-box ms-2">
+                                    <input type="text" class="form-control search" placeholder="Search...">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="table-responsive table-card mt-3 mb-1">
+                        <table class="table">
+                            <thead>
+                                <tr class="bg-light text-muted">
+
+                                    <th >Full_Name</th>
+                                    <th >Email</th>
+                                    <th >Role</th>
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (data of Users; track $index) {
+                                <tr>
+                                    <!-- <th scope="row">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}" [(ngModel)]="data.state">
+                      </div>
+                    </th> -->
+                                    <td>{{ data.fullName }}</td>
+                                    <td>{{ data.email }}</td>
+                                    <td>{{ data.roleName }}</td>
+
+                                    <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
+                    </td> -->
+                                    
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- <div class="row justify-content-md-between align-items-md-center">
+              <div class="col col-sm-6">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{service.startIndex}} to
+                  {{service.endIndex}} of {{service.totalRecords}}
+                  entries
+                </div>
+              </div> -->
+                    <!-- Pagination -->
+                    <!-- <div class="col col-sm-6">
+                <div class="text-sm-right float-end listjs-pagination">
+                  <ngb-pagination [collectionSize]="(total | async)!" [(page)]="service.page"
+                    [pageSize]="service.pageSize">
+                  </ngb-pagination>
+                </div>
+              </div>
+            
+            </div> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<ng-template #Add role="document" let-modal>
+    <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="exampleModalLabel">Party</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+            (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form [formGroup]="userForm" class="tablelist-form" autocomplete="off">
+        <div class="modal-body">
+
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">fullName</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter FullName" required
+                    formControlName="fullName" [ngClass]="{ 'is-invalid': submitted && form['fullName'].errors }" />
+                <div class="invalid-feedback">Please enter fullName</div>
+            </div>
+
+            <div class="form-group">
+                <label for="roleId">Role</label>
+                <select id="roleId" placeholder="Enter Name" formControlName="roleId" class="form-control">
+                    <option *ngFor="let role of roles" [value]="role.roleId">{{ role.roleName }}</option>
+                </select>
+
+            </div>
+
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Email</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter email" required
+                    formControlName="email" [ngClass]="{ 'is-invalid': submitted && form['Salary'].errors }" />
+                <div class="invalid-feedback">Please enter a salary.</div>
+            </div>
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Password</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter password" required
+                     formControlName="password" [ngClass]="{ 'is-invalid': submitted && form['password'].errors }" />
+                     <div class="invalid-feedback">Please enter a password.</div>
+                     
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                    (click)="modal.close('Close click')">Close</button>
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="addUser()" >Save</button>
+            </div>
+        </div>
+    </form>
+</ng-template>

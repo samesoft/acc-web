@@ -1,0 +1,77 @@
+    
+    <h2>Posted Income Report</h2>
+    <!-- <div class="row-section">
+      <label for="incomeDate">Income Date:</label>
+      <div class="col-xxl-3 col-md-6">
+      <input type="date" class="form-control" id="exampleInputdate" [(ngModel)]="incomeDate">
+    </div>
+      <button class="btn btn-primary" (click)="fetchIncomeReport()" >Fetch Report</button>
+    </div> -->
+
+    <div class="live-preview">
+        <form class="row g-3">
+            <div class="col-md-4">
+                <label for="validationDefault01" class="form-label">Income Date:</label>
+                <input type="date" class="form-control" id="exampleInputdate" [(ngModel)]="incomeDate">
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary"  type="submit" (click)="fetchIncomeReport()">Fetch Report</button>
+            </div>
+            </form>
+    <div class="row" *ngIf="!loading && incomeData.length > 0">
+        <div class="col-lg-12">
+          <div class="card">
+            
+      
+            <div class="card-body">
+              <div id="customerList">
+                <div class="row g-4 mb-3">
+      
+                  <div class="col-sm">
+                    <div class="d-flex justify-content-sm-end">
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="table-responsive table-card mt-3 mb-1">
+                  <table class="table">
+                    <thead>
+                      <tr class="bg-light text-muted">
+      
+                        <th class="sort" listsortable="customer_name" >Party Name</th>
+                        <th class="sort" listsortable="email" >Income Date</th>
+                        <th class="sort" listsortable="phone" >City Name</th>
+                        <th class="sort" listsortable="date" >Total KG</th>
+                        <th class="sort" listsortable="status" >Rate</th>
+                        <th class="sort" listsortable="status" >NBR</th>
+                        <th class="sort" listsortable="status" >Total</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (item of incomeData; track $index) {
+                      <tr>
+                        <td>{{ item.party_name }}</td>
+          <td>{{ item.income_date }}</td>
+          <td>{{ item.city_name }}</td>
+          <td>{{ (+item.total_kg).toString().includes('.') ? ((+item.total_kg).toFixed(2)) : (+item.total_kg) }}</td>
+          <td>{{ (+item.rate).toString().includes('.') ? ((+item.rate).toFixed(2)) : (+item.rate) }}</td>
+          <td>{{ (+item.nbr).toString().includes('.') ? ((+item.nbr).toFixed(2)) : (+item.nbr) }}</td>
+          <td>{{ (+item.total).toString().includes('.') ? ((+item.total).toFixed(2)) : +item.total }}</td>
+                        <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
+                        </td> -->
+                       
+                      </tr>
+                      }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                          <td colspan="5"></td>
+                          <td>Total</td>
+                          <td>{{ calculateTotal() }}</td>
+                          <td colspan="2"></td>
+                        </tr>
+                      </tfoot>
+                  </table>
+                </div>
+      

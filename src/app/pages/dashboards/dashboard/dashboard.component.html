@@ -1,0 +1,58 @@
+<!-- Start Breadcrumbs -->
+<!-- <app-breadcrumbs title="DASHBOARD" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
+<!-- End Breadcrumbs -->
+
+<div class="row">
+    <div class="col">
+
+      
+
+            <div class="row">
+                @for (stat of statData; track $index) {
+                <div class="col-xl-3 col-md-6">
+                    <app-stat [title]="stat.title" [value]="stat.value" [icon]="stat.icon" [persantage]="stat.persantage" [profit]="stat.profit" [desciption]="stat.desciption"></app-stat>
+                </div>
+                }
+            </div> <!-- end row-->
+
+           
+
+                        
+                             
+
+               
+
+                             
+
+           
+                     
+
+                
+
+                      
+                         
+
+           
+               
+    
+                             
+                           
+                          
+                              
+
+                  
+                          
+                           
+                          
+
+                   
+
+                       
+                   
+
+                
+
+    </div> <!-- end col -->
+</div>
+
+<app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
