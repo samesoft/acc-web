@@ -1,6 +1,8 @@
 export const environment = {
+  url: 'https://acc-api.samesoft.app/',
+  defaultauth: 'https://acc-api.samesoft.app/',
   production: true,
-  defaultauth: 'fackbackend',
+ 
   firebaseConfig: {
     apiKey: '',
     authDomain: '',
