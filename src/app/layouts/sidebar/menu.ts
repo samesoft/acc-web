@@ -36,50 +36,92 @@ export const MENU: MenuItem[] = [
     ],
   },
   {
-    id: 6,
+    id: 7,
     label: "MENUITEMS.APPS.LIST.REPORT",
     subItems: [
       {
-        id: 7,
+        id: 8,
         label: "MENUITEMS.APPS.LIST.JOURNAL",
         link: "forms/journal-statement",
-        parentId: 6,
+        parentId: 7,
       },
-    ],
-  },
-  {
-    id: 8,
-    label: "MENUITEMS.APPS.LIST.PARTY",
-    subItems: [
       {
         id: 9,
-        label: "MENUITEMS.APPS.LIST.PARTYLIST",
-        link: "forms/party-list",
-        parentId: 8,
-      },
-      {
-        id: 10,
-        label: "MENUITEMS.APPS.LIST.IMPORTPARTY",
-        link: "forms/import-party",
-        parentId: 8,
+        label: 'MENUITEMS.APPS.LIST.IMPORTJOURNAL',
+        link: 'forms/import-Journal',
+        parentId: 7
       },
     ],
   },
   {
-    id: 11,
+    id: 10,
+    label: 'MENUITEMS.APPS.LIST.PARTY',
+    subItems: [
+      {
+        id: 11,
+        label: 'MENUITEMS.APPS.LIST.PARTYLIST',
+        link: 'forms/party-list',
+        parentId: 10
+      },
+      {
+        id: 12,
+        label: 'MENUITEMS.APPS.LIST.IMPORTPARTY',
+        link: 'forms/import-party',
+        parentId: 10,
+      }
+    ]
+    },
+  //   {
+  //   id: 13,
+  //   label: "MENUITEMS.APPS.LIST.PARTY",
+  //   subItems: [
+  //     {
+  //       id: 14,
+  //       label: "MENUITEMS.APPS.LIST.PARTYLIST",
+  //       link: "forms/party-list",
+  //       parentId: 13,
+  //     },
+  //     {
+  //       id: 15,
+  //       label: "MENUITEMS.APPS.LIST.IMPORTPARTY",
+  //       link: "forms/import-party",
+  //       parentId: 13,
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 16,
+  //   label: 'MENUITEMS.APPS.LIST.Transactions',
+  //   subItems: [
+  //     {
+  //       id: 17,
+  //       label: 'MENUITEMS.APPS.LIST.IMPORTTRANSACTION',
+  //       link: 'forms/import-transaction',
+  //       parentId: 16
+  //     },
+  //     {
+  //       id: 18,
+  //       label: 'MENUITEMS.APPS.LIST.POSTPONEDINCOME',
+  //       link: 'forms/posted-income',
+  //       parentId: 16
+  //     }
+  //   ]
+  // },
+  {
+    id: 19,
     label: "MENUITEMS.APPS.LIST.Transactions",
     subItems: [
       {
-        id: 12,
+        id: 20,
         label: "MENUITEMS.APPS.LIST.IMPORTTRANSACTION",
         link: "forms/import-transaction",
-        parentId: 11,
+        parentId: 19,
       },
       {
-        id: 13,
+        id: 21,
         label: "MENUITEMS.APPS.LIST.POSTPONEDINCOME",
         link: "forms/posted-income",
-        parentId: 11,
+        parentId: 19,
       },
       // {
       //   id: 14,
@@ -88,28 +130,28 @@ export const MENU: MenuItem[] = [
       //   parentId: 11
       // },
       {
-        id: 15,
+        id: 22,
         label: "MENUITEMS.APPS.LIST.ACCOUNTSTATEMENTS",
         link: "forms/account-statement",
-        parentId: 11,
+        parentId: 19,
       },
     ],
   },
   {
-    id: 16,
+    id: 23,
     label: "MENUITEMS.APPS.LIST.USER",
     subItems: [
       {
-        id: 17,
+        id: 24,
         label: "MENUITEMS.APPS.LIST.USERLIST",
         link: "forms/users",
-        parentId: 16,
+        parentId: 23,
       },
       {
-        id: 18,
+        id: 25,
         label: "MENUITEMS.APPS.LIST.ACCOUNTLIST",
         link: "forms/accounts",
-        parentId: 16,
+        parentId: 23,
       },
     ],
   },

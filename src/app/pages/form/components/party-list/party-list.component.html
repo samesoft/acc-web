@@ -55,15 +55,17 @@
                             <thead>
                                 <tr class="bg-light text-muted">
 
-                                    <th class="sort" listsortable="customer_name">Name</th>
-                                    <th class="sort" listsortable="email">Party Type</th>
-                                    <th class="sort" listsortable="phone">Salary</th>
-                                    <th class="sort" listsortable="date">Action</th>
+                                    <th >Name</th>
+                                    <th >Party Type</th>
+                                    <th >Salary</th>
+                                    <th >Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (data of parties; track $index) {
-                                <tr>
+
+                                <tr *ngFor="let data of getVisibleSchedules(); ">
+                 
+                              
                                     <!-- <th scope="row">
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}" [(ngModel)]="data.state">
@@ -91,9 +93,15 @@
                                         </div>
                                     </td>
                                 </tr>
-                                }
+                                
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-center">
+                            <div class="text-sm-right float-sm-end listjs-pagination gap-2">
+                              <ngb-pagination [collectionSize]="parties.length" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="loadPage()">
+                              </ngb-pagination>
+                            </div>
+                          </div>
                     </div>
 
                     <!-- <div class="row justify-content-md-between align-items-md-center">
@@ -138,12 +146,12 @@
                 <label for="phone-field" class="form-label">Name</label>
                 <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone name" required
                     formControlName="Name" [ngClass]="{ 'is-invalid': submitted && form['Name'].errors }" />
-                    @if(submitted && form['Name'].errors){
-                        <div class="invalid-feedback">
-                            @if(form['Name'].errors['required']){
-                            <span>Name is required</span>
-                            }
-                        </div>}
+                @if(submitted && form['Name'].errors){
+                <div class="invalid-feedback">
+                    @if(form['Name'].errors['required']){
+                    <span>Name is required</span>
+                    }
+                </div>}
             </div>
 
             <div class="form-group">
@@ -184,12 +192,12 @@
                 <label for="phone-field" class="form-label">Name</label>
                 <input type="text" id="phone-field" class="form-control" placeholder="Enter Name" required
                     formControlName="Name" [ngClass]="{ 'is-invalid': submitted && form['Name'].errors }" />
-                    @if(submitted && form['Name'].errors){
-                        <div class="invalid-feedback">
-                            @if(form['Name'].errors['required']){
-                            <span>Name is required</span>
-                            }
-                        </div>}
+                @if(submitted && form['Name'].errors){
+                <div class="invalid-feedback">
+                    @if(form['Name'].errors['required']){
+                    <span>Name is required</span>
+                    }
+                </div>}
             </div>
 
             <div class="form-group">
@@ -198,11 +206,11 @@
                     <option *ngFor="let type of partyTypes" [value]="type">{{ type}}</option>
                 </select>
                 @if(submitted && form['Party_Type'].errors){
-                    <div class="invalid-feedback">
-                        @if(form['Party_Type'].errors['required']){
-                        <span>Party is required</span>
-                        }
-                    </div>}
+                <div class="invalid-feedback">
+                    @if(form['Party_Type'].errors['required']){
+                    <span>Party is required</span>
+                    }
+                </div>}
 
             </div>
 

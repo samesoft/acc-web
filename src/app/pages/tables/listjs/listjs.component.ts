@@ -2,7 +2,7 @@ import { Component, Inject, QueryList, ViewChildren } from "@angular/core";
 import { DecimalPipe } from "@angular/common";
 import { Observable } from "rxjs";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgbToast } from '@ng-bootstrap/ng-bootstrap';
+import { NgbToast } from "@ng-bootstrap/ng-bootstrap";
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -13,7 +13,7 @@ import {
 // Sweet Alert
 import Swal from "sweetalert2";
 
-import { ListJsModel, paginationModel } from "./listjs.model";
+import { ListJsModel, paginationModel, scheduleModel } from "./listjs.model";
 import {
   FuzzyList,
   dataattribute,
@@ -53,9 +53,9 @@ export class ListjsComponent {
   ListJsDatas: any;
 
   page: any = 1;
-  pageSize: any = 3;
+  // pageSize: any = 3;
   startIndex: number = 0;
-  endIndex: number = 3;
+  endIndex: number = 10;
   totalRecords: number = 0;
 
   paginationDatas: any;
@@ -68,16 +68,23 @@ export class ListjsComponent {
   dataterm: any;
   term: any;
 
+  //new
+  currentPage = 1;
+  pageSize = 10;
+  totalPages!: number;
+
   showSuccessToast = false;
 
   // Table data
-  ListJsList!: Observable<ListJsModel[]>;
+  ListJsList!: Observable<scheduleModel[]>;
   total: Observable<number>;
   schedules: any[] = [];
+  // schedules!: any[];
   parties: any[] = [];
   cities: any[] = [];
   @ViewChildren(NgbdOrdersSortableHeader)
   headers!: QueryList<NgbdOrdersSortableHeader>;
+
   editFormFieldValue: any;
   show = false;
   constructor(
@@ -88,11 +95,11 @@ export class ListjsComponent {
     private dialog: MatDialog,
     public toastService: ToastService
   ) {
-    this.ListJsList = service.countries$;
     this.total = service.total$;
   }
 
   ngOnInit(): void {
+    // this.getData(this.page, this.pageSize);
     this.getData();
     this.getParties();
     this.getCities();
@@ -116,30 +123,28 @@ export class ListjsComponent {
       Rate: ["", [Validators.required]],
       flight: "",
     });
+    this.totalPages = Math.ceil(this.schedules.length / this.pageSize);
 
     /**
      * fetches data
      */
-    this.ListJsList.subscribe((x) => {
-      this.ListJsDatas = Object.assign([], x);
-    });
+    // this.ListJsList.subscribe(x => {
+    //   this.ListJsDatas = Object.assign([], x);
+    // });
 
-    this.attributedata = dataattribute;
-    this.existingData = existingList;
-    this.fuzzyData = FuzzyList;
+    // this.attributedata = dataattribute
+    // this.existingData = existingList
+    // this.fuzzyData = FuzzyList
 
-    this.paginationDatas = paginationlist;
-    this.totalRecords = this.paginationDatas.length;
+    // this.paginationDatas = this.schedules
+    // this.totalRecords = this.paginationDatas.length
 
-    this.startIndex = (this.page - 1) * this.pageSize + 1;
-    this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
-    if (this.endIndex > this.totalRecords) {
-      this.endIndex = this.totalRecords;
-    }
-    this.paginationDatas = paginationlist.slice(
-      this.startIndex - 1,
-      this.endIndex
-    );
+    // this.startIndex = (this.page - 1) * this.pageSize + 1;
+    // this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
+    // if (this.endIndex > this.totalRecords) {
+    //   this.endIndex = this.totalRecords;
+    // }
+    // this.paginationDatas = this.schedules.slice(this.startIndex - 1, this.endIndex);
   }
 
   /**
@@ -150,6 +155,25 @@ export class ListjsComponent {
     this.submitted = false;
     this.modalService.open(content, { size: "md", centered: true });
   }
+  // pageChanged($event: any) {
+  //   this.page = $event;
+  //   this.getData(this.page, this.pageSize);
+  // }
+
+  getVisibleSchedules(): any[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.schedules.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  trackByScheduleId(index: number, schedule: any): number {
+    return schedule.ScheduleID; // Use a unique identifier for tracking
+  }
+  // getData(page: number, pageSize: number) {
+  //   this.http.get<any[]>(`${environment.url}schedule?page=${page}&size=${pageSize}`).subscribe((data) => {
+  //     this.schedules = data;
+  //     console.log(data);
+  //   });
+  // }
 
   getData() {
     this.http.get<any[]>(`${environment.url}schedule`).subscribe((data) => {
@@ -195,7 +219,7 @@ export class ListjsComponent {
     if (this.endIndex > this.totalRecords) {
       this.endIndex = this.totalRecords;
     }
-    this.paginationDatas = paginationlist.slice(
+    this.paginationDatas = this.schedules.slice(
       this.startIndex - 1,
       this.endIndex
     );
@@ -356,6 +380,7 @@ export class ListjsComponent {
           (data) => {
             console.log(data);
             // alert("succssfully edited");
+            this.modalService.dismissAll();
             this.showSuccessToast = true;
             this.ngOnInit();
           },
@@ -366,7 +391,6 @@ export class ListjsComponent {
         );
     }
   }
-  
 
   editModa(content: any, id: any) {
     this.submitted = false;

@@ -15,3 +15,13 @@ export interface paginationModel {
   type: string;
   img: string;
 }
+export interface scheduleModel {
+  ScheduleID: any;
+  CityID: string;
+  Party_ID: string;
+  Kg: string;
+  Nbr: string;
+  Rate: string;
+  flight: string;
+ 
+}

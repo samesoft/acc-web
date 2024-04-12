@@ -1,0 +1,103 @@
+<div class="col-lg-6">
+    <div class="input-group">
+        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+            aria-label="Upload" (change)="onFileSelected($event)"  accept=".xlsx, .xls">
+        <button class="btn btn-outline-success" type="button" id="inputGroupFileAddon04" (click)="importData()">Import</button>
+    </div>
+</div>
+<div class="row" *ngIf="!isLoading && Journals.length > 0" >
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Journal</h4>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <div id="customerList">
+                    <!-- <div class="row g-4 mb-3"> -->
+
+                    <!-- <div class="col-sm">
+                <div class="d-flex justify-content-sm-end">
+                 
+                </div>
+              </div> -->
+                    <!-- </div> -->
+
+                    <div class="table-responsive table-card mt-3 mb-1">
+                        <table class="table">
+                            <thead>
+                                <tr class="bg-light text-muted">
+
+                                    <th>Journal_Date</th>
+                                    <th>Dr_Account_Name</th>
+                                    <th>Dr_Tran_Type</th>
+                                    <th>Dr_Note</th>
+                                    <th>Dr_Party_Name</th>
+                                    <th>Amount</th>
+                                    <th>Journal_Type</th>
+                                    <th>Journal_Descripition</th>
+                                    <th>Cr_Account_Name</th>
+                                    <th>Cr_Tran_Type</th>
+                                    <th>Cr_Note</th>
+                                    <th>Cr_Party_Name</th>
+                                    <!-- <th>Action</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of getVisibleSchedules(); ">
+
+                                    <td>{{ data.Journal_Date }}</td>
+                                    <td>{{ data.Dr_Account_Name }}</td>
+                                    <td>{{ data.Dr_Tran_Type }}</td>
+                                    <td>{{ data.Dr_Note }}</td>
+                                    <td>{{ data.Dr_Party_Name }}</td>
+                                    <td>{{ data.Amount }}</td>
+                                    <td>{{ data.Journal_Type }}</td>
+                                    <td>{{ data.Journal_Descripition }}</td>
+                                    <td>{{ data.Cr_Account_Name }}</td>
+                                    <td>{{ data.Cr_Tran_Type }}</td>
+                                    <td>{{ data.Cr_Note }}</td>
+                                    <td>{{ data.Cr_Party_Name }}</td>
+
+
+                                    <!-- <td>
+                                        <div class="d-flex gap-2">
+                                            <div class="edit">
+                                                <button class="btn btn-sm btn-primary edit-item-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
+                                            </div>
+
+                                        </div>
+                                    </td> -->
+                                </tr>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <div class="text-sm-right float-sm-end listjs-pagination gap-2">
+                          <ngb-pagination [collectionSize]="Journals.length" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="loadPage()">
+                          </ngb-pagination>
+                        </div>
+                      </div>
+                </div><!-- end card -->
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end col -->
+    </div>
+
+     
+  <button *ngIf="Journals.length > 0" (click)="postTransactions()" style="margin-top: 10px;" class="btn btn-primary">{{!isPosting?"Post Transaction":"Posting"}}</button>
+  
+    <!-- end row -->
+
+    <!-- [collectionSize]="schedules.length" -->
+
+    <ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
+        <div class="toast-body">
+            Your Party has been Added successfully.
+        </div>
+    </ngb-toast>
+    <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">

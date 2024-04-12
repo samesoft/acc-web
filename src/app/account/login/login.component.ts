@@ -33,9 +33,9 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService, private router: Router,
     private authFackservice: AuthfakeauthenticationService, private route: ActivatedRoute, public toastService: ToastService) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+    // if (this.authenticationService.currentUserValue) {
+    //   this.router.navigate(['/']);
+    // }
   }
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required]],
     });
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields
@@ -65,10 +65,11 @@ export class LoginComponent implements OnInit {
     // Login Api
     this.authenticationService.login(this.f['email'].value, this.f['password'].value).subscribe((data: any) => {
       if (data.success == true) {
-        sessionStorage.setItem('toast', 'true');
-        // sessionStorage.setItem('currentUser', JSON.stringify(data.data));
-        sessionStorage.setItem('token', data.data);
-        console.log(data.data)
+        // sessionStorage.setItem('toast', 'true');
+        // localStorage.setItem('token', JSON.stringify(data.data));
+        // // sessionStorage.setItem('currentUser', JSON.stringify(data.data));
+        // sessionStorage.setItem('token', data.data);
+        // console.log(data.data)
         this.router.navigate(['/']);
       } else {
         this.toastService.show(data.data, { classname: 'bg-danger text-white', delay: 15000 });
@@ -105,21 +106,21 @@ export class LoginComponent implements OnInit {
   toggleFieldTextType() {
     this.fieldTextType = !this.fieldTextType;
   }
-  login() {
-    const account = this.createFromForm();
+  // login() {
+  //   const account = this.createFromForm();
 
-    this.authenticationService.loginWithUserCredentials(account).subscribe({
-      next: (result: any) => {
-        this.res = result;
-        // console.log(this.res);
-        //console.log("this is me"+JSON.stringify(result))
-        this.router.navigate(['/']);
-      },
-      error: () => {
+  //   this.authenticationService.loginWithUserCredentials(account).subscribe({
+  //     next: (result: any) => {
+  //       this.res = result;
+  //       // console.log(this.res);
+  //       //console.log("this is me"+JSON.stringify(result))
+  //       this.router.navigate(['/']);
+  //     },
+  //     error: () => {
        
-      },
-    });
-  }
+  //     },
+  //   });
+  // }
   protected createFromForm(): any {
     return {
       username: this.loginForm.get(['email'])!.value,
