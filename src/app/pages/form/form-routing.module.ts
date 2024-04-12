@@ -23,6 +23,7 @@ import { IncomeStatementComponent } from './components/income-statement/income-s
 import { AccountStatementComponent } from './components/account-statement/account-statement.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { AccountListComponent } from './components/account-list/account-list.component';
+import { ImportJournalComponent } from './components/import-journal/import-journal.component';
 
 const routes: Routes = [
   {
@@ -108,6 +109,10 @@ const routes: Routes = [
   {
     path:"accounts",
     component: AccountListComponent
+  },
+  {
+    path:"import-Journal",
+    component: ImportJournalComponent
   }
   
   

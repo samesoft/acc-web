@@ -32,6 +32,7 @@
         "CARGO": " Cargo",
         "REPORT": " report",
         "JOURNAL": "Journal statment",
+        "IMPORTJOURNAL": "Import Journal",
         "PARTY": "party",
         "PARTYLIST": " party list",
         "IMPORTPARTY": "Import party",

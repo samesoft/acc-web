@@ -31,13 +31,13 @@ export class AuthenticationService {
   user!: User;
   currentUserValue: any;
 
-  private currentUserSubject: BehaviorSubject<User>;
+  // private currentUserSubject: BehaviorSubject<User>;
   // public currentUser: Observable<User>;
 
   constructor(private http: HttpClient, private store: Store) {
-    this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(sessionStorage.getItem("currentUser")!)
-    );
+    // this.currentUserSubject = new BehaviorSubject<User>(
+    //   JSON.parse(sessionStorage.getItem("currentUser")!)
+    // );
     // this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -107,9 +107,10 @@ export class AuthenticationService {
       )
       .pipe(
         map((response: any) => {
-          const user = response;
-          localStorage.setItem('token', JSON.stringify(response.data));
-          return user;
+          // const user = response;
+          sessionStorage.setItem('token', response.data);
+          // localStorage.setItem('token', JSON.stringify(response.data));
+          return response;
           
         }),
         catchError((error: any) => {
@@ -118,35 +119,61 @@ export class AuthenticationService {
         })
       );
   }
-  loginWithUserCredentials(
-    loginInfo: LoginForm
-  ): Observable<EntityResponseType> {
-    let headers = new HttpHeaders();
-    headers = headers.set("Content-Type", " application/json");
-    // headers = headers.set('Accept', ' application/json');
-    const body = new URLSearchParams();
-    return this.http
-      .post<EntityResponseType>( AUTH_API + "user/login", loginInfo, { headers })
-      .pipe(
-        map((response: any) => {
-          localStorage.setItem("token", JSON.stringify(response.token));
-          localStorage.setItem("roles", JSON.stringify(response.roles));
-          localStorage.setItem("userType", JSON.stringify(response.userType));
+  // loginWithUserCredentials(
+  //   loginInfo: LoginForm
+  // ): Observable<EntityResponseType> {
+  //   let headers = new HttpHeaders();
+  //   headers = headers.set("Content-Type", " application/json");
+  //   // headers = headers.set('Accept', ' application/json');
+  //   const body = new URLSearchParams();
+  //   return this.http
+  //     .post<EntityResponseType>( AUTH_API + "user/login", loginInfo, { headers })
+  //     .pipe(
+  //       map((response: any) => {
+  //         localStorage.setItem("token", JSON.stringify(response.data));
+  //         localStorage.setItem("roles", JSON.stringify(response.roles));
+  //         localStorage.setItem("userType", JSON.stringify(response.userType));
 
-          localStorage.setItem("username", JSON.stringify(response.username));
-          console.log("this is response" + response._id);
-          localStorage.setItem("_id", JSON.stringify(response._id));
-          // console.log("this is response" + response.access_token)
+  //         localStorage.setItem("username", JSON.stringify(response.username));
+  //         console.log("this is response" + response._id);
+  //         localStorage.setItem("_id", JSON.stringify(response._id));
+  //         // console.log("this is response" + response.access_token)
 
-          return response;
-        })
-      );
-  }
+  //         return response;
+  //       })
+  //     );
+  // }
   /**
    * Returns the current user
    */
   public currentUser(): any {
     return getFirebaseBackend()!.getAuthenticatedUser();
+  }
+
+  loginWithRefreshToken(): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', ' application/json');
+    // headers = headers.set('Accept', ' application/json');
+
+    // const refresh = {
+    //   'refresh_token': this.refreshToken
+    // }
+
+    // return this.http.post<EntityResponseType>(HttpApi.oauthRefreshToken, JSON.stringify(refresh), { headers })
+    //   .pipe(
+    //     map((response: any) => {
+    //       localStorage.setItem('token_response', JSON.stringify(response));
+    //       return response;
+    //     })
+    //   );
+    return this.http.post(HttpApi.oauthLogin, { headers })
+      .pipe(
+        map((response: any) => {
+          sessionStorage.setItem('token', response.data);
+          return response;
+        })
+      );
+
   }
 
   /**
@@ -156,11 +183,12 @@ export class AuthenticationService {
     this.store.dispatch(logout());
     // logout the user
     // return getFirebaseBackend()!.logout();
-    sessionStorage.removeItem("currentUser");
-    sessionStorage.removeItem("token");
-    this.currentUserSubject.next(null!);
+    // sessionStorage.removeItem("currentUser");
+    // sessionStorage.removeItem("token");
+    // this.currentUserSubject.next(null!);
 
-    return of(undefined).pipe();
+    // return of(undefined).pipe();
+   sessionStorage.removeItem('token');
   }
 
   /**
@@ -176,14 +204,14 @@ export class AuthenticationService {
       });
   }
   isLogged(): boolean {
-    return localStorage.getItem("token") ? true : false;
+    return sessionStorage.getItem('token') ? true : false;
+    
   }
-  get accessToken() { 
+  get accessToken() {
     return localStorage["token"] ? JSON.parse(localStorage["token"]) : null;
   }
   getToken() {
     // Get the token value from sessionStorage in a get function
-    const token = localStorage.getItem('token');
-    return token;
+    return sessionStorage.getItem('token');
   }
 }

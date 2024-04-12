@@ -14,11 +14,6 @@ import { CommaSeparatedPipe } from 'src/app/comma-separated';
   styleUrl: './posted-income-report.component.scss',
  
 })
-
-
-
-
-
 // @Pipe({
 //   name: 'commaSeparated'
 // })
@@ -61,7 +56,4 @@ export class PostedIncomeReportComponent {
     }
     return parseFloat(total.toFixed(2));
   }
-
-  
-
 }

@@ -5,6 +5,7 @@ import { LayoutComponent } from "./layouts/layout.component";
 
 // Auth
 import { AuthGuard } from "./core/guards/auth.guard";
+import { DashboardComponent } from "./pages/dashboards/dashboard/dashboard.component";
 
 const routes: Routes = [
   {
@@ -12,12 +13,14 @@ const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () =>
       import("./pages/pages.module").then((m) => m.PagesModule),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
+ 
   {
     path: "auth",
     loadChildren: () =>
       import("./account/account.module").then((m) => m.AccountModule),
+   
   },
   {
     path: "pages",
@@ -25,7 +28,7 @@ const routes: Routes = [
       import("./extraspages/extraspages.module").then(
         (m) => m.ExtraspagesModule
       ),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   
 ];

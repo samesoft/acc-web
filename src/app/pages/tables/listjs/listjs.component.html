@@ -22,16 +22,16 @@
 
       <div class="card-body">
         <div id="customerList">
-          <div class="row g-4 mb-3">
+          <!-- <div class="row g-4 mb-3"> -->
 
-            <div class="col-sm">
+            <!-- <div class="col-sm">
               <div class="d-flex justify-content-sm-end">
                
               </div>
-            </div>
-          </div>
+            </div> -->
+          <!-- </div> -->
 
-          <div class="table-responsive table-card mt-3 mb-1">
+          <!-- <div class="table-responsive table-card mt-3 mb-1"> -->
             <table class="table">
               <thead>
                 <tr class="bg-light text-muted">
@@ -46,8 +46,10 @@
                 </tr>
               </thead>
               <tbody>
-                @for (data of schedules; track $index) {
-                <tr>
+                <!-- @for (data of getVisibleSchedules()) { -->
+                  <tr *ngFor="let data of getVisibleSchedules(); ">
+                 
+               
                 
                   <td>{{ getCityName(data.CityID) }}</td>
                   <td>{{ getPartyName(data.Party_ID) }}</td>
@@ -55,7 +57,7 @@
                   <td>{{ data.Nbr }}</td>
                   <td>{{ data.Rate }}</td>
                   <td>{{ data.flight }}</td>
-                 
+               
                   <td>
                     <div class="d-flex gap-2">
                       <div class="edit">
@@ -65,30 +67,18 @@
                     
                     </div>
                   </td>
+             
                 </tr>
-                }
               </tbody>
             </table>
-          </div>
+          <!-- </div> -->
 
-          <div class="row justify-content-md-between align-items-md-center">
-            <div class="col col-sm-6">
-              <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
-                Showing {{ (service.page - 1) * service.pageSize + 1 }} to
-                {{ (service.page - 1) * service.pageSize + service.pageSize }} of {{ schedules.length }} entries
-              </div>
+          <div class="d-flex justify-content-center">
+            <div class="text-sm-right float-sm-end listjs-pagination gap-2">
+              <ngb-pagination [collectionSize]="schedules.length" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="loadPage()">
+              </ngb-pagination>
             </div>
-            <!-- Pagination -->
-            <div class="col col-sm-6">
-              <div class="text-sm-right float-end listjs-pagination">
-                <ngb-pagination [collectionSize]="schedules.length" [(page)]="service.page"
-                  [pageSize]="service.pageSize">
-                </ngb-pagination>
-              </div>
-            </div>
-            <!-- End Pagination -->
           </div>
-        </div>
       </div><!-- end card -->
     </div>
     <!-- end col -->
@@ -97,6 +87,7 @@
 </div>
 <!-- end row -->
 
+<!-- [collectionSize]="schedules.length" -->
 
 
 

@@ -38,7 +38,7 @@ export class JournalStatmentComponent {
   ListJsDatas: any;
 
   page: any = 1;
-  pageSize: any = 3;
+  // pageSize: any = 3;
   startIndex: number = 0;
   endIndex: number = 3;
   totalRecords: number = 0;
@@ -61,6 +61,11 @@ export class JournalStatmentComponent {
   schedules: any[] = [];
   parties: any[] = [];
   cities: any[] = [];
+
+  //new
+  currentPage = 1;
+pageSize = 10;
+totalPages!: number;
   @ViewChildren(NgbdOrdersSortableHeader)
   headers!: QueryList<NgbdOrdersSortableHeader>;
   journalStatementForm: FormGroup;
@@ -102,6 +107,11 @@ export class JournalStatmentComponent {
         console.error(error);
       }
     );
+  }
+
+  getVisibleSchedules(): any[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.journalStatementData.slice(startIndex, startIndex + this.pageSize);
   }
   getJournalStatementData(): void {
     this.loading = true;
@@ -222,4 +232,13 @@ export class JournalStatmentComponent {
       }
     );
   }
+  loadPage() {
+    this.startIndex = (this.page - 1) * this.pageSize + 1;
+    this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
+    if (this.endIndex > this.totalRecords) {
+      this.endIndex = this.totalRecords;
+    }
+    this.paginationDatas = this.schedules.slice(this.startIndex - 1, this.endIndex);
+  }
+
 }

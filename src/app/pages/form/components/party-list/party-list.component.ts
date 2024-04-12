@@ -27,23 +27,36 @@ export class PartyListComponent {
   partyForm!: FormGroup;
   submitted = false;
   showSuccessToast = false;
-  showAddToast= false;
-  showEditToast= false;
+  showAddToast = false;
+  showEditToast = false;
+  page: any = 1;
+  // pageSize: any = 3;
+  startIndex: number = 0;
+  endIndex: number = 10;
+  totalRecords: number = 0;
+
+  paginationDatas: any;
+  attributedata: any;
+  existingData: any;
+  fuzzyData: any;
 
   ListJsList!: Observable<ListJsModel[]>;
   // total: Observable<number>;
   partyTypes: string[] = ["Employee", "Customer", "Vendor"];
   editFormFieldValue: any;
   journal: any;
-  
   partyId: any;
+
+  //new
+  currentPage = 1;
+  pageSize = 10;
+  totalPages!: number;
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private router: Router,
     private modalService: NgbModal,
-    public service: AccountSubTypeService,
-    
+    public service: AccountSubTypeService
   ) {}
 
   ngOnInit(): void {
@@ -77,7 +90,7 @@ export class PartyListComponent {
       };
       this.http.post(url, data).subscribe((response) => {
         this.modalService.dismissAll();
-        this.showAddToast= true;
+        this.showAddToast = true;
         this.ngOnInit();
       });
     } else {
@@ -92,7 +105,6 @@ export class PartyListComponent {
   }
 
   EditParty(): void {
-
     this.partyForm.markAllAsTouched();
     if (this.partyForm.valid) {
       const url = `${environment.url}party/edit`;
@@ -105,12 +117,17 @@ export class PartyListComponent {
       this.http.post(url, data).subscribe((response) => {
         console.log(response);
         this.modalService.dismissAll();
-        this.showEditToast= true;
+        this.showEditToast = true;
         this.ngOnInit();
       });
     } else {
       // Handle form validation errors here, e.g., display an error message.
     }
+  }
+
+  getVisibleSchedules(): any[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.parties.slice(startIndex, startIndex + this.pageSize);
   }
 
   get form() {
@@ -170,5 +187,14 @@ export class PartyListComponent {
         });
       }
     }
+  }
+
+  loadPage() {
+    this.startIndex = (this.page - 1) * this.pageSize + 1;
+    this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
+    if (this.endIndex > this.totalRecords) {
+      this.endIndex = this.totalRecords;
+    }
+    this.paginationDatas = this.parties.slice(this.startIndex - 1, this.endIndex);
   }
 }

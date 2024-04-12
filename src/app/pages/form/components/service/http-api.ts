@@ -13,5 +13,6 @@ export class HttpApi {
    static journalDelete= "transaction/delete-journal"
    static PartyDelete= "party/"
    static JournalDelete= "transaction/delete-journal/"
+   static ImportJournal = "transaction/import-journal/"
   }
   

@@ -56,7 +56,7 @@ export class OrdersService {
 
   private _state: State = {
     page: 1,
-    pageSize: 8,
+    pageSize: 5,
     searchTerm: '',
     sortColumn: '',
     sortDirection: '',
