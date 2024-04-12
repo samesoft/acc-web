@@ -1,10 +1,19 @@
-<!-- <ngb-toast type="success" *ngIf="showEditToast" (hidden)="showEditToast = false">
-    <div class="toast-body">
-        Your Party has been edited successfully.
-    </div>
-</ngb-toast> -->
+<ngb-toast
+  type="success"
+  *ngIf="showEditToast"
+  (hidden)="showEditToast = false"
+>
+  <div class="toast-body">Your Party has been edited successfully.</div>
+</ngb-toast>
 <ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
   <div class="toast-body">Your Party has been Added successfully.</div>
+</ngb-toast>
+<ngb-toast
+  type="success"
+  *ngIf="showSuccessToast"
+  (hidden)="showSuccessToast = false"
+>
+  <div class="toast-body">Party has been Deleted successfully.</div>
 </ngb-toast>
 
 <div class="row">
@@ -40,10 +49,10 @@
                 <tr class="bg-light text-muted">
                   <th listsortable="customer_name">City From</th>
                   <th listsortable="customer_name">City To</th>
-                  <th listsortable="customer_name">City Cont_No</th>
+                  <th listsortable="customer_name">Cont_No</th>
                   <th listsortable="email">Party</th>
                   <th listsortable="status">Rate</th>
-                  <th listsortable="phone">Status</th>
+                  <!-- <th listsortable="phone">Status</th> -->
                   <th listsortable="status">Truck_No</th>
                   <th listsortable="status">User</th>
                   <th>Action</th>
@@ -57,7 +66,7 @@
                   <td>{{ data.Cont_No }}</td>
                   <td>{{ getPartyName(data.Party_ID) }}</td>
                   <td>{{ data.Rate }}</td>
-                  <td>{{ data.Status }}</td>
+                  <!-- <td>{{ data.Status }}</td> -->
                   <td>{{ data.Truck_No }}</td>
                   <td>{{ getUserName(data.UserID) }}</td>
 
@@ -71,6 +80,18 @@
                           (click)="editModa(content, data.TID)"
                         >
                           Edit
+                        </button>
+                      </div>
+
+                      <div class="remove">
+                        <!-- (click)="confirm(deleteModel,data.id)" -->
+                        <button
+                          class="btn btn-sm btn-success remove-item-btn"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteRecordModal"
+                          (click)="confirm(deleteModel, data.TID)"
+                        >
+                          Remove
                         </button>
                       </div>
                     </div>
@@ -239,7 +260,7 @@
           type="submit"
           class="btn btn-success"
           id="add-btn"
-          (click)="editSchedule()"
+          (click)="editCargo()"
         >
           Update
         </button>
@@ -305,7 +326,7 @@
         <div class="invalid-feedback">Please enter a Rate.</div>
       </div>
 
-      <div class="col-md-4">
+      <div class="mb-3">
         <label for="exampleInputdate" class="form-label">Bkg Date:</label>
         <input
           type="date"
@@ -315,7 +336,7 @@
         />
       </div>
 
-      <div class="col-md-4">
+      <div class="mb-3">
         <label for="exampleInputdate" class="form-label">Dept Date:</label>
         <input
           type="date"
@@ -325,7 +346,7 @@
         />
       </div>
 
-      <div class="col-md-4">
+      <div class="mb-3">
         <label for="exampleInputdate" class="form-label">Com Date:</label>
         <input
           type="date"
@@ -389,7 +410,7 @@
 </ng-template>
 
 <!-- removeItemModal -->
-<ng-template #deleteModel let-modal>
+<ng-template #deleteModel let-modal="modal" let-journal="journal">
   <div class="modal-content">
     <div class="modal-header">
       <button
@@ -398,21 +419,15 @@
         data-bs-dismiss="modal"
         aria-label="Close"
         id="btn-close"
-        (click)="modal.dismiss('Cross click')"
+        (click)="modal?.dismiss('Cross click')"
       ></button>
     </div>
     <div class="modal-body">
       <div class="mt-2 text-center">
-        <!-- <lord-icon
-          src="https://cdn.lordicon.com/gsqxdxog.json"
-          trigger="loop"
-          colors="primary:#f7b84b,secondary:#f06548"
-          style="width: 100px; height: 100px"
-        ></lord-icon> -->
         <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
           <h4>Are you Sure ?</h4>
           <p class="text-muted mx-4 mb-0">
-            Are you Sure You want to Remove this Record ?
+            Are you Sure You want to Remove this Cargo Report ?
           </p>
         </div>
       </div>
@@ -420,7 +435,7 @@
         <button
           class="btn btn-link link-success fw-medium text-decoration-none"
           data-bs-dismiss="modal"
-          (click)="modal.close('Close click')"
+          (click)="modal?.close('Close click')"
         >
           <i class="ri-close-line me-1 align-middle"></i> Close
         </button>
@@ -428,39 +443,12 @@
           type="button"
           class="btn w-sm btn-danger"
           id="delete-product"
-          (click)="deleteData(deleteId)"
-          (click)="modal.close('Close click')"
+          (click)="modal?.close('Close click')"
+          (click)="delete(trips)"
         >
           Yes, Delete It!
         </button>
       </div>
     </div>
   </div>
-  <!-- /.modal-content -->
 </ng-template>
-<!-- 
-<ngb-toast [autohide]="false" (hidden)="show = false" *ngIf="show">
-  <ng-template ngbToastHeader>
-    <img src="assets/images/logo-sm.png" alt="" class="me-2" height="18">
-    <span class="fw-semibold me-auto">Velzon</span>
-    <small>06 mins ago</small>
-  </ng-template>
-  <div class="toast-body">
-    Hello, world! Your schedule has been edited successfully.
-  </div>
-</ngb-toast> -->
-
-<!-- <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
-  <ng-template ngbToastHeader>
-    <img src="assets/images/logo-sm.png" alt="" class="me-2" height="18">
-    <span class="fw-semibold me-auto">Velzon</span>
-    <small>06 mins ago</small>
-  </ng-template>
-  <div class="toast-body">
-    Hello, world! Your schedule has been edited successfully.
-  </div>
-</ngb-toast> -->
-
-<!-- <div *ngIf="showSuccessToast" class="success-toast">
-  <p>Successfully edited!</p>
-</div> -->

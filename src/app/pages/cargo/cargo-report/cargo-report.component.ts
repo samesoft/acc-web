@@ -36,6 +36,7 @@ import {
 } from "../../tables/listjs/listjs-sortable.directive";
 import { OrdersService } from "../../tables/listjs/listjs.service";
 import { userService } from "../../form/components/user-list/userManagment.service";
+import { AccountSubTypeService } from "../../form/components/service/accountSubType.service";
 
 @Component({
   selector: "app-cargo-report",
@@ -71,10 +72,11 @@ export class CargoReportComponent {
   fuzzyTerm: any;
   dataterm: any;
   term: any;
-
-  showAddToast = false;
-
   showSuccessToast = false;
+  showAddToast = false;
+  showEditToast = false;
+
+  Tid: any;
 
   // Table data
   ListJsList!: Observable<ListJsModel[]>;
@@ -94,7 +96,9 @@ export class CargoReportComponent {
     private http: HttpClient,
     private dialog: MatDialog,
     public toastService: ToastService,
-    private userService: userService
+    private userService: userService,
+
+    public service: AccountSubTypeService
   ) {
     // this.ListJsList = service.countries$;
     // this.total = service.total$;
@@ -332,7 +336,7 @@ export class CargoReportComponent {
     }, 100); // Adjust delay if needed
   }
 
-  editSchedule(): void {
+  editCargo(): void {
     if (this.cargoEditForm.valid) {
       this.http
         .put<any>(`${environment.url}trips/edit`, this.cargoEditForm.value)
@@ -398,11 +402,29 @@ export class CargoReportComponent {
     }
   }
 
-  selectedAccount = "This is a placeholder";
-  Default = [{ name: "Choice 1" }, { name: "Choice 2" }, { name: "Choice 3" }];
-  /**
-   * Sort table data
-   * @param param0 sort the column
-   *
-   */
+  delete(party: any) {
+    if (party) {
+      var listData = this.parties.filter(
+        (data: { TID: any }) => data.TID === this.trips
+      );
+
+      if (listData.length > 0) {
+        const rowData = listData[0];
+        const editFormFieldValue = rowData.TID;
+        console.log(editFormFieldValue);
+
+        this.Tid = editFormFieldValue;
+        console.log(this.Tid);
+        this.service.delete(this.Tid).subscribe((response) => {
+          this.modalService.dismissAll();
+          this.showSuccessToast = true;
+          this.ngOnInit();
+        });
+      } else {
+        this.checkedValGet.forEach((item: any) => {
+          document.getElementById("lj_" + item)?.remove();
+        });
+      }
+    }
+  }
 }
