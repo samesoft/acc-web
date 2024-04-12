@@ -59,8 +59,8 @@
                 </tr>
               </thead>
               <tbody>
-                @for (data of trips; track $index) {
-                <tr>
+                <!-- @for (data of trips; track $index) { -->
+                <tr *ngFor="let data of getVisibleSchedules()">
                   <td>{{ data.City_From }}</td>
                   <td>{{ data.City_To }}</td>
                   <td>{{ data.Cont_No }}</td>
@@ -97,9 +97,21 @@
                     </div>
                   </td>
                 </tr>
-                }
+                <!-- } -->
               </tbody>
             </table>
+
+            <div class="d-flex justify-content-center">
+              <div class="text-sm-right float-sm-end listjs-pagination gap-2">
+                <ngb-pagination
+                  [collectionSize]="trips.length"
+                  [(page)]="currentPage"
+                  [pageSize]="pageSize"
+                  (pageChange)="loadPage()"
+                >
+                </ngb-pagination>
+              </div>
+            </div>
           </div>
 
           <div class="row justify-content-md-between align-items-md-center">

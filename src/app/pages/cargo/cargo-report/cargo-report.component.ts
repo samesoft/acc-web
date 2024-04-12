@@ -47,20 +47,19 @@ import { AccountSubTypeService } from "../../form/components/service/accountSubT
 })
 export class CargoReportComponent {
   trips: any[] = [];
+
   // bread crumb items
   breadCrumbItems!: Array<{}>;
   submitted = false;
-  cargoForm!: UntypedFormGroup;
-  cargoEditForm!: UntypedFormGroup;
   ListJsData!: ListJsModel[];
   checkedList: any;
   masterSelected!: boolean;
   ListJsDatas: any;
 
   page: any = 1;
-  pageSize: any = 3;
+  // pageSize: any = 3;
   startIndex: number = 0;
-  endIndex: number = 3;
+  endIndex: number = 10;
   totalRecords: number = 0;
 
   paginationDatas: any;
@@ -72,11 +71,19 @@ export class CargoReportComponent {
   fuzzyTerm: any;
   dataterm: any;
   term: any;
+
   showSuccessToast = false;
   showAddToast = false;
   showEditToast = false;
 
   Tid: any;
+  //new
+  currentPage = 1;
+  pageSize = 10;
+  totalPages!: number;
+
+  cargoForm!: UntypedFormGroup;
+  cargoEditForm!: UntypedFormGroup;
 
   // Table data
   ListJsList!: Observable<ListJsModel[]>;
@@ -235,17 +242,17 @@ export class CargoReportComponent {
   /**
    * Pagination
    */
-  loadPage() {
-    this.startIndex = (this.page - 1) * this.pageSize + 1;
-    this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
-    if (this.endIndex > this.totalRecords) {
-      this.endIndex = this.totalRecords;
-    }
-    this.paginationDatas = paginationlist.slice(
-      this.startIndex - 1,
-      this.endIndex
-    );
-  }
+  // loadPage() {
+  //   this.startIndex = (this.page - 1) * this.pageSize + 1;
+  //   this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
+  //   if (this.endIndex > this.totalRecords) {
+  //     this.endIndex = this.totalRecords;
+  //   }
+  //   this.paginationDatas = paginationlist.slice(
+  //     this.startIndex - 1,
+  //     this.endIndex
+  //   );
+  // }
 
   saveCargo() {
     if (this.cargoForm.valid) {
@@ -334,6 +341,20 @@ export class CargoReportComponent {
     setTimeout(() => {
       // Optional: You can remove this timeout if it's not necessary
     }, 100); // Adjust delay if needed
+  }
+
+  loadPage() {
+    this.startIndex = (this.page - 1) * this.pageSize + 1;
+    this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
+    if (this.endIndex > this.totalRecords) {
+      this.endIndex = this.totalRecords;
+    }
+    this.paginationDatas = this.trips.slice(this.startIndex - 1, this.endIndex);
+  }
+
+  getVisibleSchedules(): any[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.trips.slice(startIndex, startIndex + this.pageSize);
   }
 
   editCargo(): void {
