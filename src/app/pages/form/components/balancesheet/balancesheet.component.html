@@ -1,0 +1,33 @@
+<div class="balance-sheet">
+    <h1>BALANCE SHEET</h1>
+    <div class="assets">
+      <h2>Assets</h2>
+      <ul>
+        <li *ngFor="let asset of assets">
+          {{ asset.account_code }} - {{ asset.account_name }}
+          <span class="balance">{{ asset.balance | currency }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="liabilities-equity">
+      <!-- <h2>Liabilities & Equity</h2> -->
+      <div class="liabilities">
+        <h2>Liabilities</h2>
+        <ul>
+          <li *ngFor="let liability of liabilities">
+            {{ liability.account_code }} - {{ liability.account_name }}
+            <span class="balance">{{ liability.balance | currency }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="equity">
+        <h2>Equity</h2>
+        <ul>
+          <li *ngFor="let equity of equity">
+            {{ equity.account_code }} - {{ equity.account_name }}
+            <span class="balance">{{ equity.balance | currency }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>

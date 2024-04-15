@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
 // Component pages
 import { BasicComponent } from "./basic/basic.component";
@@ -14,115 +14,115 @@ import { WizardComponent } from "./wizard/wizard.component";
 import { EditorsComponent } from "./editors/editors.component";
 import { FileUploadsComponent } from "./file-uploads/file-uploads.component";
 import { LayoutsComponent } from "./layouts/layouts.component";
-import { JournalStatmentComponent } from './components/journal-statment/journal-statment.component';
-import { PartyListComponent } from './components/party-list/party-list.component';
-import { ImportPartyComponent } from './components/import-party/import-party.component';
-import { ImportTransactionComponent } from './components/import-transaction/import-transaction.component';
-import { PostedIncomeReportComponent } from './components/posted-income-report/posted-income-report.component';
-import { IncomeStatementComponent } from './components/income-statement/income-statement.component';
-import { AccountStatementComponent } from './components/account-statement/account-statement.component';
-import { UserListComponent } from './components/user-list/user-list.component';
-import { AccountListComponent } from './components/account-list/account-list.component';
-import { ImportJournalComponent } from './components/import-journal/import-journal.component';
+import { JournalStatmentComponent } from "./components/journal-statment/journal-statment.component";
+import { PartyListComponent } from "./components/party-list/party-list.component";
+import { ImportPartyComponent } from "./components/import-party/import-party.component";
+import { ImportTransactionComponent } from "./components/import-transaction/import-transaction.component";
+import { PostedIncomeReportComponent } from "./components/posted-income-report/posted-income-report.component";
+import { IncomeStatementComponent } from "./components/income-statement/income-statement.component";
+import { AccountStatementComponent } from "./components/account-statement/account-statement.component";
+import { UserListComponent } from "./components/user-list/user-list.component";
+import { AccountListComponent } from "./components/account-list/account-list.component";
+import { ImportJournalComponent } from "./components/import-journal/import-journal.component";
+import { BalancesheetComponent } from "./components/balancesheet/balancesheet.component";
 
 const routes: Routes = [
   {
-    path:"basic",
-    component: BasicComponent
+    path: "basic",
+    component: BasicComponent,
   },
   {
-    path:"select",
-    component: SelectComponent
+    path: "select",
+    component: SelectComponent,
   },
   {
-    path:"checkboxs-radios",
-    component: CheckboxsRadiosComponent
+    path: "checkboxs-radios",
+    component: CheckboxsRadiosComponent,
   },
   {
-    path:"pickers",
-    component: PickersComponent
+    path: "pickers",
+    component: PickersComponent,
   },
   {
-    path:"masks",
-    component: MasksComponent
+    path: "masks",
+    component: MasksComponent,
   },
   {
-    path:"advanced",
-    component: AdvancedComponent
+    path: "advanced",
+    component: AdvancedComponent,
   },
   {
-    path:"range-sliders",
-    component: RangeSlidersComponent
+    path: "range-sliders",
+    component: RangeSlidersComponent,
   },
   {
-    path:"validation",
-    component: ValidationComponent
+    path: "validation",
+    component: ValidationComponent,
   },
   {
-    path:"wizard",
-    component: WizardComponent
+    path: "wizard",
+    component: WizardComponent,
   },
   {
-    path:"editors",
-    component: EditorsComponent
+    path: "editors",
+    component: EditorsComponent,
   },
   {
-    path:"file-uploads",
-    component: FileUploadsComponent
+    path: "file-uploads",
+    component: FileUploadsComponent,
   },
   {
-    path:"layouts",
-    component: LayoutsComponent
+    path: "layouts",
+    component: LayoutsComponent,
   },
   {
-    path:"journal-statement",
-    component: JournalStatmentComponent
+    path: "journal-statement",
+    component: JournalStatmentComponent,
   },
   {
-    path:"party-list",
-    component: PartyListComponent
+    path: "party-list",
+    component: PartyListComponent,
   },
   {
-    path:"import-party",
-    component: ImportPartyComponent
+    path: "import-party",
+    component: ImportPartyComponent,
   },
   {
-    path:"import-transaction",
-    component: ImportTransactionComponent
+    path: "import-transaction",
+    component: ImportTransactionComponent,
   },
   {
-    path:"posted-income",
-    component: PostedIncomeReportComponent
+    path: "posted-income",
+    component: PostedIncomeReportComponent,
   },
   {
-    path:"Income-statement",
-    component: IncomeStatementComponent
+    path: "Income-statement",
+    component: IncomeStatementComponent,
   },
   {
-    path:"account-statement",
-    component: AccountStatementComponent
+    path: "account-statement",
+    component: AccountStatementComponent,
   },
   {
-    path:"users",
-    component: UserListComponent
+    path: "users",
+    component: UserListComponent,
   },
   {
-    path:"accounts",
-    component: AccountListComponent
+    path: "accounts",
+    component: AccountListComponent,
   },
   {
-    path:"import-Journal",
-    component: ImportJournalComponent
-  }
-  
-  
-
-  
-
+    path: "import-Journal",
+    component: ImportJournalComponent,
+  },
+  {
+    path: "balancesheet",
+    component: BalancesheetComponent,
+  },
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
 export class FormRoutingModule {}

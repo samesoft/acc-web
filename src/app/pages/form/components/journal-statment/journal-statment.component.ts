@@ -102,14 +102,12 @@ export class JournalStatmentComponent {
   }
 
   accounts: any[] = [];
-  fetchAccounts(){
+  fetchAccounts() {
     const url = `${environment.url}accounts`;
-    this.http.get<any[]>(url).subscribe(
-      (response) => {
-        this.accounts = response;
-        console.log(this.accounts);
-      },
-    );
+    this.http.get<any[]>(url).subscribe((response) => {
+      this.accounts = response;
+      console.log(this.accounts);
+    });
   }
 
   getVisibleSchedules(): any[] {
@@ -189,14 +187,12 @@ export class JournalStatmentComponent {
 
   editSchedule(): void {
     if (this.listJsForm.valid) {
-
-      
       const formData = this.listJsForm.value;
 
       // Prepare data in the desired format
       const journalData = {
-         // Assuming you have a way to determine the journal ID
-         Journal_id: formData.Journal_id,
+        // Assuming you have a way to determine the journal ID
+        Journal_id: formData.Journal_id,
         Journal_Date: formData.Journal_Date, // Format date as YYYY-MM-DD
         details: [
           {

@@ -111,10 +111,16 @@ export const MENU: MenuItem[] = [
     id: 19,
     label: "MENUITEMS.APPS.LIST.Transactions",
     subItems: [
+      // {
+      //   id: 20,
+      //   label: "MENUITEMS.APPS.LIST.IMPORTTRANSACTION",
+      //   link: "forms/import-transaction",
+      //   parentId: 19,
+      // },
       {
-        id: 20,
-        label: "MENUITEMS.APPS.LIST.IMPORTTRANSACTION",
-        link: "forms/import-transaction",
+        id: 26,
+        label: "MENUITEMS.APPS.LIST.BALANCESHEET",
+        link: "forms/balancesheet",
         parentId: 19,
       },
       {

@@ -1,78 +1,87 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 // Register Auth
-import { environment } from '../../../environments/environment';
-import { AuthenticationService } from '../../core/services/auth.service';
-import { UserProfileService } from '../../core/services/user.service';
-import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { environment } from "../../../environments/environment";
+import { AuthenticationService } from "../../core/services/auth.service";
+import { UserProfileService } from "../../core/services/user.service";
+import { Router } from "@angular/router";
+import { first } from "rxjs/operators";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.scss"],
 })
-
 
 /**
  * Register Component
  */
-
-
 export class RegisterComponent implements OnInit {
-
-   roles = [
-    { id: 1, name: 'Admin' },
-    { id: 2, name: 'Moderator' },
-    { id: 3, name: 'User' }
+  roles = [
+    { id: 1, name: "Admin" },
+    { id: 2, name: "Moderator" },
+    { id: 3, name: "User" },
   ];
   // Login Form
   signupForm!: FormGroup;
   submitted = false;
   successmsg = false;
-  error = '';
-
+  error = "";
 
   // set the current year
   year: number = new Date().getFullYear();
 
-  constructor(private formBuilder: FormBuilder, private router: Router,
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
     private authenticationService: AuthenticationService,
-    private userService: UserProfileService) { }
+    private userService: UserProfileService
+  ) {}
 
   ngOnInit(): void {
     /**
      * Form Validatyion
      */
-     this.signupForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      fullName: ['', [Validators.required]],
-      password: ['', Validators.required],
-      roleId: ['', Validators.required],
+    this.signupForm = this.formBuilder.group({
+      email: ["", [Validators.required, Validators.email]],
+      fullName: ["", [Validators.required]],
+      password: ["", Validators.required],
+      roleId: ["", Validators.required],
     });
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.signupForm.controls; }
+  get f() {
+    return this.signupForm.controls;
+  }
 
   /**
    * Register submit form
    */
-   onSubmit() {
+  onSubmit() {
     this.submitted = true;
 
-     //Register Api
-     this.authenticationService.register(this.f['email'].value, this.f['fullName'].value, this.f['password'].value, this.f['roleId'].value).pipe(first()).subscribe(
-      (data: any) => {
-      this.successmsg = true;
-      if (this.successmsg) {
-        this.router.navigate(['/auth/login']);
-      }
-    },
-    (error: any) => {
-      this.error = error ? error : '';
-    });
+    //Register Api
+    this.authenticationService
+      .register(
+        this.f["email"].value,
+        this.f["fullName"].value,
+        this.f["password"].value,
+        this.f["roleId"].value
+      )
+      .pipe(first())
+      .subscribe(
+        (data: any) => {
+          this.successmsg = true;
+          if (this.successmsg) {
+            this.router.navigate(["/auth/login"]);
+          }
+        },
+        (error: any) => {
+          this.error = error ? error : "";
+        }
+      );
 
     // stop here if form is invalid
     // if (this.signupForm.invalid) {
@@ -104,5 +113,4 @@ export class RegisterComponent implements OnInit {
     //   }
     // }
   }
-
 }
