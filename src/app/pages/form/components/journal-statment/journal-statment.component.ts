@@ -15,16 +15,19 @@ import { NgbdOrdersSortableHeader } from "src/app/pages/tables/listjs/listjs-sor
 import { Observable } from "rxjs";
 import { ListJsModel } from "src/app/pages/tables/listjs/listjs.model";
 import { OrdersService } from "src/app/pages/tables/listjs/listjs.service";
-import { NgbModal, NgbModule, NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
+import {
+  NgbModal,
+  NgbModule,
+  NgbPaginationModule,
+} from "@ng-bootstrap/ng-bootstrap";
 import { ToastService } from "src/app/pages/icons/toast-service";
 import { AccountSubTypeService } from "../service/accountSubType.service";
-
 
 @Component({
   selector: "app-journal-statment",
   standalone: true,
 
-  imports: [CommonModule, ReactiveFormsModule, NgbPaginationModule, NgbModule,],
+  imports: [CommonModule, ReactiveFormsModule, NgbPaginationModule, NgbModule],
   templateUrl: "./journal-statment.component.html",
   styleUrl: "./journal-statment.component.scss",
 })
@@ -64,8 +67,8 @@ export class JournalStatmentComponent {
 
   //new
   currentPage = 1;
-pageSize = 10;
-totalPages!: number;
+  pageSize = 10;
+  totalPages!: number;
   @ViewChildren(NgbdOrdersSortableHeader)
   headers!: QueryList<NgbdOrdersSortableHeader>;
   journalStatementForm: FormGroup;
@@ -90,28 +93,31 @@ totalPages!: number;
 
     this.listJsForm = this.formBuilder.group({
       Journal_id: "",
+      Journal_Date: ["", Validators.required],
       Account_code: ["", Validators.required],
+      Debit: ["", Validators.required],
+      Credit: ["", Validators.required],
+      memo: ["", Validators.required],
     });
   }
 
   accounts: any[] = [];
-  fetchAccounts(): void {
+  fetchAccounts(){
     const url = `${environment.url}accounts`;
-
     this.http.get<any[]>(url).subscribe(
       (response) => {
         this.accounts = response;
-        console.log(response);
+        console.log(this.accounts);
       },
-      (error) => {
-        console.error(error);
-      }
     );
   }
 
   getVisibleSchedules(): any[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
-    return this.journalStatementData.slice(startIndex, startIndex + this.pageSize);
+    return this.journalStatementData.slice(
+      startIndex,
+      startIndex + this.pageSize
+    );
   }
   getJournalStatementData(): void {
     this.loading = true;
@@ -183,10 +189,28 @@ totalPages!: number;
 
   editSchedule(): void {
     if (this.listJsForm.valid) {
+
+      
+      const formData = this.listJsForm.value;
+
+      // Prepare data in the desired format
+      const journalData = {
+         // Assuming you have a way to determine the journal ID
+         Journal_id: formData.Journal_id,
+        Journal_Date: formData.Journal_Date, // Format date as YYYY-MM-DD
+        details: [
+          {
+            Account_code: formData.Account_code,
+            Debit: formData.Debit,
+            Credit: formData.Credit,
+            memo: formData.memo,
+          },
+        ],
+      };
       this.http
-        .post<any>(
+        .put<any>(
           `${environment.url}transaction/update-entry-account`,
-          this.listJsForm.value
+          journalData
         )
         .subscribe(
           (data) => {
@@ -211,16 +235,15 @@ totalPages!: number;
   //   ]
   //   }
   delete(id: any) {
-    let data={"journal_id":id}
+    let data = { journal_id: id };
     return this.http.post<any>(
       `${environment.url}transaction/delete-journal/`,
       data
     );
   }
 
-
   elete(deleteId: any) {
-    let data = { "journal_id": deleteId };
+    let data = { journal_id: deleteId };
     this.service.deleteJournal(data).subscribe(
       (response) => {
         this.modalService.dismissAll();
@@ -238,7 +261,9 @@ totalPages!: number;
     if (this.endIndex > this.totalRecords) {
       this.endIndex = this.totalRecords;
     }
-    this.paginationDatas = this.schedules.slice(this.startIndex - 1, this.endIndex);
+    this.paginationDatas = this.schedules.slice(
+      this.startIndex - 1,
+      this.endIndex
+    );
   }
-
 }

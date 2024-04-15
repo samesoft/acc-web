@@ -234,6 +234,7 @@ totalPages!: number;
         () => {
           this.isPosting=false
           console.log('Data uploaded successfully');
+          this.showAddToast = true;
           // this.router.navigate(['/pages'])
         },
         // (error) => {
