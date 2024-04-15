@@ -131,7 +131,7 @@ export class CargoReportComponent {
       City_From: ["", [Validators.required]],
       City_To: ["", [Validators.required]],
       Cont_No: ["", [Validators.required]],
-      Party_ID: ["", [Validators.required]],
+      Party_ID: [""],
       Rate: ["", [Validators.required]],
       Truck_No: ["", [Validators.required]],
       Bkg_Date: ["", [Validators.required]],
