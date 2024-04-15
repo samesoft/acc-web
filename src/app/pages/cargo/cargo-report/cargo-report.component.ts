@@ -36,6 +36,7 @@ import {
 } from "../../tables/listjs/listjs-sortable.directive";
 import { OrdersService } from "../../tables/listjs/listjs.service";
 import { userService } from "../../form/components/user-list/userManagment.service";
+import { AccountSubTypeService } from "../../form/components/service/accountSubType.service";
 
 @Component({
   selector: "app-cargo-report",
@@ -46,20 +47,19 @@ import { userService } from "../../form/components/user-list/userManagment.servi
 })
 export class CargoReportComponent {
   trips: any[] = [];
+
   // bread crumb items
   breadCrumbItems!: Array<{}>;
   submitted = false;
-  cargoForm!: UntypedFormGroup;
-  cargoEditForm!: UntypedFormGroup;
   ListJsData!: ListJsModel[];
   checkedList: any;
   masterSelected!: boolean;
   ListJsDatas: any;
 
   page: any = 1;
-  pageSize: any = 3;
+  // pageSize: any = 3;
   startIndex: number = 0;
-  endIndex: number = 3;
+  endIndex: number = 10;
   totalRecords: number = 0;
 
   paginationDatas: any;
@@ -72,9 +72,18 @@ export class CargoReportComponent {
   dataterm: any;
   term: any;
 
-  showAddToast = false;
-
   showSuccessToast = false;
+  showAddToast = false;
+  showEditToast = false;
+
+  Tid: any;
+  //new
+  currentPage = 1;
+  pageSize = 10;
+  totalPages!: number;
+
+  cargoForm!: UntypedFormGroup;
+  cargoEditForm!: UntypedFormGroup;
 
   // Table data
   ListJsList!: Observable<ListJsModel[]>;
@@ -94,7 +103,9 @@ export class CargoReportComponent {
     private http: HttpClient,
     private dialog: MatDialog,
     public toastService: ToastService,
-    private userService: userService
+    private userService: userService,
+
+    public service: AccountSubTypeService
   ) {
     // this.ListJsList = service.countries$;
     // this.total = service.total$;
@@ -231,17 +242,17 @@ export class CargoReportComponent {
   /**
    * Pagination
    */
-  loadPage() {
-    this.startIndex = (this.page - 1) * this.pageSize + 1;
-    this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
-    if (this.endIndex > this.totalRecords) {
-      this.endIndex = this.totalRecords;
-    }
-    this.paginationDatas = paginationlist.slice(
-      this.startIndex - 1,
-      this.endIndex
-    );
-  }
+  // loadPage() {
+  //   this.startIndex = (this.page - 1) * this.pageSize + 1;
+  //   this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
+  //   if (this.endIndex > this.totalRecords) {
+  //     this.endIndex = this.totalRecords;
+  //   }
+  //   this.paginationDatas = paginationlist.slice(
+  //     this.startIndex - 1,
+  //     this.endIndex
+  //   );
+  // }
 
   saveCargo() {
     if (this.cargoForm.valid) {
@@ -332,7 +343,21 @@ export class CargoReportComponent {
     }, 100); // Adjust delay if needed
   }
 
-  editSchedule(): void {
+  loadPage() {
+    this.startIndex = (this.page - 1) * this.pageSize + 1;
+    this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
+    if (this.endIndex > this.totalRecords) {
+      this.endIndex = this.totalRecords;
+    }
+    this.paginationDatas = this.trips.slice(this.startIndex - 1, this.endIndex);
+  }
+
+  getVisibleSchedules(): any[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.trips.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  editCargo(): void {
     if (this.cargoEditForm.valid) {
       this.http
         .put<any>(`${environment.url}trips/edit`, this.cargoEditForm.value)
@@ -398,11 +423,29 @@ export class CargoReportComponent {
     }
   }
 
-  selectedAccount = "This is a placeholder";
-  Default = [{ name: "Choice 1" }, { name: "Choice 2" }, { name: "Choice 3" }];
-  /**
-   * Sort table data
-   * @param param0 sort the column
-   *
-   */
+  delete(party: any) {
+    if (party) {
+      var listData = this.parties.filter(
+        (data: { TID: any }) => data.TID === this.trips
+      );
+
+      if (listData.length > 0) {
+        const rowData = listData[0];
+        const editFormFieldValue = rowData.TID;
+        console.log(editFormFieldValue);
+
+        this.Tid = editFormFieldValue;
+        console.log(this.Tid);
+        this.service.delete(this.Tid).subscribe((response) => {
+          this.modalService.dismissAll();
+          this.showSuccessToast = true;
+          this.ngOnInit();
+        });
+      } else {
+        this.checkedValGet.forEach((item: any) => {
+          document.getElementById("lj_" + item)?.remove();
+        });
+      }
+    }
+  }
 }
