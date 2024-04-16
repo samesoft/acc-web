@@ -60,7 +60,7 @@
               </thead>
               <tbody>
                 <!-- @for (data of trips; track $index) { -->
-                <tr *ngFor="let data of getVisibleSchedules()">
+                <tr *ngFor="let data of getVisibleCargoReport()">
                   <td>{{ data.City_From }}</td>
                   <td>{{ data.City_To }}</td>
                   <td>{{ data.Cont_No }}</td>
@@ -83,8 +83,10 @@
                         </button>
                       </div>
 
-                      <div class="remove">
-                        <!-- (click)="confirm(deleteModel,data.id)" -->
+                      <div
+                        class="remove"
+                        (click)="confirm(deleteModel, data.id)"
+                      >
                         <button
                           class="btn btn-sm btn-success remove-item-btn"
                           data-bs-toggle="modal"
@@ -113,42 +115,11 @@
               </div>
             </div>
           </div>
-
-          <div class="row justify-content-md-between align-items-md-center">
-            <div class="col col-sm-6">
-              <!-- <div
-                class="dataTables_info mb-2"
-                id="tickets-table_info"
-                role="status"
-                aria-live="polite"
-              >
-                Showing {{ (service.page - 1) * service.pageSize + 1 }} to
-                {{ (service.page - 1) * service.pageSize + service.pageSize }}
-                of {{ schedules.length }} entries
-              </div> -->
-            </div>
-            <!-- Pagination -->
-            <div class="col col-sm-6">
-              <div class="text-sm-right float-end listjs-pagination">
-                <!-- <ngb-pagination
-                  [collectionSize]="trips.length"
-                  [(page)]="service.page"
-                  [pageSize]="service.pageSize"
-                > -->
-                <!-- </ngb-pagination> -->
-              </div>
-            </div>
-            <!-- End Pagination -->
-          </div>
         </div>
       </div>
-      <!-- end card -->
     </div>
-    <!-- end col -->
   </div>
-  <!-- end col -->
 </div>
-<!-- end row -->
 
 <!-- Edit Cargo Report Data -->
 <ng-template #content role="document" let-modal>
@@ -220,7 +191,7 @@
         <div class="invalid-feedback">Please enter a Rate.</div>
       </div>
 
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label for="phone-field" class="form-label">Status</label>
         <input
           type="text"
@@ -232,7 +203,7 @@
           [ngClass]="{ 'is-invalid': submitted && formEdit['Status'].errors }"
         />
         <div class="invalid-feedback">Please enter a Status.</div>
-      </div>
+      </div> -->
 
       <div class="mb-3">
         <label for="phone-field" class="form-label">Truck_No</label>

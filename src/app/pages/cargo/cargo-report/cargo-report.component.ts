@@ -352,7 +352,7 @@ export class CargoReportComponent {
     this.paginationDatas = this.trips.slice(this.startIndex - 1, this.endIndex);
   }
 
-  getVisibleSchedules(): any[] {
+  getVisibleCargoReport(): any[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.trips.slice(startIndex, startIndex + this.pageSize);
   }

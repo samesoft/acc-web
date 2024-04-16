@@ -47,30 +47,30 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 9,
-        label: 'MENUITEMS.APPS.LIST.IMPORTJOURNAL',
-        link: 'forms/import-Journal',
-        parentId: 7
+        label: "MENUITEMS.APPS.LIST.IMPORTJOURNAL",
+        link: "forms/import-Journal",
+        parentId: 7,
       },
     ],
   },
   {
     id: 10,
-    label: 'MENUITEMS.APPS.LIST.PARTY',
+    label: "MENUITEMS.APPS.LIST.PARTY",
     subItems: [
       {
         id: 11,
-        label: 'MENUITEMS.APPS.LIST.PARTYLIST',
-        link: 'forms/party-list',
-        parentId: 10
+        label: "MENUITEMS.APPS.LIST.PARTYLIST",
+        link: "forms/party-list",
+        parentId: 10,
       },
       {
         id: 12,
-        label: 'MENUITEMS.APPS.LIST.IMPORTPARTY',
-        link: 'forms/import-party',
+        label: "MENUITEMS.APPS.LIST.IMPORTPARTY",
+        link: "forms/import-party",
         parentId: 10,
-      }
-    ]
-    },
+      },
+    ],
+  },
   //   {
   //   id: 13,
   //   label: "MENUITEMS.APPS.LIST.PARTY",
@@ -129,12 +129,12 @@ export const MENU: MenuItem[] = [
         link: "forms/posted-income",
         parentId: 19,
       },
-      // {
-      //   id: 14,
-      //   label: 'MENUITEMS.APPS.LIST.INCOMESTATMENT',
-      //   link: 'forms/Income-statement',
-      //   parentId: 11
-      // },
+      {
+        id: 27,
+        label: "MENUITEMS.APPS.LIST.INCOMESTATMENT",
+        link: "forms/Income-statement",
+        parentId: 19,
+      },
       {
         id: 22,
         label: "MENUITEMS.APPS.LIST.ACCOUNTSTATEMENTS",
