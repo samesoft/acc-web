@@ -131,7 +131,7 @@ export class CargoReportComponent {
       City_From: ["", [Validators.required]],
       City_To: ["", [Validators.required]],
       Cont_No: ["", [Validators.required]],
-      Party_ID: ["", [Validators.required]],
+      Party_ID: [""],
       Rate: ["", [Validators.required]],
       Truck_No: ["", [Validators.required]],
       Bkg_Date: ["", [Validators.required]],
@@ -352,7 +352,7 @@ export class CargoReportComponent {
     this.paginationDatas = this.trips.slice(this.startIndex - 1, this.endIndex);
   }
 
-  getVisibleSchedules(): any[] {
+  getVisibleCargoReport(): any[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.trips.slice(startIndex, startIndex + this.pageSize);
   }
