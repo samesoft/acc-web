@@ -72,7 +72,7 @@ export class ListjsComponent {
   currentPage = 1;
   pageSize = 10;
   totalPages!: number;
-
+  isLoading = false;
   showSuccessToast = false;
 
   // Table data
@@ -176,10 +176,25 @@ export class ListjsComponent {
   // }
 
   getData() {
+    this.isLoading = true;
     this.http.get<any[]>(`${environment.url}schedule`).subscribe((data) => {
       this.schedules = data;
       console.log(data);
+      this.isLoading = false;
     });
+    
+  }
+
+  fetchSchedules() {
+    this.isLoading = true; // Set loading flag to true
+    // Replace with your actual data fetching logic (e.g., HTTP service call)
+    setTimeout(() => {
+      this.http.get<any[]>(`${environment.url}schedule`).subscribe((data) => {
+        this.schedules = data;
+        console.log(data);
+      });
+      this.isLoading = false; // Set loading flag to false after data arrives
+    }, 12000); // Simulate a 2-second delay (replace with actual API call duration)
   }
 
   getParties() {

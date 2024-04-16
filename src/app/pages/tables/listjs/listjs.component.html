@@ -8,7 +8,7 @@
     <small>06 mins ago</small>
   </ng-template> -->
   <div class="toast-body">
-   Your schedule has been edited successfully.
+    Your schedule has been edited successfully.
   </div>
 </ngb-toast>
 
@@ -24,70 +24,76 @@
         <div id="customerList">
           <!-- <div class="row g-4 mb-3"> -->
 
-            <!-- <div class="col-sm">
+          <!-- <div class="col-sm">
               <div class="d-flex justify-content-sm-end">
                
               </div>
             </div> -->
           <!-- </div> -->
+          <div *ngIf="isLoading">
+            <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+              <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
 
           <!-- <div class="table-responsive table-card mt-3 mb-1"> -->
-            <table class="table">
-              <thead>
-                <tr class="bg-light text-muted">
+          <table class="table" *ngIf="!isLoading">
+            <thead>
+              <tr class="bg-light text-muted">
 
-                  <th  listsortable="customer_name" (listsort)="onSort($event)">City</th>
-                  <th  listsortable="email" (listsort)="onSort($event)">Party Name</th>
-                  <th  listsortable="phone" (listsort)="onSort($event)">Kg</th>
-                  <th  listsortable="date" (listsort)="onSort($event)">Nbr</th>
-                  <th  listsortable="status" (listsort)="onSort($event)">Rate</th>
-                  <th  listsortable="status" (listsort)="onSort($event)">Flight</th>
-                  <th >Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- @for (data of getVisibleSchedules()) { -->
-                  <tr *ngFor="let data of getVisibleSchedules(); ">
-                 
-               
-                
-                  <td>{{ getCityName(data.CityID) }}</td>
-                  <td>{{ getPartyName(data.Party_ID) }}</td>
-                  <td>{{ data.Kg }}</td>
-                  <td>{{ data.Nbr }}</td>
-                  <td>{{ data.Rate }}</td>
-                  <td>{{ data.flight }}</td>
-               
-                  <td>
-                    <div class="d-flex gap-2">
-                      <div class="edit">
-                        <button class="btn btn-sm btn-primary edit-item-btn" data-bs-toggle="modal"
-                          data-bs-target="#showModal" (click)="editModa(content,data.ScheduleID)">Edit</button>
-                      </div>
-                    
+                <th listsortable="customer_name" (listsort)="onSort($event)">City</th>
+                <th listsortable="email" (listsort)="onSort($event)">Party Name</th>
+                <th listsortable="phone" (listsort)="onSort($event)">Kg</th>
+                <th listsortable="date" (listsort)="onSort($event)">Nbr</th>
+                <th listsortable="status" (listsort)="onSort($event)">Rate</th>
+                <th listsortable="status" (listsort)="onSort($event)">Flight</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- @for (data of getVisibleSchedules()) { -->
+              <tr *ngFor="let data of getVisibleSchedules(); ">
+
+                <td>{{ getCityName(data.CityID) }}</td>
+                <td>{{ getPartyName(data.Party_ID) }}</td>
+                <td>{{ data.Kg }}</td>
+                <td>{{ data.Nbr }}</td>
+                <td>{{ data.Rate }}</td>
+                <td>{{ data.flight }}</td>
+
+                <td>
+                  <div class="d-flex gap-2">
+                    <div class="edit">
+                      <button class="btn btn-sm btn-primary edit-item-btn" data-bs-toggle="modal"
+                        data-bs-target="#showModal" (click)="editModa(content,data.ScheduleID)">Edit</button>
                     </div>
-                  </td>
-             
-                </tr>
-              </tbody>
-            </table>
+
+                  </div>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
           <!-- </div> -->
 
-          <div class="d-flex justify-content-center">
+          <div class="d-flex justify-content-center" *ngIf="!isLoading">
             <div class="text-sm-right float-sm-end listjs-pagination gap-2">
-              <ngb-pagination [collectionSize]="schedules.length" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="loadPage()">
+              <ngb-pagination [collectionSize]="schedules.length" [(page)]="currentPage" [pageSize]="pageSize"
+                (pageChange)="loadPage()">
               </ngb-pagination>
             </div>
           </div>
-      </div><!-- end card -->
+        </div><!-- end card -->
+      </div>
+      <!-- end col -->
     </div>
     <!-- end col -->
   </div>
-  <!-- end col -->
-</div>
-<!-- end row -->
+  <!-- end row -->
 
-<!-- [collectionSize]="schedules.length" -->
+  <!-- [collectionSize]="schedules.length" -->
 
 
 
@@ -95,71 +101,71 @@
 
 
 
-<!-- Add ListJs Data -->
-<ng-template #content role="document" let-modal>
-  <div class="modal-header bg-light p-3">
-    <h5 class="modal-title" id="exampleModalLabel">Schedule</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
-      (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <form (ngSubmit)="saveListJs()" [formGroup]="listJsForm" class="tablelist-form" autocomplete="off">
-    <div class="modal-body">
+  <!-- Add ListJs Data -->
+  <ng-template #content role="document" let-modal>
+    <div class="modal-header bg-light p-3">
+      <h5 class="modal-title" id="exampleModalLabel">Schedule</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+        (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form (ngSubmit)="saveListJs()" [formGroup]="listJsForm" class="tablelist-form" autocomplete="off">
+      <div class="modal-body">
 
-      <input type="hidden" name="id" value="" formControlName="ids" />
+        <input type="hidden" name="id" value="" formControlName="ids" />
 
-      <div class="mb-3" id="modal-id" style="display: none;">
-        <label for="id-field" class="form-label">ID</label>
-        <input type="text" id="id-field" class="form-control" placeholder="ID" readonly />
-      </div>
+        <div class="mb-3" id="modal-id" style="display: none;">
+          <label for="id-field" class="form-label">ID</label>
+          <input type="text" id="id-field" class="form-control" placeholder="ID" readonly />
+        </div>
 
-      <div class="form-group">
-        <label for="CityID">City:</label>
-        <select id="CityID" formControlName="CityID" class="form-control">
-          <option *ngFor="let city of cities" [value]="city.CityID">{{ city.City_Name}}</option>
-        </select>
-       
-      </div>
+        <div class="form-group">
+          <label for="CityID">City:</label>
+          <select id="CityID" formControlName="CityID" class="form-control">
+            <option *ngFor="let city of cities" [value]="city.CityID">{{ city.City_Name}}</option>
+          </select>
 
-      <div class="form-group">
-        <label for="Party_ID">Party:</label>
-        <select id="Party_ID" formControlName="Party_ID" class="form-control">
-          <option *ngFor="let party of parties" [value]="party.
+        </div>
+
+        <div class="form-group">
+          <label for="Party_ID">Party:</label>
+          <select id="Party_ID" formControlName="Party_ID" class="form-control">
+            <option *ngFor="let party of parties" [value]="party.
           Party_ID">{{ party.Name}}</option>
-        </select>
-       
-      </div>
-      
-      <!-- <div class="mb-3">
+          </select>
+
+        </div>
+
+        <!-- <div class="mb-3">
         <label for="email-field" class="form-label">Party</label>
         <input type="email" id="email-field" class="form-control" placeholder="Enter Email" required
           formControlName="Party_ID" [ngClass]="{ 'is-invalid': submitted && form['Party_ID'].errors }" />
         <div class="invalid-feedback">Please enter an email.</div>
       </div> -->
 
-      <div class="mb-3">
-        <label for="phone-field" class="form-label">Kg</label>
-        <input type="number" type="text"  id="phone-field" class="form-control" placeholder="Enter Phone no." required
-          formControlName="Kg" [ngClass]="{ 'is-invalid': submitted && form['Kg'].errors }" />
-        <div class="invalid-feedback">Please enter a Kg.</div>
-      </div>
+        <div class="mb-3">
+          <label for="phone-field" class="form-label">Kg</label>
+          <input type="number" type="text" id="phone-field" class="form-control" placeholder="Enter Phone no." required
+            formControlName="Kg" [ngClass]="{ 'is-invalid': submitted && form['Kg'].errors }" />
+          <div class="invalid-feedback">Please enter a Kg.</div>
+        </div>
 
-      <div class="mb-3">
-        <label for="phone-field" class="form-label">Nbr</label>
-        <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone no." required
-          formControlName="Nbr" [ngClass]="{ 'is-invalid': submitted && form['Nbr'].errors }" />
-        <div class="invalid-feedback">Please enter a Nbr.</div>
-      </div>
+        <div class="mb-3">
+          <label for="phone-field" class="form-label">Nbr</label>
+          <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone no." required
+            formControlName="Nbr" [ngClass]="{ 'is-invalid': submitted && form['Nbr'].errors }" />
+          <div class="invalid-feedback">Please enter a Nbr.</div>
+        </div>
 
-      <div class="mb-3">
-        <label for="phone-field" class="form-label">Rate</label>
-        <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone no." required
-          formControlName="Rate" [ngClass]="{ 'is-invalid': submitted && form['Rate'].errors }" />
-        <div class="invalid-feedback">Please enter a Rate.</div>
-      </div>
+        <div class="mb-3">
+          <label for="phone-field" class="form-label">Rate</label>
+          <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone no." required
+            formControlName="Rate" [ngClass]="{ 'is-invalid': submitted && form['Rate'].errors }" />
+          <div class="invalid-feedback">Please enter a Rate.</div>
+        </div>
 
-      
 
-      <!-- <div class="col-lg-4 col-md-6">
+
+        <!-- <div class="col-lg-4 col-md-6">
         <div class="mb-3">
             <label for="choices-single-groups" class="form-label text-muted">Option
                 Groups</label>
@@ -172,12 +178,12 @@
         </div>
     </div> -->
 
-   
 
 
 
 
-      <!-- <div>
+
+        <!-- <div>
         <label for="status-field" class="form-label">Status</label>
         <select class="form-control" data-trigger name="status-field" id="status-field" formControlName="status" required [ngClass]="{ 'is-invalid': submitted && form['status'].errors }">
           <option value="">Status</option>
@@ -192,43 +198,43 @@
         </div>
         }
       </div> -->
-    </div>
-    <div class="modal-footer">
-      <div class="hstack gap-2 justify-content-end">
-        <button type="button" class="btn btn-light" data-bs-dismiss="modal"
-          (click)="modal.close('Close click')">Close</button>
-        <button type="submit" class="btn btn-success" id="add-btn" (click)="editSchedule()">Update</button>
       </div>
-    </div>
-  </form>
-</ng-template>
-
-<!-- removeItemModal -->
-<ng-template #deleteModel let-modal>
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"
-        (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <div class="mt-2 text-center">
-        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
-          colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
-        <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-          <h4>Are you Sure ?</h4>
-          <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Record ?</p>
+      <div class="modal-footer">
+        <div class="hstack gap-2 justify-content-end">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+            (click)="modal.close('Close click')">Close</button>
+          <button type="submit" class="btn btn-success" id="add-btn" (click)="editSchedule()">Update</button>
         </div>
       </div>
-      <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-        <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
-          (click)="modal.close('Close click')"><i class="ri-close-line me-1 align-middle"></i> Close</button>
-        <button type="button" class="btn w-sm btn-danger" id="delete-product" (click)="deleteData(deleteId)"
-          (click)="modal.close('Close click')">Yes, Delete It!</button>
+    </form>
+  </ng-template>
+
+  <!-- removeItemModal -->
+  <ng-template #deleteModel let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"
+          (click)="modal.dismiss('Cross click')"></button>
       </div>
-    </div>
-  </div><!-- /.modal-content -->
-</ng-template>
-<!-- 
+      <div class="modal-body">
+        <div class="mt-2 text-center">
+          <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
+            colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
+          <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+            <h4>Are you Sure ?</h4>
+            <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Record ?</p>
+          </div>
+        </div>
+        <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+          <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
+            (click)="modal.close('Close click')"><i class="ri-close-line me-1 align-middle"></i> Close</button>
+          <button type="button" class="btn w-sm btn-danger" id="delete-product" (click)="deleteData(deleteId)"
+            (click)="modal.close('Close click')">Yes, Delete It!</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </ng-template>
+  <!-- 
 <ngb-toast [autohide]="false" (hidden)="show = false" *ngIf="show">
   <ng-template ngbToastHeader>
     <img src="assets/images/logo-sm.png" alt="" class="me-2" height="18">
@@ -240,7 +246,7 @@
   </div>
 </ngb-toast> -->
 
-<!-- <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
+  <!-- <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
   <ng-template ngbToastHeader>
     <img src="assets/images/logo-sm.png" alt="" class="me-2" height="18">
     <span class="fw-semibold me-auto">Velzon</span>
@@ -250,21 +256,14 @@
     Hello, world! Your schedule has been edited successfully.
   </div>
 </ngb-toast> -->
-<ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
-  <!-- <ng-template ngbToastHeader>
-    <img src="assets/images/logo-sm.png" alt="" class="me-2" height="18">
-    <span class="fw-semibold me-auto">Velzon</span>
-    <small>06 mins ago</small>
-  </ng-template> -->
-  <div class="toast-body">
-   Your schedule has been edited successfully.
-  </div>
-</ngb-toast>
+  <!-- <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
+    <div class="toast-body">
+      Your schedule has been edited successfully.
+    </div>
+  </ngb-toast> -->
 
 
 
-<!-- <div *ngIf="showSuccessToast" class="success-toast">
+  <!-- <div *ngIf="showSuccessToast" class="success-toast">
   <p>Successfully edited!</p>
 </div> -->
-
-  

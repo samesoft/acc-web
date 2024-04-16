@@ -14,6 +14,7 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AccountSubTypeService } from "../service/accountSubType.service";
+import { ToastService } from "src/app/pages/icons/toast-service";
 
 @Component({
   selector: "app-party-list",
@@ -47,16 +48,19 @@ export class PartyListComponent {
   journal: any;
   partyId: any;
 
+  isLoading = false;
   //new
   currentPage = 1;
   pageSize = 10;
   totalPages!: number;
+  
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private router: Router,
     private modalService: NgbModal,
-    public service: AccountSubTypeService
+    public service: AccountSubTypeService,
+    public toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -71,17 +75,23 @@ export class PartyListComponent {
   }
 
   fetchPartyList(): void {
-    const url = `${environment.url}party/list`;
-    this.http.get<any[]>(url).subscribe((data) => {
-      this.parties = data;
-      console.log(data);
-    });
-  }
+    this.isLoading = true;
+    // setTimeout(() => {
+      this.http.get<any[]>(`${environment.url}party/list`).subscribe((data) => {
+        this.parties = data;
+        console.log(data);
+        this.isLoading = false;
+      });
+      // Set loading flag to false after data arrives
+    }
+  
+  
 
   createParty(): void {
     this.submitted = true;
     this.partyForm.markAllAsTouched();
     if (this.partyForm.valid) {
+      this.isLoading = true;
       const url = `${environment.url}party/create`;
       const data = {
         Name: this.partyForm.value.Name,
@@ -89,11 +99,14 @@ export class PartyListComponent {
         Salary: this.partyForm.value.Salary,
       };
       this.http.post(url, data).subscribe((response) => {
+        this.isLoading = false;
         this.modalService.dismissAll();
-        this.showAddToast = true;
+        this.toastService.show('Successfully.', { classname: 'bg-success text-center text-white', delay: 5000 });
+      
         this.ngOnInit();
       });
     } else {
+      this.isLoading = false;
       // Handle form validation errors here, e.g., display an error message.
     }
   }

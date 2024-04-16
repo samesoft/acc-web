@@ -19,7 +19,7 @@ export class AccountStatementComponent {
   totalCr: number = 0;
   balance: number = 0;
   p: number = 1;
-  loading=false
+  isLoading=false
   accountLoading=false
 
   constructor( public fb: UntypedFormBuilder, private http: HttpClient) {
@@ -56,21 +56,21 @@ export class AccountStatementComponent {
     if (this.form.invalid) {
       return;
     }
-    this.loading=true
+    this.isLoading=true
 
     const url = `${environment.url}transaction/account-statement`;
     this.http.post<any[]>(url, this.form.value).subscribe(
       (response) => {
         this.statements = response;
         this.calculateAnalytics();
-        this.loading=false
+        this.isLoading=false
         if(this.statements.length===0){
           alert('There are no account statements');
         }
       },
       (error) => {
         console.error(error);
-        this.loading=false
+        this.isLoading=false
         // this.toaster.error(error, 'Error');
       }
     );

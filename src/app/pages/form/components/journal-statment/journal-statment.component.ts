@@ -75,6 +75,8 @@ export class JournalStatmentComponent {
   journalStatementData: any[] = [];
   loading = false;
   editFormFieldValue: any;
+
+  isLoading = false;
   constructor(
     private http: HttpClient,
     private formBuilder: UntypedFormBuilder,
@@ -118,7 +120,7 @@ export class JournalStatmentComponent {
     );
   }
   getJournalStatementData(): void {
-    this.loading = true;
+    this.isLoading = true;
 
     const requestData = {
       from_date: this.journalStatementForm.value.fromDate,
@@ -133,7 +135,7 @@ export class JournalStatmentComponent {
       .subscribe((data) => {
         this.journalStatementData = data;
         console.log(data);
-        this.loading = false;
+        this.isLoading = false;
       });
   }
 

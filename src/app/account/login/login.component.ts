@@ -65,14 +65,14 @@ export class LoginComponent implements OnInit {
     // Login Api
     this.authenticationService.login(this.f['email'].value, this.f['password'].value).subscribe((data: any) => {
       if (data.success == true) {
-        // sessionStorage.setItem('toast', 'true');
+        sessionStorage.setItem('toast', 'true');
         // localStorage.setItem('token', JSON.stringify(data.data));
         // // sessionStorage.setItem('currentUser', JSON.stringify(data.data));
         // sessionStorage.setItem('token', data.data);
         // console.log(data.data)
         this.router.navigate(['/']);
       } else {
-        this.toastService.show(data.data, { classname: 'bg-danger text-white', delay: 15000 });
+        this.toastService.show(data.message, { classname: 'bg-danger text-white', delay: 15000 });
       }
     });
 

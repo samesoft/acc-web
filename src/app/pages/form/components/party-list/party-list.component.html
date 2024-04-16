@@ -51,7 +51,14 @@
                     </div>
 
                     <div class="table-responsive table-card mt-3 mb-1">
-                        <table class="table">
+                        <div *ngIf="isLoading">
+                            <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                              <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                            </div>
+                          </div>
+                        <table class="table" *ngIf="!isLoading">
                             <thead>
                                 <tr class="bg-light text-muted">
 
@@ -96,7 +103,7 @@
 
                             </tbody>
                         </table>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center" *ngIf="!isLoading">
                             <div class="text-sm-right float-sm-end listjs-pagination gap-2">
                                 <ngb-pagination [collectionSize]="parties.length" [(page)]="currentPage"
                                     [pageSize]="pageSize" (pageChange)="loadPage()">
@@ -188,7 +195,14 @@
     </div>
     <form [formGroup]="partyForm" class="tablelist-form" autocomplete="off">
         <div class="modal-body">
-
+            <!-- <div *ngIf="isLoading">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div> -->
+        
             <div class="mb-3">
                 <label for="phone-field" class="form-label">Name</label>
                 <input type="text" id="phone-field" class="form-control" placeholder="Enter Name" required
@@ -223,10 +237,10 @@
             </div>
         </div>
         <div class="modal-footer">
-            <div class="hstack gap-2 justify-content-end">
+            <div class="hstack gap-2 justify-content-end" [ngClass]="{ 'disabled': isLoading }">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal"
                     (click)="modal.close('Close click')">Close</button>
-                <button type="submit" class="btn btn-success" id="add-btn" (click)="createParty()">Save</button>
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="createParty()" [disabled]="isLoading">Save</button>
             </div>
         </div>
     </form>

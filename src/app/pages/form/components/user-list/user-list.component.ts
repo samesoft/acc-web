@@ -39,7 +39,7 @@ export class UserListComponent {
   userForm!: FormGroup;
   public showPassword: boolean = false;
 
-  loading = false;
+  isLoading = false;
   //new
   currentPage = 1;
   pageSize = 10;
@@ -74,10 +74,12 @@ export class UserListComponent {
   }
 
   getUser() {
+    this.isLoading = true; 
     this.userService.getAll().subscribe({
       next: (res) => {
         this.Users = res;
         console.log(this.Users);
+        this.isLoading = false;
       },
       error: (err) => {
         console.log(err);
@@ -108,11 +110,11 @@ export class UserListComponent {
   addUser() {
     this.userForm.markAllAsTouched();
     if (this.userForm.valid) {
-      this.loading = true;
+      this.isLoading = true;
       console.log("creating");
       this.userService.post(this.userForm.value).subscribe({
         next: (res) => {
-          this.loading = false;
+          this.isLoading = false;
           this.modalService.dismissAll();
           this.showAddToast = true;
           this.ngOnInit();
