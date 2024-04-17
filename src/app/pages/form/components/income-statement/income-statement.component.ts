@@ -17,21 +17,33 @@ export class IncomeStatementComponent {
   income: any[] = [];
   expense: any[] = [];
 
+  showBalanceSheet = false; // Flag for printing
+  isLoading = false;
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    const url = `${environment.url}transaction/income-statement`;
-    this.http.get<any>(url).subscribe((data) => {
-      console.log(data);
-      this.income = data.income;
-      this.expense = data.expense;
+    this.fetchData();
+    // const url = `${environment.url}transaction/income-statement`;
+    // this.http.get<any>(url).subscribe((data) => {
+    //   console.log(data);
+    //   this.income = data.income;
+    //   this.expense = data.expense;
 
-      console.log(this.income);
-      console.log(this.expense);
-    });
+    //   console.log(this.income);
+    //   console.log(this.expense);
+    // });
   }
 
-  showBalanceSheet = false; // Flag for printing
+  fetchData() {
+    this.isLoading = true;
+    const url = `${environment.url}transaction/income-statement`;
+    this.http.get<any>(url).subscribe((data) => {
+      this.income = data.income;
+      this.expense = data.expense;
+      this.isLoading = false;
+    });
+  }
 
   printReport() {
     this.showBalanceSheet = true; // Set flag to show text on print

@@ -94,3 +94,15 @@ li {
     display: block;
   }
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Adjust height as needed */
+}
+
+.fa-spinner {
+  font-size: 2em;
+  color: #ccc;
+}
