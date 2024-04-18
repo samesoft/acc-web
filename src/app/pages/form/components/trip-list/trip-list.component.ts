@@ -62,7 +62,7 @@ export class TripListComponent {
     this.TripForm = this.formBuilder.group({
       TID: [""],
       Status: ["", Validators.required],
-      Com_Date: [null, Validators.required],
+      Date_Finished: [null, Validators.required],
     });
   }
   fetchTripList(): void {
@@ -167,7 +167,7 @@ export class TripListComponent {
       const data = {
         TID: this.TripForm.value.TID,
         Status: this.TripForm.value.Status,
-        Date_Finished: this.TripForm.value.Com_Date,
+        Date_Finished: this.TripForm.value.Date_Finished,
       };
       this.http.post(url, data).subscribe((response) => {
         console.log(response);
@@ -185,12 +185,12 @@ export class TripListComponent {
 
     if (this.TripForm.valid) {
       const url = `${environment.url}trips/update-status`;
-      const formattedDate = this.formatDate(this.TripForm.value.Com_Date); // Format date before sending
+      // const formattedDate = this.formatDate(this.TripForm.value.Com_Date); // Format date before sending
 
       const data = {
         TID: this.TripForm.value.TID,
         Status: this.TripForm.value.Status,
-        Date_Finished: formattedDate
+        Date_Finished: this.TripForm.value.Date_Finished,
       };
 
       this.http.post(url, data).subscribe((response) => {
@@ -204,11 +204,11 @@ export class TripListComponent {
     }
   }
 
-  formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for single-digit months
-    const day = String(date.getDate()).padStart(2, '0'); // Add leading zero for single-digit days
+  // formatDate(date: Date): string {
+  //   const year = date.getFullYear();
+  //   const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for single-digit months
+  //   const day = String(date.getDate()).padStart(2, '0'); // Add leading zero for single-digit days
 
-    return `${year}-${month}-${day}`;
-  }
+  //   return `${year}-${month}-${day}`;
+  // }
 }
