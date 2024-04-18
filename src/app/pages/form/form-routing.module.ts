@@ -25,6 +25,7 @@ import { UserListComponent } from "./components/user-list/user-list.component";
 import { AccountListComponent } from "./components/account-list/account-list.component";
 import { ImportJournalComponent } from "./components/import-journal/import-journal.component";
 import { BalancesheetComponent } from "./components/balancesheet/balancesheet.component";
+import { TripListComponent } from "./components/trip-list/trip-list.component";
 
 const routes: Routes = [
   {
@@ -119,6 +120,10 @@ const routes: Routes = [
     path: "balancesheet",
     component: BalancesheetComponent,
   },
+  {
+    path: "trip",
+    component: TripListComponent,
+  }
 ];
 
 @NgModule({

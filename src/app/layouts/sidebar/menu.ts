@@ -161,4 +161,10 @@ export const MENU: MenuItem[] = [
       },
     ],
   },
+  {
+    id: 26,
+    label: "MENUITEMS.APPS.LIST.TRIP",
+    link: "forms/trip",
+    icon: "trip",
+  },
 ];

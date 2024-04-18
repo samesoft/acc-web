@@ -83,13 +83,15 @@
         <!-- end col -->
     </div>
 
-    <button *ngIf="transactions.length > 0" (click)="postTransactions()" class="btn btn-primary post-button">
-        {{ !isPosting ? 'Post Transaction' : 'Posting' }}
-      </button>
-
-      <ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
+    <ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
         <div class="toast-body">
             Transaction Imported successfully.
         </div>
     </ngb-toast>
+    
+    <button *ngIf="transactions.length > 0" (click)="postTransactions()" class="btn btn-primary post-button">
+        {{ !isPosting ? 'Post Transaction' : 'Posting' }}
+      </button>
+
+    
     

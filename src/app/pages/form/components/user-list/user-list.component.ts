@@ -23,7 +23,7 @@ export class UserListComponent {
   public page: any;
   public count = 6;
   submitted = false;
- 
+
   startIndex: number = 0;
   endIndex: number = 10;
   totalRecords: number = 0;
@@ -74,7 +74,7 @@ export class UserListComponent {
   }
 
   getUser() {
-    this.isLoading = true; 
+    this.isLoading = true;
     this.userService.getAll().subscribe({
       next: (res) => {
         this.Users = res;
@@ -133,10 +133,7 @@ export class UserListComponent {
     if (this.endIndex > this.totalRecords) {
       this.endIndex = this.totalRecords;
     }
-    this.paginationDatas = this.Users.slice(
-      this.startIndex - 1,
-      this.endIndex
-    );
+    this.paginationDatas = this.Users.slice(this.startIndex - 1, this.endIndex);
   }
 
   editModa(content: any, id: any) {

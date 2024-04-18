@@ -1,0 +1,177 @@
+<ngb-toast type="success" *ngIf="showEditToast" (hidden)="showEditToast = false">
+    <div class="toast-body">
+        Trip has been edited successfully.
+    </div>
+</ngb-toast>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Trip List</h4>
+            </div><!-- end card header -->
+            <div class="card-body">
+                <div id="customerList">
+                    <div class="row g-4 mb-3">
+                        <!-- <div class="col-sm-auto">
+                            <div class="d-flex gap-1">
+                                <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal"
+                                    id="create-btn" data-bs-target="#showModal" (click)="openModal(Add)"><i
+                                        class="ri-add-line align-bottom me-1"></i>
+                                    Add</button>
+
+                            </div>
+                        </div> -->
+
+                        <!-- <div class="col-sm">
+                            <div class="d-flex justify-content-sm-end">
+                                <div class="search-box ms-2">
+                                    <input type="text" class="form-control search" placeholder="Search...">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="table-responsive table-card mt-3 mb-1">
+                        <div *ngIf="isLoading">
+                            <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                                <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table" *ngIf="!isLoading">
+                            <thead>
+                                <tr class="bg-light text-muted">
+
+                                    <th>City_From</th>
+                                    <th>City_To</th>
+                                    <th>Bkg_Date</th>
+                                    <th>Cont_No</th>
+                                    <th>Dept_Date</th>
+                                    <th>Party</th>
+                                    <th>Rate</th>
+                                    <th>Status</th>
+                                    <th>Truck_No</th>
+                                    <th>User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let data of getVisibleSchedules(); ">
+
+
+                                    <!-- <th scope="row">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}" [(ngModel)]="data.state">
+                      </div>
+                    </th> -->
+                                    <td>{{ data.
+                                        City_From
+                                        }}</td>
+                                    <td>{{ data.
+                                        City_To }}</td>
+                                    <td>{{ data.Bkg_Date | date }}</td>
+                                    <td>{{ data.Cont_No }}</td>
+                                    <td>{{ data.Dept_Date | date }}</td>
+                                    <td>{{ getPartyName(data.Party_ID) }}</td>
+                                    <td>{{ data.Rate
+                                        }}</td>
+                                    <td>{{ data.Status }}</td>
+                                    <td>{{ data.Truck_No }}</td>
+                                    <td>{{ getUserName(data.UserID) }}</td>
+                                    <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
+                    </td> -->
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <div class="edit">
+                                                <button class="btn btn-sm btn-primary edit-item-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#showModal"
+                                                    (click)="editModal(content,data.TID)">Edit</button>
+                                            </div>
+                                            <!-- <div class="remove">
+                                              
+                                                <button class="btn btn-sm btn-success remove-item-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
+                                                    (click)="confirm(deleteModel,data.Party_ID)">Remove</button>
+                                            </div> -->
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-center" *ngIf="!isLoading">
+                            <div class="text-sm-right float-sm-end listjs-pagination gap-2">
+                                <ngb-pagination [collectionSize]="trips.length" [(page)]="currentPage"
+                                    [pageSize]="pageSize" (pageChange)="loadPage()">
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row justify-content-md-between align-items-md-center">
+              <div class="col col-sm-6">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{service.startIndex}} to
+                  {{service.endIndex}} of {{service.totalRecords}}
+                  entries
+                </div>
+              </div> -->
+                    <!-- Pagination -->
+                    <!-- <div class="col col-sm-6">
+                <div class="text-sm-right float-end listjs-pagination">
+                  <ngb-pagination [collectionSize]="(total | async)!" [(page)]="service.page"
+                    [pageSize]="service.pageSize">
+                  </ngb-pagination>
+                </div>
+              </div>
+            
+            </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content role="document" let-modal>
+    <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="exampleModalLabel">Trip</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+            (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form [formGroup]="TripForm" class="tablelist-form" autocomplete="off">
+        <div class="modal-body">
+
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Status</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone name" required
+                    formControlName="Status" [ngClass]="{ 'is-invalid': submitted && form['Status'].errors }" />
+                @if(submitted && form['Status'].errors){
+                <div class="invalid-feedback">
+                    @if(form['Status'].errors['required']){
+                    <span>Name is required</span>
+                    }
+                </div>}
+            </div>
+
+            <div class="mb-3">
+                <div class="mb-3">
+                    <label for="date-field" class="form-label">Joining Date</label>
+                    <input class="form-control flatpickr-input" type="text" mwlFlatpickr [altInput]="true"
+                        [convertModelValue]="true" formControlName="Com_Date"
+                        [ngClass]="{ 'is-invalid': submitted && form['Com_Date'].errors }">
+                    <div class="invalid-feedback">Please select a date.</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                    (click)="modal.close('Close click')">Close</button>
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="Edit()">Update</button>
+            </div>
+        </div>
+    </form>
+</ng-template>
