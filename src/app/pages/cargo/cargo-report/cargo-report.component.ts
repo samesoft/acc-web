@@ -96,6 +96,9 @@ export class CargoReportComponent {
   headers!: QueryList<NgbdOrdersSortableHeader>;
   editFormFieldValue: any;
   show = false;
+
+  isLoading = false;
+
   constructor(
     private modalService: NgbModal,
     // public service: OrdersService,
@@ -186,9 +189,11 @@ export class CargoReportComponent {
   }
 
   getData() {
+    this.isLoading = true;
     this.http.get<any[]>(`${environment.url}trips`).subscribe((data) => {
       this.trips = data;
       console.log(data);
+      this.isLoading = false;
     });
   }
 

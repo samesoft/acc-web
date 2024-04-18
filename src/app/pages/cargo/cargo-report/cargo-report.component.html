@@ -36,6 +36,7 @@
                   id="create-btn"
                   data-bs-target="#showModal"
                   (click)="openModal(Add)"
+                  *ngIf="!isLoading"
                 >
                   <i class="ri-add-line align-bottom me-1"></i> Add
                 </button>
@@ -43,78 +44,90 @@
             </div>
           </div>
 
-          <div class="table-responsive table-card mt-3 mb-1">
-            <table class="table">
-              <thead>
-                <tr class="bg-light text-muted">
-                  <th listsortable="customer_name">City From</th>
-                  <th listsortable="customer_name">City To</th>
-                  <th listsortable="customer_name">Cont_No</th>
-                  <!-- <th listsortable="email">Party</th> -->
-                  <th listsortable="status">Rate</th>
-                  <!-- <th listsortable="phone">Status</th> -->
-                  <th listsortable="status">Truck_No</th>
-                  <th listsortable="status">User</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- @for (data of trips; track $index) { -->
-                <tr *ngFor="let data of getVisibleCargoReport()">
-                  <td>{{ data.City_From }}</td>
-                  <td>{{ data.City_To }}</td>
-                  <td>{{ data.Cont_No }}</td>
-                  <!-- <td>{{ getPartyName(data.Party_ID) }}</td> -->
-                  <td>{{ data.Rate }}</td>
-                  <!-- <td>{{ data.Status }}</td> -->
-                  <td>{{ data.Truck_No }}</td>
-                  <td>{{ getUserName(data.UserID) }}</td>
-
-                  <td>
-                    <div class="d-flex gap-2">
-                      <div class="edit">
-                        <button
-                          class="btn btn-sm btn-primary edit-item-btn"
-                          data-bs-toggle="modal"
-                          data-bs-target="#showModal"
-                          (click)="editModa(content, data.TID)"
-                        >
-                          Edit
-                        </button>
-                      </div>
-
-                      <div
-                        class="remove"
-                        (click)="confirm(deleteModel, data.id)"
-                      >
-                        <button
-                          class="btn btn-sm btn-success remove-item-btn"
-                          data-bs-toggle="modal"
-                          data-bs-target="#deleteRecordModal"
-                          (click)="confirm(deleteModel, data.TID)"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <!-- } -->
-              </tbody>
-            </table>
-
-            <div class="d-flex justify-content-center">
-              <div class="text-sm-right float-sm-end listjs-pagination gap-2">
-                <ngb-pagination
-                  [collectionSize]="trips.length"
-                  [(page)]="currentPage"
-                  [pageSize]="pageSize"
-                  (pageChange)="loadPage()"
-                >
-                </ngb-pagination>
+          <div *ngIf="isLoading">
+            <div
+              class="d-flex justify-content-center align-items-center"
+              style="height: 200px"
+            >
+              <div
+                class="spinner-border"
+                role="status"
+                style="width: 3rem; height: 3rem"
+              >
+                <span class="visually-hidden">Loading...</span>
               </div>
             </div>
           </div>
+
+          <!-- <div class="table-responsive table-card mt-3 mb-1"> -->
+          <table class="table" *ngIf="!isLoading">
+            <thead>
+              <tr class="bg-light text-muted">
+                <th listsortable="customer_name">City From</th>
+                <th listsortable="customer_name">City To</th>
+                <th listsortable="customer_name">Cont_No</th>
+                <!-- <th listsortable="email">Party</th> -->
+                <th listsortable="status">Rate</th>
+                <!-- <th listsortable="phone">Status</th> -->
+                <th listsortable="status">Truck_No</th>
+                <th listsortable="status">User</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- @for (data of trips; track $index) { -->
+              <tr *ngFor="let data of getVisibleCargoReport()">
+                <td>{{ data.City_From }}</td>
+                <td>{{ data.City_To }}</td>
+                <td>{{ data.Cont_No }}</td>
+                <!-- <td>{{ getPartyName(data.Party_ID) }}</td> -->
+                <td>{{ data.Rate }}</td>
+                <!-- <td>{{ data.Status }}</td> -->
+                <td>{{ data.Truck_No }}</td>
+                <td>{{ getUserName(data.UserID) }}</td>
+
+                <td>
+                  <div class="d-flex gap-2">
+                    <div class="edit">
+                      <button
+                        class="btn btn-sm btn-primary edit-item-btn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#showModal"
+                        (click)="editModa(content, data.TID)"
+                      >
+                        Edit
+                      </button>
+                    </div>
+
+                    <div class="remove" (click)="confirm(deleteModel, data.id)">
+                      <button
+                        class="btn btn-sm btn-success remove-item-btn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteRecordModal"
+                        (click)="confirm(deleteModel, data.TID)"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <!-- } -->
+            </tbody>
+          </table>
+
+          <div class="d-flex justify-content-center" *ngIf="!isLoading">
+            <div class="text-sm-right float-sm-end listjs-pagination gap-2">
+              <ngb-pagination
+                [collectionSize]="trips.length"
+                [(page)]="currentPage"
+                [pageSize]="pageSize"
+                (pageChange)="loadPage()"
+              >
+              </ngb-pagination>
+            </div>
+          </div>
+          <!-- </div> -->
         </div>
       </div>
     </div>

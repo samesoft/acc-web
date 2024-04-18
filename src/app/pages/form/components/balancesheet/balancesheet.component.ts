@@ -15,19 +15,22 @@ export class BalancesheetComponent {
   liabilities: any[] = [];
   equity: any[] = [];
 
+  isLoading = false;
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    const url = `${environment.url}transaction/balance-sheet`;
-    this.http.get<any>(url).subscribe((data) => {
-      console.log(data);
-      this.assets = data.assets;
-      this.liabilities = data.liability;
-      this.equity = data.equity;
-      console.log(this.assets);
-      console.log(this.liabilities);
-      console.log(this.equity);
-    });
+    // const url = `${environment.url}transaction/balance-sheet`;
+    // this.http.get<any>(url).subscribe((data) => {
+    //   console.log(data);
+    //   this.assets = data.assets;
+    //   this.liabilities = data.liability;
+    //   this.equity = data.equity;
+    //   console.log(this.assets);
+    //   console.log(this.liabilities);
+    //   console.log(this.equity);
+    // });
+    this.fetchData();
   }
 
   showBalanceSheet = false; // Flag for printing
@@ -36,5 +39,16 @@ export class BalancesheetComponent {
     this.showBalanceSheet = true; // Set flag to show text on print
     window.print(); // Trigger printing
     this.showBalanceSheet = false; // Reset flag after printing
+  }
+
+  fetchData() {
+    this.isLoading = true;
+    const url = `${environment.url}transaction/balance-sheet`;
+    this.http.get<any>(url).subscribe((data) => {
+      this.assets = data.assets;
+      this.liabilities = data.liability;
+      this.equity = data.equity;
+      this.isLoading = false;
+    });
   }
 }
