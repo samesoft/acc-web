@@ -17,8 +17,7 @@ import { FlatpickrModule } from "angularx-flatpickr";
 @Component({
   selector: "app-trip-list",
   standalone: true,
-  imports: [CommonModule, NgbModule, ReactiveFormsModule,
-    FlatpickrModule],
+  imports: [CommonModule, NgbModule, ReactiveFormsModule, FlatpickrModule],
   templateUrl: "./trip-list.component.html",
   styleUrl: "./trip-list.component.scss",
 })
@@ -179,7 +178,7 @@ export class TripListComponent {
       // Handle form validation errors here, e.g., display an error message.
     }
   }
-  
+
   Edit(): void {
     this.TripForm.markAllAsTouched();
 
