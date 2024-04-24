@@ -88,18 +88,24 @@
         <!-- end col -->
     </div>
 
-     
-  <!-- <button *ngIf="Journals.length > 0" (click)="postTransactions()"  class="btn btn-primary">{{!isPosting?"Post Transaction":"Posting"}}</button> -->
-  <button *ngIf="Journals.length > 0" (click)="postTransactions()" class="btn btn-primary post-button">
-    {{ !isPosting ? 'Post Transaction' : 'Posting' }}
-  </button>
-    <!-- end row -->
-
-    <!-- [collectionSize]="schedules.length" -->
-
-    <ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
+    <button *ngIf="Journals.length > 0" (click)="postTransactions()" class="btn btn-primary post-button">
+        {{ !isPosting ? 'Post Transaction' : 'Posting' }}
+      </button>
+    
+    <div>
+      <ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
         <div class="toast-body">
             Journal Imported successfully.
         </div>
     </ngb-toast>
-    <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
+</div>
+   
+     
+  <!-- <button *ngIf="Journals.length > 0" (click)="postTransactions()"  class="btn btn-primary">{{!isPosting?"Post Transaction":"Posting"}}</button> -->
+  
+  
+    <!-- end row -->
+
+    <!-- [collectionSize]="schedules.length" -->
+
+    

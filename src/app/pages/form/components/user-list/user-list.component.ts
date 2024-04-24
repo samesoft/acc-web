@@ -23,7 +23,7 @@ export class UserListComponent {
   public page: any;
   public count = 6;
   submitted = false;
-
+  isPosting= false;
   startIndex: number = 0;
   endIndex: number = 10;
   totalRecords: number = 0;
@@ -111,12 +111,14 @@ export class UserListComponent {
     this.userForm.markAllAsTouched();
     if (this.userForm.valid) {
       this.isLoading = true;
+      this.isPosting= true;
       console.log("creating");
       this.userService.post(this.userForm.value).subscribe({
         next: (res) => {
           this.isLoading = false;
           this.modalService.dismissAll();
           this.showAddToast = true;
+          this.isPosting= false;
           this.ngOnInit();
           // this.toastr.success('User Added Successfully!');
           // this.router.navigate(['pages/users'])

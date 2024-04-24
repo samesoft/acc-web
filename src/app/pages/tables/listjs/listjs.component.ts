@@ -73,6 +73,7 @@ export class ListjsComponent {
   pageSize = 10;
   totalPages!: number;
   isLoading = false;
+  isPosting = false;
   showSuccessToast = false;
 
   // Table data
@@ -388,6 +389,7 @@ export class ListjsComponent {
   // }
 
   editSchedule(): void {
+    this.isPosting=true
     if (this.listJsForm.valid) {
       this.http
         .put<any>(`${environment.url}schedule/edit`, this.listJsForm.value)
@@ -397,6 +399,7 @@ export class ListjsComponent {
             // alert("succssfully edited");
             this.modalService.dismissAll();
             this.showSuccessToast = true;
+            this.isPosting= false;
             this.ngOnInit();
           },
           (error) => {

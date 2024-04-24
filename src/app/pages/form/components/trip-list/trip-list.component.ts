@@ -23,6 +23,7 @@ import { FlatpickrModule } from "angularx-flatpickr";
 })
 export class TripListComponent {
   isLoading = false;
+  isPosting= false;
   submitted = false;
   trips: any[] = [];
   users: any[] = [];
@@ -91,8 +92,8 @@ export class TripListComponent {
     return party ? party.Name : "Unknown";
   }
 
-  getUserName(UserId: string): string {
-    const user = this.users.find((p) => p.userId === UserId);
+  getUserName(Id: string): string {
+    const user = this.users.find((p) => p.userId === Id);
     return user ? user.fullName : "Unknown";
   }
   getVisibleSchedules(): any[] {
@@ -138,14 +139,14 @@ export class TripListComponent {
       this.rowData = listData[0];
       console.log(this.rowData);
       // Convert the date string to a JavaScript Date object
-      const formattedDate = new Date(this.rowData.Com_Date.substring(0, 10)); // Assuming YYYY-MM-DD format
+      // const formattedDate = new Date(this.rowData.Com_Date.substring(0, 10)); // Assuming YYYY-MM-DD format
 
-      // Use DatePipe to format the date for patching
-      const formattedDateString = this.datePipe.transform(
-        formattedDate,
-        "MM/dd/yyyy"
-      );
-      console.log(formattedDateString);
+      // // Use DatePipe to format the date for patching
+      // const formattedDateString = this.datePipe.transform(
+      //   formattedDate,
+      //   "MM/dd/yyyy"
+      // );
+      // console.log(formattedDateString);
       this.TripForm.patchValue({
         TID: this.rowData.TID,
         Status: this.rowData.Status,
@@ -183,19 +184,19 @@ export class TripListComponent {
     this.TripForm.markAllAsTouched();
 
     if (this.TripForm.valid) {
+      this.isPosting= true;
       const url = `${environment.url}trips/update-status`;
       // const formattedDate = this.formatDate(this.TripForm.value.Com_Date); // Format date before sending
-
       const data = {
         TID: this.TripForm.value.TID,
         Status: this.TripForm.value.Status,
         Date_Finished: this.TripForm.value.Date_Finished,
       };
-
       this.http.post(url, data).subscribe((response) => {
         console.log(response);
         this.modalService.dismissAll();
         this.showEditToast = true;
+        this.isPosting= false;
         this.ngOnInit();
       });
     } else {

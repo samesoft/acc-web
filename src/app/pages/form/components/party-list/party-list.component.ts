@@ -40,7 +40,7 @@ export class PartyListComponent {
   attributedata: any;
   existingData: any;
   fuzzyData: any;
-
+  isPosting = false;
   ListJsList!: Observable<ListJsModel[]>;
   // total: Observable<number>;
   partyTypes: string[] = ["Employee", "Customer", "Vendor"];
@@ -49,6 +49,7 @@ export class PartyListComponent {
   partyId: any;
 
   isLoading = false;
+
   //new
   currentPage = 1;
   pageSize = 10;
@@ -88,7 +89,7 @@ export class PartyListComponent {
   
 
   createParty(): void {
-    this.submitted = true;
+    this.isPosting = true;
     this.partyForm.markAllAsTouched();
     if (this.partyForm.valid) {
       this.isLoading = true;
@@ -102,7 +103,7 @@ export class PartyListComponent {
         this.isLoading = false;
         this.modalService.dismissAll();
         this.toastService.show('Successfully.', { classname: 'bg-success text-center text-white', delay: 5000 });
-      
+        this.isPosting=false
         this.ngOnInit();
       });
     } else {
@@ -118,6 +119,7 @@ export class PartyListComponent {
   }
 
   EditParty(): void {
+    this.isPosting = true;
     this.partyForm.markAllAsTouched();
     if (this.partyForm.valid) {
       const url = `${environment.url}party/edit`;
@@ -131,6 +133,7 @@ export class PartyListComponent {
         console.log(response);
         this.modalService.dismissAll();
         this.showEditToast = true;
+        this.isPosting= false;
         this.ngOnInit();
       });
     } else {

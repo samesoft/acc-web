@@ -233,9 +233,10 @@ export class ImportJournalComponent {
 
     this.http.post(url, this.Journals).subscribe(
       () => {
-        this.isPosting = false;
+      
         console.log("Data uploaded successfully");
         this.showAddToast = true;
+        this.isPosting = false;
         // this.router.navigate(['/pages'])
       }
       // (error) => {

@@ -146,7 +146,7 @@
 
             <div class="mb-3">
                 <label for="phone-field" class="form-label">Status</label>
-                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone name" required
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Status" required
                     formControlName="Status" [ngClass]="{ 'is-invalid': submitted && form['Status'].errors }" />
                 @if(submitted && form['Status'].errors){
                 <div class="invalid-feedback">
@@ -170,7 +170,7 @@
             <div class="hstack gap-2 justify-content-end">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal"
                     (click)="modal.close('Close click')">Close</button>
-                <button type="submit" class="btn btn-success" id="add-btn" (click)="Edit()">Update</button>
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="Edit()">{{ !isPosting ? 'Update' : 'Updating' }}</button>
             </div>
         </div>
     </form>
