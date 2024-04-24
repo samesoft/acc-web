@@ -150,30 +150,34 @@ export class AuthenticationService {
     return getFirebaseBackend()!.getAuthenticatedUser();
   }
 
-  loginWithRefreshToken(): Observable<any> {
+  loginWithRefreshToken(email: string, password: string): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', ' application/json');
-    // headers = headers.set('Accept', ' application/json');
-
-    // const refresh = {
-    //   'refresh_token': this.refreshToken
-    // }
-
-    // return this.http.post<EntityResponseType>(HttpApi.oauthRefreshToken, JSON.stringify(refresh), { headers })
-    //   .pipe(
-    //     map((response: any) => {
-    //       localStorage.setItem('token_response', JSON.stringify(response));
-    //       return response;
-    //     })
-    //   );
-    return this.http.post(HttpApi.oauthLogin, { headers })
+   
+    return this.http
+      .post(
+        AUTH_API + "user/login",
+        {
+          email,
+          password,
+        },
+      
+        
+        httpOptions
+      )
       .pipe(
         map((response: any) => {
+          // const user = response;
           sessionStorage.setItem('token', response.data);
+          // localStorage.setItem('token', JSON.stringify(response.data));
           return response;
+          
+        }),
+        catchError((error: any) => {
+          const errorMessage = "Login failed"; // Customize the error message as needed
+          return throwError(errorMessage);
         })
       );
-
   }
 
   /**

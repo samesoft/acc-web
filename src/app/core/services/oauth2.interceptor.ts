@@ -1,122 +1,122 @@
-import { Injectable } from "@angular/core";
-import {
-  HttpEvent,
-  HttpInterceptor,
-  HttpHandler,
-  HttpHeaders,
-  HttpRequest,
-  HttpErrorResponse,
-} from "@angular/common/http";
-import { Observable, BehaviorSubject, throwError } from "rxjs";
-import { catchError, finalize, switchMap, filter, take } from "rxjs/operators";
+// import { Injectable } from "@angular/core";
+// import {
+//   HttpEvent,
+//   HttpInterceptor,
+//   HttpHandler,
+//   HttpHeaders,
+//   HttpRequest,
+//   HttpErrorResponse,
+// } from "@angular/common/http";
+// import { Observable, BehaviorSubject, throwError } from "rxjs";
+// import { catchError, finalize, switchMap, filter, take } from "rxjs/operators";
 
 
 
-import { environment } from "src/environments/environment";
-import { ActivatedRoute } from "@angular/router";
-import { AuthenticationService } from "./auth.service";
-import { HttpApi } from "src/app/pages/form/components/service/http-api";
-// import { AuthService } from '../services/auth.service';
+// import { environment } from "src/environments/environment";
+// import { ActivatedRoute } from "@angular/router";
+// import { AuthenticationService } from "./auth.service";
+// import { HttpApi } from "src/app/pages/form/components/service/http-api";
+// // import { AuthService } from '../services/auth.service';
 
-@Injectable()
-export class Oauth2Interceptor implements HttpInterceptor {
-  refreshTokenInProgress!: boolean;
-  refreshTokenSubject: BehaviorSubject<boolean | null> = new BehaviorSubject<
-    boolean | null
-  >(null);
-  id: any = "100";
-  constructor(
-    private authService: AuthenticationService,
-    private route: ActivatedRoute
-  ) {}
+// @Injectable()
+// export class Oauth2Interceptor implements HttpInterceptor {
+//   refreshTokenInProgress!: boolean;
+//   refreshTokenSubject: BehaviorSubject<boolean | null> = new BehaviorSubject<
+//     boolean | null
+//   >(null);
+//   id: any = "100";
+//   constructor(
+//     private authService: AuthenticationService,
+//     private route: ActivatedRoute
+//   ) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    return next
-      .handle(this.performRequest(req))
-      .pipe(catchError((err) => this.processRequestError(err, req, next)));
-  }
-  private JsonApi(apiUrl: string): any {
-    var editAPi = apiUrl.substring(0, apiUrl.lastIndexOf("/") + 1);
-    // console.log(editAPi);
-    // console.log("editAPi");
-    // const blockedApiList = [
-    //   environment.host + HttpApi.membershipBaseUrl,
-    //   environment.host + HttpApi.membershipBaseUrl,
-    //   environment.host + HttpApi.tenant,
-    // ];
-    // return blockedApiList.includes(editAPi) ? false : true;
-  }
+//   intercept(
+//     req: HttpRequest<any>,
+//     next: HttpHandler
+//   ): Observable<HttpEvent<any>> {
+//     return next
+//       .handle(this.performRequest(req))
+//       .pipe(catchError((err) => this.processRequestError(err, req, next)));
+//   }
+//   private JsonApi(apiUrl: string): any {
+//     var editAPi = apiUrl.substring(0, apiUrl.lastIndexOf("/") + 1);
+//     // console.log(editAPi);
+//     // console.log("editAPi");
+//     // const blockedApiList = [
+//     //   environment.host + HttpApi.membershipBaseUrl,
+//     //   environment.host + HttpApi.membershipBaseUrl,
+//     //   environment.host + HttpApi.tenant,
+//     // ];
+//     // return blockedApiList.includes(editAPi) ? false : true;
+//   }
 
-  private performRequest(req: HttpRequest<any>): HttpRequest<any> {
-    let headers: HttpHeaders = req.headers;
+//   private performRequest(req: HttpRequest<any>): HttpRequest<any> {
+//     let headers: HttpHeaders = req.headers;
 
-    if (this.isAuthenticationRequired(req.url)) {
-      if (this.JsonApi(req.url)) {
-        headers = headers.set("Content-Type", " application/json");
-        headers = headers.set("Accept", " application/json");
-        headers = headers.set("Access-Control-Allow-Headers", "content-type");
-        // console.log("Json");
-      }
+//     if (this.isAuthenticationRequired(req.url)) {
+//       if (this.JsonApi(req.url)) {
+//         headers = headers.set("Content-Type", " application/json");
+//         headers = headers.set("Accept", " application/json");
+//         headers = headers.set("Access-Control-Allow-Headers", "content-type");
+//         // console.log("Json");
+//       }
 
-      headers = headers.set("Authorization", ` Bearer ${this.authService.accessToken}`);
-    }
+//       headers = headers.set("Authorization", ` Bearer ${this.authService.accessToken}`);
+//     }
 
-    return req.clone({ headers });
-  }
+//     return req.clone({ headers });
+//   }
 
-  private processRequestError(
-    error: HttpErrorResponse,
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    if (error.status === 401 && this.authService.isLogged()) {
-      return this.tryAgainWithRefresToken(req, next);
-    }
+//   private processRequestError(
+//     error: HttpErrorResponse,
+//     req: HttpRequest<any>,
+//     next: HttpHandler
+//   ): Observable<HttpEvent<any>> {
+//     if (error.status === 401 && this.authService.isLogged()) {
+//       return this.tryAgainWithRefresToken(req, next);
+//     }
 
-    return throwError(error);
-  }
+//     return throwError(error);
+//   }
 
-  // Helpers and Casuistics
-  private isAuthenticationRequired(apiUrl: string): boolean {
-    const blockedApiList = [HttpApi.oauthLogin];
-    return blockedApiList.includes(apiUrl) ? false : true;
-  }
+//   // Helpers and Casuistics
+//   private isAuthenticationRequired(apiUrl: string): boolean {
+//     const blockedApiList = [HttpApi.oauthLogin];
+//     return blockedApiList.includes(apiUrl) ? false : true;
+//   }
 
-  private tryAgainWithRefresToken(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<any> {
-    if (!this.refreshTokenInProgress) {
-      // Set the refreshToknSubject to null so that subsequent API calls will wait until the new token has been retrieved
-      this.refreshTokenSubject.next(null);
-      this.refreshTokenInProgress = true;
+//   private tryAgainWithRefresToken(
+//     req: HttpRequest<any>,
+//     next: HttpHandler
+//   ): Observable<any> {
+//     if (!this.refreshTokenInProgress) {
+//       // Set the refreshToknSubject to null so that subsequent API calls will wait until the new token has been retrieved
+//       this.refreshTokenSubject.next(null);
+//       this.refreshTokenInProgress = true;
 
-      return this.authService.loginWithRefreshToken().pipe(
-        switchMap((result) => {
-          if (result) {
-            this.refreshTokenSubject.next(result);
-            return next.handle(this.performRequest(req));
-          }
+//       return this.authService.loginWithRefreshToken().pipe(
+//         switchMap((result) => {
+//           if (result) {
+//             this.refreshTokenSubject.next(result);
+//             return next.handle(this.performRequest(req));
+//           }
 
-          throw new Error("Acceso denegado.");
-        }),
-        catchError((error) => {
-          this.authService.logout();
-          return throwError(error);
-        }),
-        finalize(() => {
-          this.refreshTokenInProgress = false;
-        })
-      );
-    } else {
-      return this.refreshTokenSubject.pipe(
-        filter((result) => result != null),
-        take(1),
-        switchMap(() => next.handle(this.performRequest(req)))
-      );
-    }
-  }
-}
+//           throw new Error("Acceso denegado.");
+//         }),
+//         catchError((error) => {
+//           this.authService.logout();
+//           return throwError(error);
+//         }),
+//         finalize(() => {
+//           this.refreshTokenInProgress = false;
+//         })
+//       );
+//     } else {
+//       return this.refreshTokenSubject.pipe(
+//         filter((result) => result != null),
+//         take(1),
+//         switchMap(() => next.handle(this.performRequest(req)))
+//       );
+//     }
+//   }
+// }
