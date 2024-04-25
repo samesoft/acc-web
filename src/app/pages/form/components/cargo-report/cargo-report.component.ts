@@ -1,49 +1,33 @@
-import { Component, QueryList, ViewChildren } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import {
+  ReactiveFormsModule,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from "@angular/forms";
 
-import { environment } from "src/environments/environment";
-import { HttpClient } from "@angular/common/http";
+import Swal from "sweetalert2";
 
+import { Component, Inject, QueryList, ViewChildren } from "@angular/core";
 import { DecimalPipe } from "@angular/common";
 import { Observable } from "rxjs";
 import { NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { NgbToast } from "@ng-bootstrap/ng-bootstrap";
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  FormArray,
-  Validators,
-  ReactiveFormsModule,
-} from "@angular/forms";
-
-// Sweet Alert
-import Swal from "sweetalert2";
-
-import {
-  FuzzyList,
-  dataattribute,
-  existingList,
-  paginationlist,
-} from "src/app/core/data";
-import { EditCargoComponent } from "../../cargo/edit-cargo/edit-cargo.component";
-import { MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
-import { CargoTableComponent } from "../../cargo/cargo-table/cargo-table.component";
-import { ToastService } from "../../icons/toast-service";
-import { ListJsModel } from "../../tables/listjs/listjs.model";
-import {
-  NgbdOrdersSortableHeader,
-  listSortEvent,
-} from "../../tables/listjs/listjs-sortable.directive";
-import { OrdersService } from "../../tables/listjs/listjs.service";
-import { userService } from "../../form/components/user-list/userManagment.service";
-import { AccountSubTypeService } from "../../form/components/service/accountSubType.service";
-
+import { HttpClient } from "@angular/common/http";
+import { MatDialog } from "@angular/material/dialog";
+import { ToastService } from "src/app/pages/icons/toast-service";
+import { environment } from "src/environments/environment";
+import { OrdersService } from "src/app/pages/tables/listjs/listjs.service";
+import { ListJsModel } from "src/app/pages/tables/listjs/listjs.model";
+import { NgbdOrdersSortableHeader } from "src/app/pages/tables/listjs/listjs-sortable.directive";
+import { AccountSubTypeService } from "../service/accountSubType.service";
+import { userService } from "../user-list/userManagment.service";
 @Component({
   selector: "app-cargo-report",
   standalone: true,
   imports: [CommonModule, NgbModule, ReactiveFormsModule],
   templateUrl: "./cargo-report.component.html",
   styleUrl: "./cargo-report.component.scss",
+  providers: [OrdersService, DecimalPipe],
 })
 export class CargoReportComponent {
   trips: any[] = [];
@@ -153,32 +137,7 @@ export class CargoReportComponent {
       Truck_No: ["", [Validators.required]],
       UserID: ["", [Validators.required]],
     });
-
-    /**
-     * fetches data
-     */
-    this.ListJsList.subscribe((x) => {
-      this.ListJsDatas = Object.assign([], x);
-    });
-
-    this.attributedata = dataattribute;
-    this.existingData = existingList;
-    this.fuzzyData = FuzzyList;
-
-    this.paginationDatas = paginationlist;
-    this.totalRecords = this.paginationDatas.length;
-
-    this.startIndex = (this.page - 1) * this.pageSize + 1;
-    this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
-    if (this.endIndex > this.totalRecords) {
-      this.endIndex = this.totalRecords;
-    }
-    this.paginationDatas = paginationlist.slice(
-      this.startIndex - 1,
-      this.endIndex
-    );
   }
-
   /**
    * Open modal
    * @param content modal content
@@ -188,7 +147,7 @@ export class CargoReportComponent {
     this.modalService.open(content, { size: "md", centered: true });
   }
 
-  getData() {
+  getData(): void {
     this.isLoading = true;
     this.http.get<any[]>(`${environment.url}trips`).subscribe((data) => {
       this.trips = data;

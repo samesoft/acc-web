@@ -26,6 +26,8 @@ import { AccountListComponent } from "./components/account-list/account-list.com
 import { ImportJournalComponent } from "./components/import-journal/import-journal.component";
 import { BalancesheetComponent } from "./components/balancesheet/balancesheet.component";
 import { TripListComponent } from "./components/trip-list/trip-list.component";
+import { ScheduleListComponent } from "./components/schedule-list/schedule-list.component";
+import { CargoReportComponent } from "./components/cargo-report/cargo-report.component";
 
 const routes: Routes = [
   {
@@ -123,7 +125,16 @@ const routes: Routes = [
   {
     path: "trip",
     component: TripListComponent,
-  }
+  },
+
+  {
+    path: "schedule-list",
+    component: ScheduleListComponent,
+  },
+  {
+    path: "cargo-report",
+    component: CargoReportComponent,
+  },
 ];
 
 @NgModule({

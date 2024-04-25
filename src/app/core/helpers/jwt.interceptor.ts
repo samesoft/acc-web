@@ -67,7 +67,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
       headers = headers.set(
         "Authorization",
-        ` Bearer ${this.authenticationService.accessToken}`
+        `Bearer ${sessionStorage.getItem("token")}`
       );
     }
 

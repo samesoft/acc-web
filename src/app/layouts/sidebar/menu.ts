@@ -24,13 +24,13 @@ export const MENU: MenuItem[] = [
       {
         id: 5,
         label: "MENUITEMS.APPS.LIST.CARGOSCHEUDLE",
-        link: "tables/listjs",
+        link: "forms/schedule-list",
         parentId: 4,
       },
       {
         id: 6,
         label: "MENUITEMS.APPS.LIST.CARGOREPORT",
-        link: "cargo/cargoreport",
+        link: "forms/cargo-report",
         parentId: 4,
       },
     ],

@@ -1,46 +1,40 @@
-import { Component, Inject, QueryList, ViewChildren } from "@angular/core";
-import { DecimalPipe } from "@angular/common";
-import { Observable } from "rxjs";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgbToast } from "@ng-bootstrap/ng-bootstrap";
+import { CommonModule } from "@angular/common";
 import {
+  ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormGroup,
-  FormArray,
   Validators,
 } from "@angular/forms";
 
-// Sweet Alert
 import Swal from "sweetalert2";
 
-import { ListJsModel, paginationModel, scheduleModel } from "./listjs.model";
+import { Component, Inject, QueryList, ViewChildren } from "@angular/core";
+import { DecimalPipe } from "@angular/common";
+import { Observable } from "rxjs";
+import { NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import {
-  FuzzyList,
-  dataattribute,
-  existingList,
-  paginationlist,
-} from "src/app/core/data";
-import { OrdersService } from "./listjs.service";
+  ListJsModel,
+  scheduleModel,
+} from "src/app/pages/tables/listjs/listjs.model";
 import {
   NgbdOrdersSortableHeader,
   listSortEvent,
-} from "./listjs-sortable.directive";
-import { environment } from "src/environments/environment";
+} from "src/app/pages/tables/listjs/listjs-sortable.directive";
+import { OrdersService } from "src/app/pages/tables/listjs/listjs.service";
 import { HttpClient } from "@angular/common/http";
-import { MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
-import { ToastService } from "../../icons/toast-service";
+import { MatDialog } from "@angular/material/dialog";
+import { ToastService } from "src/app/pages/icons/toast-service";
+import { environment } from "src/environments/environment";
 
 @Component({
-  selector: "app-listjs",
-  templateUrl: "./listjs.component.html",
-  styleUrls: ["./listjs.component.scss"],
+  selector: "app-schedule-list",
+  standalone: true,
+  imports: [CommonModule, NgbModule, ReactiveFormsModule],
+  templateUrl: "./schedule-list.component.html",
+  styleUrl: "./schedule-list.component.scss",
   providers: [OrdersService, DecimalPipe],
 })
-
-/**
- * Listjs table Component
- */
-export class ListjsComponent {
+export class ScheduleListComponent {
   // bread crumb items
   breadCrumbItems!: Array<{}>;
   submitted = false;
