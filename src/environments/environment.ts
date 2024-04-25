@@ -4,18 +4,21 @@
 
 export const environment = {
   production: true,
-  url: 'https://acc-api.samesoft.app/',
-  defaultauth: 'https://acc-api.samesoft.app/',
+  url: "http://hayat-api.samesoft.app/",
+  defaultauth: "http://hayat-api.samesoft.app/",
+  // production: true,
+  // url: 'https://acc-api.samesoft.app/',
+  // defaultauth: 'https://acc-api.samesoft.app/',
   firebaseConfig: {
-    apiKey: '',
-    authDomain: '',
-    databaseURL: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: '',
-    appId: '',
-    measurementId: ''
-  }
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: "",
+  },
 };
 
 /*
