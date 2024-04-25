@@ -398,7 +398,7 @@
           id="add-btn"
           (click)="createCargo()"
         >
-          Save
+        {{ !isPosting ? 'Save' : 'Saving' }}
         </button>
       </div>
     </div>
