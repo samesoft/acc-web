@@ -80,7 +80,7 @@ export class CargoReportComponent {
   headers!: QueryList<NgbdOrdersSortableHeader>;
   editFormFieldValue: any;
   show = false;
-
+  isPosting = false;
   isLoading = false;
 
   constructor(
@@ -219,12 +219,14 @@ export class CargoReportComponent {
   // }
 
   saveCargo() {
+    this.isPosting = true;
     if (this.cargoForm.valid) {
       const formData = this.cargoForm.value;
 
       this.http.post<any>(`${environment.url}trips/create`, formData).subscribe(
         (data) => {
           console.log(data);
+          this.isPosting = false;
           // ... your success logic
         },
         (error) => {
@@ -341,6 +343,7 @@ export class CargoReportComponent {
   }
 
   createCargo(): void {
+    this.isPosting = true;
     this.cargoForm.markAllAsTouched();
     if (this.cargoForm.valid) {
       const url = `${environment.url}trips/create `;
@@ -358,6 +361,7 @@ export class CargoReportComponent {
       this.http.post(url, data).subscribe((response) => {
         this.modalService.dismissAll();
         this.showAddToast = true;
+        this.isPosting = false;
         this.ngOnInit();
       });
     } else {
