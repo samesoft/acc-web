@@ -16,6 +16,7 @@ import {
 import { LoginForm } from "../models/LoginForms";
 import { Account } from "src/app/account/login/login.model";
 import { HttpApi } from "src/app/pages/form/components/service/http-api";
+import { Router } from "@angular/router";
 const AUTH_API = GlobalComponent.AUTH_API;
 export type EntityResponseType = HttpResponse<Account>;
 const httpOptions = {
@@ -34,7 +35,7 @@ export class AuthenticationService {
   // private currentUserSubject: BehaviorSubject<User>;
   // public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient, private store: Store) {
+  constructor(private http: HttpClient, private store: Store,  private router: Router,) {
     // this.currentUserSubject = new BehaviorSubject<User>(
     //   JSON.parse(sessionStorage.getItem("currentUser")!)
     // );
@@ -52,12 +53,7 @@ export class AuthenticationService {
     password: string,
     roleId: string
   ) {
-    // return getFirebaseBackend()!.registerUser(email, password).then((response: any) => {
-    //     const user = response;
-    //     return user;
-    // });
-
-    // Register Api
+   
     return this.http
       .post(
         AUTH_API + "user/register  ",
@@ -72,7 +68,9 @@ export class AuthenticationService {
       .pipe(
         map((response: any) => {
           const user = response;
-          return user;
+          // return user;
+          this.router.navigate(['/auth/login']); // Navigate to login page
+        return user;
         }),
         catchError((error: any) => {
           const errorMessage = "Login failed"; // Customize the error message as needed
