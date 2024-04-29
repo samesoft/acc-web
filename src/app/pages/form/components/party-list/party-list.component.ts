@@ -54,7 +54,7 @@ export class PartyListComponent {
   currentPage = 1;
   pageSize = 10;
   totalPages!: number;
-  
+
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
@@ -78,15 +78,12 @@ export class PartyListComponent {
   fetchPartyList(): void {
     this.isLoading = true;
     // setTimeout(() => {
-      this.http.get<any[]>(`${environment.url}party/list`).subscribe((data) => {
-        this.parties = data;
-        console.log(data);
-        this.isLoading = false;
-      });
-      // Set loading flag to false after data arrives
-    }
-  
-  
+    this.http.get<any[]>(`${environment.url}party/list`).subscribe((data) => {
+      this.parties = data;
+      console.log(data);
+      this.isLoading = false;
+    });
+  }
 
   createParty(): void {
     this.isPosting = true;
@@ -102,19 +99,20 @@ export class PartyListComponent {
       this.http.post(url, data).subscribe((response) => {
         this.isLoading = false;
         this.modalService.dismissAll();
-        this.toastService.show('Successfully.', { classname: 'bg-success text-center text-white', delay: 5000 });
-        this.isPosting=false
+        this.toastService.show("Successfully.", {
+          classname: "bg-success text-center text-white",
+          delay: 5000,
+        });
+        this.isPosting = false;
         this.ngOnInit();
       });
     } else {
       this.isLoading = false;
-      // Handle form validation errors here, e.g., display an error message.
     }
   }
   party: any;
   confirm(party: any, id: any) {
     this.party = id;
-
     this.modalService.open(party, { centered: true });
   }
 
@@ -133,7 +131,7 @@ export class PartyListComponent {
         console.log(response);
         this.modalService.dismissAll();
         this.showEditToast = true;
-        this.isPosting= false;
+        this.isPosting = false;
         this.ngOnInit();
       });
     } else {
@@ -184,12 +182,10 @@ export class PartyListComponent {
       var listData = this.parties.filter(
         (data: { Party_ID: any }) => data.Party_ID === party
       );
-
       if (listData.length > 0) {
         const rowData = listData[0];
         const editFormFieldValue = rowData.Party_ID;
         console.log(editFormFieldValue);
-
         this.partyId = editFormFieldValue;
         console.log(this.partyId);
         this.service.delete(this.partyId).subscribe((response) => {
@@ -204,13 +200,15 @@ export class PartyListComponent {
       }
     }
   }
-
   loadPage() {
     this.startIndex = (this.page - 1) * this.pageSize + 1;
     this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
     if (this.endIndex > this.totalRecords) {
       this.endIndex = this.totalRecords;
     }
-    this.paginationDatas = this.parties.slice(this.startIndex - 1, this.endIndex);
+    this.paginationDatas = this.parties.slice(
+      this.startIndex - 1,
+      this.endIndex
+    );
   }
 }

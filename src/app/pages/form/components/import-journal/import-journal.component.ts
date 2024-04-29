@@ -57,7 +57,8 @@ export class ImportJournalComponent {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private service: JournalService
+    private service: JournalService,
+
   ) {}
 
   FileChange(event: any) {
@@ -237,7 +238,7 @@ export class ImportJournalComponent {
         console.log("Data uploaded successfully");
         this.showAddToast = true;
         this.isPosting = false;
-        // this.router.navigate(['/pages'])
+        this.router.navigate(['/'])
       }
       // (error) => {
       //   this.isPosting=false

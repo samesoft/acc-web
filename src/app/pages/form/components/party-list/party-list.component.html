@@ -53,11 +53,11 @@
                     <div class="table-responsive table-card mt-3 mb-1">
                         <div *ngIf="isLoading">
                             <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
-                              <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
-                                <span class="visually-hidden">Loading...</span>
-                              </div>
+                                <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </div>
-                          </div>
+                        </div>
                         <table class="table" *ngIf="!isLoading">
                             <thead>
                                 <tr class="bg-light text-muted">
@@ -134,9 +134,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
 
 
@@ -167,7 +165,6 @@
                 <select id="Party_ID" formControlName="Party_Type" class="form-control">
                     <option *ngFor="let type of partyTypes" [value]="type">{{ type}}</option>
                 </select>
-
             </div>
 
             <div class="mb-3">
@@ -181,7 +178,8 @@
             <div class="hstack gap-2 justify-content-end">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal"
                     (click)="modal.close('Close click')">Close</button>
-                <button type="submit" class="btn btn-success" id="add-btn" (click)="EditParty()">{{ !isPosting ? 'Update' : 'Updating' }}</button>
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="EditParty()">{{ !isPosting ?
+                    'Update' : 'Updating' }}</button>
             </div>
         </div>
     </form>
@@ -202,7 +200,7 @@
                     </div>
                 </div>
             </div> -->
-        
+
             <div class="mb-3">
                 <label for="phone-field" class="form-label">Name</label>
                 <input type="text" id="phone-field" class="form-control" placeholder="Enter Name" required
@@ -226,7 +224,6 @@
                     <span>Party is required</span>
                     }
                 </div>}
-
             </div>
 
             <div class="mb-3">
@@ -240,7 +237,8 @@
             <div class="hstack gap-2 justify-content-end" [ngClass]="{ 'disabled': isLoading }">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal"
                     (click)="modal.close('Close click')">Close</button>
-                <button type="submit" class="btn btn-success" id="add-btn" (click)="createParty()" [disabled]="isLoading"> {{ !isPosting ? 'Save' : 'Saving' }}</button>
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="createParty()"
+                    [disabled]="isLoading"> {{ !isPosting ? 'Save' : 'Saving' }}</button>
             </div>
         </div>
     </form>
@@ -265,7 +263,6 @@
                 <button type="button" class="btn w-sm btn-danger" id="delete-product"
                     (click)="modal?.close('Close click')" (click)="delete(party)">Yes, Delete It!</button>
             </div>
-
         </div>
     </div>
 </ng-template>
