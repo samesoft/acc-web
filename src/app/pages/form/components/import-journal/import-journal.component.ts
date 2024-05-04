@@ -177,7 +177,7 @@ export class ImportJournalComponent {
           Dr_Party_Name: transactionData[4],
           Amount: transactionData[5],
           Journal_Type: transactionData[6], // Set PartyName to null if it is blank
-          Journal_Descripition: transactionData[7],
+          Journal_Description: transactionData[7],
           Cr_Account_Name: transactionData[8],
           Cr_Tran_Type: transactionData[9],
           Cr_Note: transactionData[10],
@@ -215,7 +215,7 @@ export class ImportJournalComponent {
           Dr_Party_Name: transactionData[4],
           Amount: transactionData[5],
           Journal_Type: transactionData[6], // Set PartyName to null if it is blank
-          Journal_Descripition: transactionData[7],
+          Journal_Description: transactionData[7],
           Cr_Account_Name: transactionData[8],
           Cr_Tran_Type: transactionData[9],
           Cr_Note: transactionData[10],
@@ -256,7 +256,7 @@ interface Journal {
   Dr_Party_Name: string;
   Amount: number;
   Journal_Type: string;
-  Journal_Descripition: string;
+  Journal_Description: string;
   Cr_Account_Name: string;
   Cr_Tran_Type: string;
   Cr_Note: string;

@@ -1,128 +1,127 @@
 <h2>Account Statement</h2>
 <div class="live-preview">
-    <form [formGroup]="form" class="row g-3">
-              <div class="col-md-4">
-                <label for="Account_Code">Account:</label>
-                <select id="Account_Code" formControlName="Account_Code" class="form-control">
-                  <option *ngFor="let account of accounts" [value]="account.Account_code">{{ account.Account_Name}}</option>
-                </select>
-               
-              </div>
-              <div class="col-md-4">
-                <label for="exampleInputdate" class="form-label">From Date:</label>
-                <input type="date" class="form-control" id="exampleInputdate" formControlName="From">
-              </div>
-              <div class="col-md-4">
-                <label for="exampleInputdate" class="form-label">To Date:</label>
-                <input type="date" class="form-control" id="exampleInputdate" formControlName="To">
-              </div>
+  <form [formGroup]="form" class="row g-3">
+    <div class="col-md-4">
+      <label for="Account_Code">Account:</label>
+      <select id="Account_Code" formControlName="Account_Code" class="form-control">
+        <option *ngFor="let account of accounts" [value]="account.Account_code">{{ account.Account_Name}}</option>
+      </select>
 
-          
-              <div class="col-12">
-                <button class="btn btn-primary"  type="submit" (click)="fetchStatements()">Get Statement</button>
-            </div>
-        <!-- <div class="row">
+    </div>
+    <div class="col-md-4">
+      <label for="exampleInputdate" class="form-label">From Date:</label>
+      <input type="date" class="form-control" id="exampleInputdate" formControlName="From">
+    </div>
+    <div class="col-md-4">
+      <label for="exampleInputdate" class="form-label">To Date:</label>
+      <input type="date" class="form-control" id="exampleInputdate" formControlName="To">
+    </div>
+
+
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit" (click)="fetchStatements()">Get Statement</button>
+    </div>
+    <!-- <div class="row">
             <div class="col-xxl-6 col-md-6">
                 <button class="btn btn-primary btn-border" (click)="fetchStatements()" >Get Statement</button>
             </div>
         </div> -->
-      
-        
-      </form>
-      <div *ngIf="isLoading">
-        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
-          <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
 
-      <div class="row" *ngIf="statements.length > 0 && !isLoading">
-        <div class="col-lg-12">
-          <div class="card">
-            
-      
-            <div class="card-body">
-              <div id="customerList">
-                <div class="row g-4 mb-3">
-      
-                <div class="table-responsive table-card mt-3 mb-1">
-                  <table class="table">
-                    <thead>
-                      <tr class="bg-light text-muted">
-      
-                        <th class="sort" listsortable="customer_name" >Tran_Date</th>
-                        <th class="sort" listsortable="email" >Memo</th>
-                        <th class="sort" listsortable="phone" >Dr</th>
-                        <th class="sort" listsortable="date" >Cr</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (statement of statements; track $index) {
-                      <tr>
-                        <!-- <th scope="row">
+
+  </form>
+  <div *ngIf="isLoading">
+    <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+      <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="statements.length > 0 && !isLoading">
+    <div class="col-lg-12">
+      <div class="card">
+
+
+        <div class="card-body">
+          <div id="customerList">
+            <div class="row g-4 mb-3">
+
+              <div class="table-responsive table-card mt-3 mb-1">
+                <table class="table">
+                  <thead>
+                    <tr class="bg-light text-muted">
+
+                      <th class="sort" listsortable="customer_name">Tran_Date</th>
+                      <th class="sort" listsortable="email">Memo</th>
+                      <th class="sort" listsortable="phone">Dr</th>
+                      <th class="sort" listsortable="date">Cr</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (statement of statements; track $index) {
+                    <tr>
+                      <!-- <th scope="row">
                           <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}" [(ngModel)]="data.state">
                           </div>
                         </th> -->
-                        <td>{{ statement.Tran_Date }}</td>
-                        <td>{{ statement.Memo }}</td>
-                        <td>{{ statement.Dr }}</td>
-                        <td>{{ statement.Cr }}</td>
-                       
-                        <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
+                      <td>{{ statement.Tran_Date }}</td>
+                      <td>{{ statement.Memo }}</td>
+                      <td>{{ statement.Dr }}</td>
+                      <td>{{ statement.Cr }}</td>
+
+                      <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
                         </td> -->
-                        <td>
-                          
-                        </td>
-                      </tr>
-                      }
-                    </tbody>
-                  </table>
-                </div>
-                <div class="row" *ngIf="statements.length>0">
-                    <div class="col-lg-12">
-                      <div class="card">
-                        <div class="card-header">
-                          <h4 class="card-title mb-0">Total</h4>
-                        </div><!-- end card header -->
-                  
-                        <div class="card-body">
-                          <div id="customerList">
-                            <div class="row g-4 mb-3">
-                  
-                            <div class="table-responsive table-card mt-3 mb-1">
-                              <table class="table">
-                                <thead>
-                                  <tr class="bg-light text-muted">
-                  
-                                    <th class="sort" listsortable="customer_name" >Total Dr</th>
-                                    <th class="sort" listsortable="email" >Total Cr</th>
-                                    <th class="sort" listsortable="phone" >Balance</th>
-                                  
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <!-- @for (statement of statements; track $index) { -->
-                                  <tr>
-                                    <!-- <th scope="row">
+                      <td>
+
+                      </td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+              <div class="row" *ngIf="statements.length>0">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title mb-0">Total</h4>
+                    </div><!-- end card header -->
+
+                    <div class="card-body">
+                      <div id="customerList">
+                        <div class="row g-4 mb-3">
+
+                          <div class="table-responsive table-card mt-3 mb-1">
+                            <table class="table">
+                              <thead>
+                                <tr class="bg-light text-muted">
+
+                                  <th class="sort" listsortable="customer_name">Total Dr</th>
+                                  <th class="sort" listsortable="email">Total Cr</th>
+                                  <th class="sort" listsortable="phone">Balance</th>
+
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <!-- @for (statement of statements; track $index) { -->
+                                <tr>
+                                  <!-- <th scope="row">
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}" [(ngModel)]="data.state">
                                       </div>
                                     </th> -->
-                                    <td>{{ totalDr }}</td>
-                                    <td>{{ totalCr }}</td>
-                                    <td>{{ balance}}</td>
-                                    
-                                   
-                                    <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
+                                  <td>{{ totalDr }}</td>
+                                  <td>{{ totalCr }}</td>
+                                  <td>{{ balance}}</td>
+
+
+                                  <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
                                     </td> -->
-                                    <td>
-                                      
-                                    </td>
-                                  </tr>
-                                  
-                                </tbody>
-                              </table>
-                            </div>
-      
+                                  <td>
+
+                                  </td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+                          </div>
