@@ -17,13 +17,13 @@ import { AccountSubTypeService } from "../service/accountSubType.service";
 import { ToastService } from "src/app/pages/icons/toast-service";
 
 @Component({
-  selector: "app-property-type",
+  selector: "app-property-usage",
   standalone: true,
   imports: [CommonModule, NgbModule, ReactiveFormsModule],
-  templateUrl: "./property-type.component.html",
-  styleUrl: "./property-type.component.scss",
+  templateUrl: "./property-usage.component.html",
+  styleUrl: "./property-usage.component.scss",
 })
-export class PropertyTypeComponent {
+export class PropertyUsageComponent {
   propertys: any[] = [];
   propertyForm!: FormGroup;
   submitted = false;
@@ -69,7 +69,7 @@ export class PropertyTypeComponent {
   ngOnInit(): void {
     this.propertyForm = this.formBuilder.group({
       id: [""],
-      Property_Type: ["", Validators.required],
+      usage: ["", Validators.required],
     });
 
     this.fetchPropertyList();
@@ -85,7 +85,7 @@ export class PropertyTypeComponent {
     });
   }
 
-  createProperty(): void {
+  createPropertyUsage(): void {
     this.isPosting = true;
     this.submitted = true;
     this.propertyForm.markAllAsTouched();
@@ -116,7 +116,7 @@ export class PropertyTypeComponent {
     this.modalService.open(property, { centered: true });
   }
 
-  EditProperty(): void {
+  EditPropertyUsage(): void {
     this.isPosting = true;
     this.submitted = true;
     this.propertyForm.markAllAsTouched();
@@ -198,11 +198,13 @@ export class PropertyTypeComponent {
 
         this.property = editFormFieldValue;
         console.log(this.property);
-        this.service.deleteProperty(this.property).subscribe((response) => {
-          this.modalService.dismissAll();
-          this.showSuccessToast = true;
-          this.ngOnInit();
-        });
+        this.service
+          .deletePropertyUsage(this.property)
+          .subscribe((response) => {
+            this.modalService.dismissAll();
+            this.showSuccessToast = true;
+            this.ngOnInit();
+          });
       } else {
         this.checkedValGet.forEach((item: any) => {
           document.getElementById("lj_" + item)?.remove();
