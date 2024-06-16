@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 export class SubdistrictComponent {
   SubDistrictForm!: FormGroup;
   districties: any[] = [];
+  Subdistricties: any[] = [];
   isLoading = false;
   submitted = false;
   isPosting = false;
@@ -46,16 +47,27 @@ export class SubdistrictComponent {
   ngOnInit(): void {
     this.SubDistrictForm = this.formBuilder.group({
       Sub_District: ["", Validators.required],
+      DistrictID: ["", Validators.required]
     });
 
     this.fetchDistricList();
+    this.fetchSubDistrictList();
   }
 
   fetchDistricList(): void {
     this.isLoading = true;
     // setTimeout(() => {
-    this.http.get<any[]>(`${environment.url}district`).subscribe((data) => {
+    this.http.get<any[]>(`${environment.url}subDistrict`).subscribe((data) => {
       this.districties = data;
+      console.log(data);
+      this.isLoading = false;
+    });
+  }
+  fetchSubDistrictList(): void {
+    this.isLoading = true;
+    // setTimeout(() => {
+    this.http.get<any[]>(`${environment.url}subDistrict`).subscribe((data) => {
+      this.Subdistricties = data;
       console.log(data);
       this.isLoading = false;
     });
@@ -66,10 +78,10 @@ export class SubdistrictComponent {
     this.SubDistrictForm.markAllAsTouched();
     if (this.SubDistrictForm.valid) {
       this.isLoading = true;
-      const url = `${environment.url}district`;
+      const url = `${environment.url}subDistrict`;
       const data = {
         Sub_District: this.SubDistrictForm.value.Sub_District,
-       
+        DistrictID: this.SubDistrictForm.value.DistrictID
       };
       this.http.post(url, data).subscribe((response) => {
         this.isLoading = false;

@@ -2,6 +2,7 @@ export class HttpApi {
   static oauthLogin = "user/login";
   static subType = "accountsubtypes/";
   static Type = "accounttype/";
+  static GetSubdistrictByDistrict= "subDistrict/"
   static tenant = "tenants/";
   static accountclass = "accountclasses/";
   static account = "accounts/";

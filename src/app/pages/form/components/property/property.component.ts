@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from 'src/app/pages/icons/toast-service';
 import { environment } from 'src/environments/environment';
+import { AccountSubTypeService } from '../service/accountSubType.service';
 
 @Component({
   selector: 'app-property',
@@ -16,7 +17,11 @@ import { environment } from 'src/environments/environment';
 })
 export class PropertyComponent {
   PropertyForm!: FormGroup;
-  districties: any[] = [];
+  properties: any[] = [];
+  propertyType: any[]= [];
+  propertyUsage: any[]= [];
+  district: any[]= [];
+  subdistrict: any[]= [];
   partyTypes: string[] = ["Employee", "Customer", "Vendor"];
   isLoading = false;
   submitted = false;
@@ -42,7 +47,8 @@ export class PropertyComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private modalService: NgbModal,
-    public toastService: ToastService
+    public toastService: ToastService,
+    public service : AccountSubTypeService
   ) {}
 
   ngOnInit(): void {
@@ -69,17 +75,69 @@ export class PropertyComponent {
     });
 
    
-    this.fetchDistricList();
+    this.fetchPropertyList();
+    this.fetchPropertyTypeList();
+    this.fetchPropertyUsageList();
+    this.fetchDistrictList();
+    this.fetchSubdistrictList();
+
   }
 
-  fetchDistricList(): void {
+  fetchPropertyList(): void {
     this.isLoading = true;
     // setTimeout(() => {
-    this.http.get<any[]>(`${environment.url}district`).subscribe((data) => {
-      this.districties = data;
+    this.http.get<any[]>(`${environment.url}property`).subscribe((data) => {
+      this.properties = data;
       console.log(data);
       this.isLoading = false;
     });
+  }
+  fetchPropertyTypeList(): void {
+    this.isLoading = true;
+    // setTimeout(() => {
+    this.http.get<any[]>(`${environment.url}propertyType`).subscribe((data) => {
+      this.propertyType = data;
+      console.log(data);
+      this.isLoading = false;
+    });
+  }
+
+  fetchPropertyUsageList(): void {
+    this.isLoading = true;
+    // setTimeout(() => {
+    this.http.get<any[]>(`${environment.url}propertyUsage`).subscribe((data) => {
+      this.propertyUsage = data;
+      console.log(data);
+      this.isLoading = false;
+    });
+  }
+
+  fetchDistrictList(): void {
+    this.isLoading = true;
+    // setTimeout(() => {
+    this.http.get<any[]>(`${environment.url}district`).subscribe((data) => {
+      this.district = data;
+      console.log(data);
+      this.isLoading = false;
+    });
+  }
+  fetchSubdistrictList(): void {
+    this.isLoading = true;
+    // setTimeout(() => {
+    this.http.get<any[]>(`${environment.url}subDistrict`).subscribe((data) => {
+      this.subdistrict = data;
+      console.log(data);
+      this.isLoading = false;
+    });
+  }
+
+  getSubdistrictByDistrict(Id: any) {
+    this.service
+      .getSubdistrictByDistrict(Id)
+      .subscribe((data) => {
+        this.subdistrict = data;
+        console.log(this.subdistrict);
+      });
   }
 
   createDistrict(): void {
@@ -137,7 +195,7 @@ export class PropertyComponent {
 
   getVisibleSchedules(): any[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
-    return this.districties.slice(startIndex, startIndex + this.pageSize);
+    return this.properties.slice(startIndex, startIndex + this.pageSize);
   }
 
   get form() {
@@ -153,7 +211,7 @@ export class PropertyComponent {
     this.modalService.open(content, { size: "md", centered: true });
 
     // Filter the row data based on the ScheduleID
-    var listData = this.districties.filter(
+    var listData = this.properties.filter(
       (data: { Party_ID: any }) => data.Party_ID === id
     );
 
@@ -202,7 +260,7 @@ export class PropertyComponent {
     if (this.endIndex > this.totalRecords) {
       this.endIndex = this.totalRecords;
     }
-    this.paginationDatas = this.districties.slice(
+    this.paginationDatas = this.properties.slice(
       this.startIndex - 1,
       this.endIndex
     );

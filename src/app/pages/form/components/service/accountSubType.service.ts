@@ -75,4 +75,7 @@ export class AccountSubTypeService {
       `${environment.url}${HttpApi.PropertyUsageDelete}` + id
     );
   }
+  getSubdistrictByDistrict(id: string){
+    return this.http.get<any>(HttpApi.GetSubdistrictByDistrict + id); 
+  }
 }
