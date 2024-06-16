@@ -12,6 +12,6 @@ export class HttpApi {
   static JournalDelete = "transaction/delete-journal/";
   static ImportJournal = "transaction/import-journal/";
   static CargoDelete = "trips/delete";
-  static PropertyDelete = "/propertyType";
+  static PropertyDelete = "propertyType/";
   static PropertyUsageDelete = "/propertyUsage";
 }

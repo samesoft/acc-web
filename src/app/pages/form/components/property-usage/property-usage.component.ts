@@ -69,7 +69,7 @@ export class PropertyUsageComponent {
   ngOnInit(): void {
     this.propertyForm = this.formBuilder.group({
       id: [""],
-      usage: ["", Validators.required],
+      Usage: ["", Validators.required],
     });
 
     this.fetchPropertyList();
@@ -78,11 +78,13 @@ export class PropertyUsageComponent {
   fetchPropertyList(): void {
     this.isLoading = true;
     // setTimeout(() => {
-    this.http.get<any[]>(`${environment.url}propertyType`).subscribe((data) => {
-      this.propertys = data;
-      console.log(data);
-      this.isLoading = false;
-    });
+    this.http
+      .get<any[]>(`${environment.url}propertyUsage`)
+      .subscribe((data) => {
+        this.propertys = data;
+        console.log(data);
+        this.isLoading = false;
+      });
   }
 
   createPropertyUsage(): void {
@@ -91,9 +93,9 @@ export class PropertyUsageComponent {
     this.propertyForm.markAllAsTouched();
     if (this.propertyForm.valid) {
       this.isLoading = true;
-      const url = `${environment.url}propertyType`;
+      const url = `${environment.url}propertyUsage`;
       const data = {
-        name: this.propertyForm.value.name,
+        Usage: this.propertyForm.value.Usage,
       };
       this.http.post(url, data).subscribe((response) => {
         this.isLoading = false;
@@ -125,7 +127,7 @@ export class PropertyUsageComponent {
       const propertyId = this.propertyForm.value.id; // Assuming the ID is stored in the form's 'id' field
 
       if (propertyId) {
-        const url = `${environment.url}propertyType/${propertyId}`; // Construct URL with ID path segment
+        const url = `${environment.url}propertyUsage/${propertyId}`; // Construct URL with ID path segment
 
         this.http.put(url, this.propertyForm.value).subscribe(
           (response) => {

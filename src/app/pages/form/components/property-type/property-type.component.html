@@ -60,13 +60,13 @@
             <table class="table" *ngIf="!isLoading">
               <thead>
                 <tr class="bg-light text-muted">
-                  <th>Name</th>
+                  <th>Property Type</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let data of getVisibleSchedules()">
-                  <td>{{ data.name }}</td>
+                  <td>{{ data.Property_Type }}</td>
 
                   <td>
                     <div class="d-flex gap-2">
@@ -75,7 +75,7 @@
                           class="btn btn-sm btn-primary edit-item-btn"
                           data-bs-toggle="modal"
                           data-bs-target="#showModal"
-                          (click)="editModa(content, data.id)"
+                          (click)="editModa(content, data.Pro_Type_ID)"
                         >
                           Edit
                         </button>
@@ -85,7 +85,7 @@
                           class="btn btn-sm btn-success remove-item-btn"
                           data-bs-toggle="modal"
                           data-bs-target="#deleteRecordModal"
-                          (click)="confirm(deleteModel, data.id)"
+                          (click)="confirm(deleteModel, data.Pro_Type_ID)"
                         >
                           Remove
                         </button>
