@@ -70,4 +70,9 @@ export class AccountSubTypeService {
       `${environment.url}${HttpApi.PropertyDelete}` + id
     );
   }
+  deletePropertyUsage(id: number) {
+    return this.http.delete<any>(
+      `${environment.url}${HttpApi.PropertyUsageDelete}` + id
+    );
+  }
 }

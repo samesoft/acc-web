@@ -42,6 +42,7 @@
         "DISTRICT": "District",
         "SUBDISTRICT": "Sub District",
         "PROPERTYTYPE": "Property Type",
+        "PROPERTYUSAGE": "Property Usage",
         "POSTPONEDINCOME": "postpond income",
         "INCOMESTATMENT": " Income statement",
         "ACCOUNTSTATEMENTS": "Account statemt",
