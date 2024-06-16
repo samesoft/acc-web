@@ -69,7 +69,7 @@ export class PropertyTypeComponent {
   ngOnInit(): void {
     this.propertyForm = this.formBuilder.group({
       id: [""],
-      Property_Name: ["", Validators.required],
+      Property_Type: ["", Validators.required],
     });
 
     this.fetchPropertyList();

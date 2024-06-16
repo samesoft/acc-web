@@ -69,7 +69,7 @@ export class PropertyUsageComponent {
   ngOnInit(): void {
     this.propertyForm = this.formBuilder.group({
       id: [""],
-      Property_Name: ["", Validators.required],
+      usage: ["", Validators.required],
     });
 
     this.fetchPropertyList();

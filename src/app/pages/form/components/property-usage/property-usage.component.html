@@ -131,20 +131,20 @@
   <form [formGroup]="propertyForm" class="tablelist-form" autocomplete="off">
     <div class="modal-body">
       <div class="mb-3">
-        <label for="phone-field" class="form-label">Name</label>
+        <label for="phone-field" class="form-label">Usage</label>
         <input
           type="text"
           id="phone-field"
           class="form-control"
-          placeholder="Enter name"
+          placeholder="Enter usage"
           required
-          formControlName="name"
-          [ngClass]="{ 'is-invalid': submitted && form['name'].errors }"
+          formControlName="usage"
+          [ngClass]="{ 'is-invalid': submitted && form['usage'].errors }"
         />
-        @if(submitted && form['name'].errors){
+        @if(submitted && form['usage'].errors){
         <div class="invalid-feedback">
-          @if(form['name'].errors['required']){
-          <span> Name is required</span>
+          @if(form['usage'].errors['required']){
+          <span> Usage is required</span>
           }
         </div>
         }
@@ -188,22 +188,20 @@
   <form [formGroup]="propertyForm" class="tablelist-form" autocomplete="off">
     <div class="modal-body">
       <div class="mb-3">
-        <label for="phone-field" class="form-label">Property</label>
+        <label for="phone-field" class="form-label">Usage</label>
         <input
           type="text"
           id="phone-field"
           class="form-control"
-          placeholder="Enter Property"
+          placeholder="Enter usage"
           required
-          formControlName="Property_Name"
-          [ngClass]="{
-            'is-invalid': submitted && form['Property_Name'].errors
-          }"
+          formControlName="usage"
+          [ngClass]="{ 'is-invalid': submitted && form['usage'].errors }"
         />
-        @if(submitted && form['Property_Name'].errors){
+        @if(submitted && form['usage'].errors){
         <div class="invalid-feedback">
-          @if(form['Property_Name'].errors['required']){
-          <span>Property is required</span>
+          @if(form['usage'].errors['required']){
+          <span> Usage is required</span>
           }
         </div>
         }
