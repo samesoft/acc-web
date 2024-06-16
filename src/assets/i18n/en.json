@@ -41,6 +41,7 @@
         "TRIP": "Trip",
         "DISTRICT": "District",
         "SUBDISTRICT": "Sub District",
+        "PROPERTY": "Property",
         "POSTPONEDINCOME": "postpond income",
         "INCOMESTATMENT": " Income statement",
         "ACCOUNTSTATEMENTS": "Account statemt",

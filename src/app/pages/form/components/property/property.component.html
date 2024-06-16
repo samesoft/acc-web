@@ -1,0 +1,505 @@
+<ngb-toast type="success" *ngIf="showEditToast" (hidden)="showEditToast = false">
+    <div class="toast-body">
+        Your Party has been edited successfully.
+    </div>
+</ngb-toast>
+<ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
+    <div class="toast-body">
+        Your Party has been Added successfully.
+    </div>
+</ngb-toast>
+<ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
+    <!-- <ng-template ngbToastHeader>
+      <img src="assets/images/logo-sm.png" alt="" class="me-2" height="18">
+      <span class="fw-semibold me-auto">Velzon</span>
+      <small>06 mins ago</small>
+    </ng-template> -->
+    <div class="toast-body">
+        Party has been Deleted successfully.
+    </div>
+</ngb-toast>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Property List</h4>
+            </div><!-- end card header -->
+
+
+
+            <div class="card-body">
+                <div id="customerList">
+                    <div class="row g-4 mb-3">
+                        <div class="col-sm-auto">
+                            <div class="d-flex gap-1">
+                                <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal"
+                                    id="create-btn" data-bs-target="#showModal" (click)="openModal(Add)"><i
+                                        class="ri-add-line align-bottom me-1"></i>
+                                    Add</button>
+
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-sm">
+                            <div class="d-flex justify-content-sm-end">
+                                <div class="search-box ms-2">
+                                    <input type="text" class="form-control search" placeholder="Search...">
+                                    <i class="ri-search-line search-icon"></i>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="table-responsive table-card mt-3 mb-1">
+                        <div *ngIf="isLoading">
+                            <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                                <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table" *ngIf="!isLoading">
+                            <thead>
+                                <tr class="bg-light text-muted">
+
+                                    <th>Name</th>
+                                    <th>Party Type</th>
+                                    <th>Salary</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let data of getVisibleSchedules(); ">
+
+
+                                    <!-- <th scope="row">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}" [(ngModel)]="data.state">
+                      </div>
+                    </th> -->
+                                    <td>{{ data.Name }}</td>
+                                    <td>{{ data.Party_Type }}</td>
+                                    <td>{{ data.Salary }}</td>
+
+                                    <!-- <td class="status"><span class="badge bg-{{data.status_color}}-subtle text-{{data.status_color}}F text-uppercase">{{data.status}}</span>
+                    </td> -->
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <div class="edit">
+                                                <button class="btn btn-sm btn-primary edit-item-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#showModal"
+                                                    (click)="editModa(content,data.Party_ID)">Edit</button>
+                                            </div>
+                                            <div class="remove">
+                                                <!-- (click)="confirm(deleteModel,data.id)" -->
+                                                <button class="btn btn-sm btn-success remove-item-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
+                                                    (click)="confirm(deleteModel,data.Party_ID)">Remove</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-center" *ngIf="!isLoading">
+                            <div class="text-sm-right float-sm-end listjs-pagination gap-2">
+                                <ngb-pagination [collectionSize]="districties.length" [(page)]="currentPage"
+                                    [pageSize]="pageSize" (pageChange)="loadPage()">
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row justify-content-md-between align-items-md-center">
+              <div class="col col-sm-6">
+                <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                  Showing
+                  {{service.startIndex}} to
+                  {{service.endIndex}} of {{service.totalRecords}}
+                  entries
+                </div>
+              </div> -->
+                    <!-- Pagination -->
+                    <!-- <div class="col col-sm-6">
+                <div class="text-sm-right float-end listjs-pagination">
+                  <ngb-pagination [collectionSize]="(total | async)!" [(page)]="service.page"
+                    [pageSize]="service.pageSize">
+                  </ngb-pagination>
+                </div>
+              </div>
+            
+            </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Party Data -->
+<ng-template #content role="document" let-modal>
+    <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="exampleModalLabel">Property</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+            (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form [formGroup]="PropertyForm" class="tablelist-form" autocomplete="off">
+        <div class="modal-body">
+
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Name</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone name" required
+                    formControlName="Party_Type" [ngClass]="{ 'is-invalid': submitted && form['Name'].errors }" />
+                @if(submitted && form['Name'].errors){
+                <div class="invalid-feedback">
+                    @if(form['Name'].errors['required']){
+                    <span>Name is required</span>
+                    }
+                </div>}
+            </div>
+
+            <!-- <div class="form-group">
+                <label for="Party_ID">Party Type:</label>
+                <select id="Party_ID" formControlName="Party_Type" class="form-control">
+                    <option *ngFor="let type of partyTypes" [value]="type">{{ type}}</option>
+                </select>
+            </div> -->
+
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Salary</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone salary" required
+                    formControlName="Salary" [ngClass]="{ 'is-invalid': submitted && form['Salary'].errors }" />
+                <div class="invalid-feedback">Please enter a salary.</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                    (click)="modal.close('Close click')">Close</button>
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="EditParty()">{{ !isPosting ?
+                    'Update' : 'Updating' }}</button>
+            </div>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #Add role="document" let-modal>
+    <div class="modal-header bg-light p-3">
+      <h5 class="modal-title" id="exampleModalLabel">Property</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+              (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form [formGroup]="PropertyForm" class="tablelist-form" autocomplete="off">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="Party_ID">Party Type:</label>
+              <select id="Party_ID" placeholder="Enter Name" formControlName="Party_Type" class="form-control">
+                <option *ngFor="let type of partyTypes" [value]="type">{{ type }}</option>
+              </select>
+              @if(submitted && form['Party_Type'].errors){
+                <div class="invalid-feedback">
+                  @if(form['Party_Type'].errors['required']){
+                    <span>Party is required</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="phone-field" class="form-label">Property_No</label>
+            <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                   formControlName="Property_No" [ngClass]="{ 'is-invalid': submitted && form['Property_No'].errors }" />
+            @if(submitted && form['Property_No'].errors){
+              <div class="invalid-feedback">
+                @if(form['Property_No'].errors['required']){
+                  <span>Property_No is required</span>
+                }
+              </div>
+            }
+          </div>
+          
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">Property_Name</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                     formControlName="Property_Name" [ngClass]="{ 'is-invalid': submitted && form['Property_Name'].errors }" />
+              @if(submitted && form['Property_Name'].errors){
+                <div class="invalid-feedback">
+                  @if(form['Property_Name'].errors['required']){
+                    <span>Property_Name is required</span>
+                  }
+                </div>
+              }
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">House_Nbr</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                     formControlName="Tenant_Name" [ngClass]="{ 'is-invalid': submitted && form['House_Nbr'].errors }" />
+              @if(submitted && form['House_Nbr'].errors){
+                <div class="invalid-feedback">
+                  @if(form['House_Nbr'].errors['required']){
+                    <span>House_Nbr is required</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">Property_Type</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                     formControlName="Property_Type" [ngClass]="{ 'is-invalid': submitted && form['Property_Type'].errors }" />
+              @if(submitted && form['Property_Type'].errors){
+                <div class="invalid-feedback">
+                  @if(form['Property_Type'].errors['required']){
+                    <span>Property_Type is required</span>
+                  }
+                </div>
+              }
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">Property_usage</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                     formControlName="Property_usage" [ngClass]="{ 'is-invalid': submitted && form['Property_usage'].errors }" />
+              @if(submitted && form['Property_usage'].errors){
+                <div class="invalid-feedback">
+                  @if(form['Property_usage'].errors['required']){
+                    <span>Property_usage is required</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">Property_Owner</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter Property_Owner" required
+                     formControlName="Property_Owner" [ngClass]="{ 'is-invalid': submitted && form['Property_Owner'].errors }" />
+              @if(submitted && form['Property_Owner'].errors){
+                <div class="invalid-feedback">
+                  @if(form['Property_Owner'].errors['required']){
+                    <span>Property_Owner is required</span>
+                  }
+                </div>
+              }
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">Owner_Mobile</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter Owner_Mobile" required
+                     formControlName="Owner_Mobile" [ngClass]="{ 'is-invalid': submitted && form['Owner_Mobile'].errors }" />
+              @if(submitted && form['Owner_Mobile'].errors){
+                <div class="invalid-feedback">
+                  @if(form['Owner_Mobile'].errors['required']){
+                    <span>Owner_Mobile is required</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">District</label>
+              <select id="Party_ID" placeholder="Enter Name" formControlName="District" class="form-control">
+                <option *ngFor="let type of partyTypes" [value]="type">{{ type }}</option>
+              </select>
+              @if(submitted && form['District'].errors){
+                <div class="invalid-feedback">
+                  @if(form['District'].errors['required']){
+                    <span>District is required</span>
+                  }
+                </div>
+              }
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">Sub_District</label>
+              <select id="Party_ID" placeholder="Enter Name" formControlName="Sub_District" class="form-control">
+                <option *ngFor="let type of partyTypes" [value]="type">{{ type }}</option>
+              </select>
+              @if(submitted && form['Sub_District'].errors){
+                <div class="invalid-feedback">
+                  @if(form['Sub_District'].errors['required']){
+                    <span>Sub_District is required</span>
+                  }
+                </div>
+              }
+            </div>
+            </div>
+        
+  
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="phone-field" class="form-label">Tenant_Name</label>
+            <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                   formControlName="Tenant_Name" [ngClass]="{ 'is-invalid': submitted && form['House_Nbr'].errors }" />
+            @if(submitted && form['Tenant_Name'].errors){
+              <div class="invalid-feedback">
+                @if(form['Tenant_Name'].errors['required']){
+                  <span>Tenant_Name is required</span>
+                }
+              </div>
+            }
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="phone-field" class="form-label">Mobile</label>
+            <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                   formControlName="Tenant_Name" [ngClass]="{ 'is-invalid': submitted && form['Mobile'].errors }" />
+            @if(submitted && form['Mobile'].errors){
+              <div class="invalid-feedback">
+                @if(form['Mobile'].errors['required']){
+                  <span>Mobile is required</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">amount</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter amount" required
+                     formControlName="amount" [ngClass]="{ 'is-invalid': submitted && form['amount'].errors }" />
+              @if(submitted && form['amount'].errors){
+                <div class="invalid-feedback">
+                  @if(form['amount'].errors['required']){
+                    <span>amount is required</span>
+                  }
+                </div>
+              }
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">P_Period</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                     formControlName="Tenant_Name" [ngClass]="{ 'is-invalid': submitted && form['P_Period'].errors }" />
+              @if(submitted && form['P_Period'].errors){
+                <div class="invalid-feedback">
+                  @if(form['P_Period'].errors['required']){
+                    <span>P_Period is required</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">P_Year</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter P_Year" required
+                     formControlName="amount" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
+              @if(submitted && form['P_Year'].errors){
+                <div class="invalid-feedback">
+                  @if(form['P_Year'].errors['required']){
+                    <span>P_Year is required</span>
+                  }
+                </div>
+              }
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">Pro_Is_Mon</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter Pro_Is_Mon" required
+                     formControlName="Tenant_Name" [ngClass]="{ 'is-invalid': submitted && form['Pro_Is_Mon'].errors }" />
+              @if(submitted && form['Pro_Is_Mon'].errors){
+                <div class="invalid-feedback">
+                  @if(form['Pro_Is_Mon'].errors['required']){
+                    <span>Pro_Is_Mon is required</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">Pro_Is_Apr</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter Pro_Is_Apr" required
+                     formControlName="amount" [ngClass]="{ 'is-invalid': submitted && form['Pro_Is_Apr'].errors }" />
+              @if(submitted && form['Pro_Is_Apr'].errors){
+                <div class="invalid-feedback">
+                  @if(form['Pro_Is_Apr'].errors['required']){
+                    <span>Pro_Is_Apr is required</span>
+                  }
+                </div>
+              }
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">longitude</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter longitude" required
+                     formControlName="Tenant_Name" [ngClass]="{ 'is-invalid': submitted && form['longitude'].errors }" />
+              @if(submitted && form['longitude'].errors){
+                <div class="invalid-feedback">
+                  @if(form['longitude'].errors['required']){
+                    <span>longitude is required</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone-field" class="form-label">latitude</label>
+              <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
+                     formControlName="amount" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
+              @if(submitted && form['latitude'].errors){
+                <div class="invalid-feedback">
+                  @if(form['latitude'].errors['required']){
+                    <span>latitude is required</span>
+                  }
+                </div>
+              }
+            </div>
+           
+          </div>
+
+     
+
+
+
+      </div>
+      <div class="modal-footer">
+        <div class="hstack gap-2 justify-content-end" [ngClass]="{ 'disabled': isLoading }">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                  (click)="modal.close('Close click')">Close</button>
+          <button type="submit" class="btn btn-success" id="add-btn" (click)="createDistrict()"
+                  [disabled]="isLoading"> {{ !isPosting ? 'Save' : 'Saving' }}</button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+<ng-template #deleteModel let-modal="modal" let-journal="journal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"
+                (click)="modal?.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mt-2 text-center">
+
+                <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                    <h4>Are you Sure ?</h4>
+                    <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Party ?</p>
+                </div>
+            </div>
+            <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
+                    (click)="modal?.close('Close click')"><i class="ri-close-line me-1 align-middle"></i> Close</button>
+                <button type="button" class="btn w-sm btn-danger" id="delete-product"
+                    (click)="modal?.close('Close click')" >Yes, Delete It!</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

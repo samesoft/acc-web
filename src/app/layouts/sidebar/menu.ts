@@ -179,4 +179,11 @@ export const MENU: MenuItem[] = [
     link: "forms/Sub_District",
     icon: "trip",
   },
+   {
+    id: 28,
+    label: "MENUITEMS.APPS.LIST.PROPERTY",
+    link: "forms/Property",
+    icon: "trip",
+  },
+  
 ];

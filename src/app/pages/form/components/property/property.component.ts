@@ -1,22 +1,23 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from 'src/app/pages/icons/toast-service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-subdistrict',
+  selector: 'app-property',
   standalone: true,
   imports: [CommonModule, NgbModule, ReactiveFormsModule],
-  templateUrl: './subdistrict.component.html',
-  styleUrl: './subdistrict.component.scss'
+  templateUrl: './property.component.html',
+  styleUrl: './property.component.scss'
 })
-export class SubdistrictComponent {
-  SubDistrictForm!: FormGroup;
+export class PropertyComponent {
+  PropertyForm!: FormGroup;
   districties: any[] = [];
+  partyTypes: string[] = ["Employee", "Customer", "Vendor"];
   isLoading = false;
   submitted = false;
   isPosting = false;
@@ -35,6 +36,7 @@ export class SubdistrictComponent {
   startIndex: number = 0;
   endIndex: number = 10;
   totalRecords: number = 0;
+
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
@@ -44,10 +46,29 @@ export class SubdistrictComponent {
   ) {}
 
   ngOnInit(): void {
-    this.SubDistrictForm = this.formBuilder.group({
+    this.PropertyForm = this.formBuilder.group({
+      Party_Type: ["", Validators.required],
+      Property_No: ["", Validators.required],
+      Property_Name: ["", Validators.required],
+      House_Nbr: ["", Validators.required],
+      Property_Type: ["", Validators.required],
+      Property_usage: ["", Validators.required],
+      Tenant_Name: ["", Validators.required],
+      Mobile: ["", Validators.required],
+      Property_Owner: ["", Validators.required],
+      Owner_Mobile: ["", Validators.required],
+      District: ["", Validators.required],
       Sub_District: ["", Validators.required],
+      amount: ["", Validators.required],
+      P_Period: ["", Validators.required],
+      P_Year: ["", Validators.required],
+      Pro_Is_Mon: ["", Validators.required],
+      Pro_Is_Apr: ["", Validators.required],
+      longitude: ["", Validators.required],
+      latitude: ["", Validators.required],
     });
 
+   
     this.fetchDistricList();
   }
 
@@ -63,12 +84,12 @@ export class SubdistrictComponent {
 
   createDistrict(): void {
     this.isPosting = true;
-    this.SubDistrictForm.markAllAsTouched();
-    if (this.SubDistrictForm.valid) {
+    this.PropertyForm.markAllAsTouched();
+    if (this.PropertyForm.valid) {
       this.isLoading = true;
       const url = `${environment.url}district`;
       const data = {
-        Sub_District: this.SubDistrictForm.value.Sub_District,
+        District_Name: this.PropertyForm.value.District_Name,
        
       };
       this.http.post(url, data).subscribe((response) => {
@@ -93,13 +114,14 @@ export class SubdistrictComponent {
 
   EditParty(): void {
     this.isPosting = true;
-    this.SubDistrictForm.markAllAsTouched();
-    if (this.SubDistrictForm.valid) {
+    this.PropertyForm.markAllAsTouched();
+    if (this.PropertyForm.valid) {
       const url = `${environment.url}party/edit`;
       const data = {
-        Party_ID: this.SubDistrictForm.value.Party_ID,
-        Name: this.SubDistrictForm.value.Name,
-      
+        Party_ID: this.PropertyForm.value.Party_ID,
+        Name: this.PropertyForm.value.Name,
+        Party_Type: this.PropertyForm.value.Party_Type,
+        Salary: this.PropertyForm.value.Salary,
       };
       this.http.post(url, data).subscribe((response) => {
         console.log(response);
@@ -119,11 +141,11 @@ export class SubdistrictComponent {
   }
 
   get form() {
-    return this.SubDistrictForm.controls;
+    return this.PropertyForm.controls;
   }
   openModal(content: any) {
     this.submitted = false;
-    this.modalService.open(content, { size: "md", centered: true });
+    this.modalService.open(content, { size: "lg", centered: true });
   }
 
   editModa(content: any, id: any) {
@@ -143,7 +165,7 @@ export class SubdistrictComponent {
 
       // Set the value of the edit form field, e.g., assigning to a variable or updating a form control
       this.editFormFieldValue = editFormFieldValue; // Update the value of editFormFieldValue with the actual form field variable
-      this.SubDistrictForm.patchValue(rowData);
+      this.PropertyForm.patchValue(rowData);
       console.log(rowData); // Log the row data for verification
     } else {
       console.error("No data found for the specified ScheduleID");

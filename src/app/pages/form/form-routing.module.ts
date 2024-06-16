@@ -31,6 +31,7 @@ import { CargoReportComponent } from "./components/cargo-report/cargo-report.com
 import { DistrictComponent } from "./components/district/district.component";
 import { SubdistrictComponent } from "./components/subdistrict/subdistrict.component";
 import { PropertyTypeComponent } from "./components/property-type/property-type.component";
+import { PropertyComponent } from "./components/property/property.component";
 
 const routes: Routes = [
   {
@@ -149,6 +150,10 @@ const routes: Routes = [
   {
     path: "Property_Type",
     component: PropertyTypeComponent,
+  },
+  {
+    path: "Property",
+    component: PropertyComponent,
   },
 ];
 
