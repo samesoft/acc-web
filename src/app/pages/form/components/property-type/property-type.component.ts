@@ -68,7 +68,7 @@ export class PropertyTypeComponent {
 
   ngOnInit(): void {
     this.propertyForm = this.formBuilder.group({
-      id: [""],
+      Pro_Type_ID: [""],
       Property_Type: ["", Validators.required],
     });
 
@@ -93,7 +93,7 @@ export class PropertyTypeComponent {
       this.isLoading = true;
       const url = `${environment.url}propertyType`;
       const data = {
-        name: this.propertyForm.value.name,
+        Property_Type: this.propertyForm.value.Property_Type,
       };
       this.http.post(url, data).subscribe((response) => {
         this.isLoading = false;
@@ -110,8 +110,8 @@ export class PropertyTypeComponent {
     }
   }
   property: any;
-  confirm(property: any, id: any) {
-    this.property = id;
+  confirm(property: any, Pro_Type_ID: any) {
+    this.property = Pro_Type_ID;
     console.log(this.property);
     this.modalService.open(property, { centered: true });
   }
@@ -122,7 +122,7 @@ export class PropertyTypeComponent {
     this.propertyForm.markAllAsTouched();
 
     if (this.propertyForm.valid) {
-      const propertyId = this.propertyForm.value.id; // Assuming the ID is stored in the form's 'id' field
+      const propertyId = this.propertyForm.value.Pro_Type_ID; // Assuming the ID is stored in the form's 'id' field
 
       if (propertyId) {
         const url = `${environment.url}propertyType/${propertyId}`; // Construct URL with ID path segment
@@ -137,12 +137,12 @@ export class PropertyTypeComponent {
           },
           (error) => {
             // Handle error response from delete request
-            console.error("Error deleting city:", error);
+            console.error("Error deleting Property Type:", error);
           }
         );
       } else {
         // Handle case where ID is not present in the form
-        console.error("City ID is required for deletion.");
+        console.error("Property Type ID is required for deletion.");
       }
     } else {
       // Handle form validation errors here, e.g., display an error message.
@@ -162,25 +162,27 @@ export class PropertyTypeComponent {
     this.modalService.open(content, { size: "md", centered: true });
   }
 
-  editModa(content: any, id: any) {
+  editModa(content: any, Pro_Type_ID: any) {
     this.submitted = false;
     this.modalService.open(content, { size: "md", centered: true });
 
     // Filter the row data based on the ScheduleID
-    var listData = this.propertys.filter((data: { id: any }) => data.id === id);
+    var listData = this.propertys.filter(
+      (data: { Pro_Type_ID: any }) => data.Pro_Type_ID === Pro_Type_ID
+    );
 
     // Assuming listData has only one row matching the ScheduleID
     if (listData.length > 0) {
       // Access the row data to set the value in the edit form field
       const rowData = listData[0]; // Get the first (and only) element
-      const editFormFieldValue = rowData.id; // Replace YOUR_FIELD_NAME with the actual field name
+      const editFormFieldValue = rowData.Pro_Type_ID; // Replace YOUR_FIELD_NAME with the actual field name
 
       // Set the value of the edit form field, e.g., assigning to a variable or updating a form control
       this.editFormFieldValue = editFormFieldValue; // Update the value of editFormFieldValue with the actual form field variable
       this.propertyForm.patchValue(rowData);
       console.log(rowData); // Log the row data for verification
     } else {
-      console.error("No data found for the specified city");
+      console.error("No data found for the specified Property Type");
     }
   }
   checkedValGet: any[] = [];
@@ -188,12 +190,12 @@ export class PropertyTypeComponent {
   delete(property: any) {
     if (property) {
       var listData = this.propertys.filter(
-        (data: { id: any }) => data.id === this.property
+        (data: { Pro_Type_ID: any }) => data.Pro_Type_ID === this.property
       );
 
       if (listData.length > 0) {
         const rowData = listData[0];
-        const editFormFieldValue = rowData.id;
+        const editFormFieldValue = rowData.Pro_Type_ID;
         console.log(editFormFieldValue);
 
         this.property = editFormFieldValue;
