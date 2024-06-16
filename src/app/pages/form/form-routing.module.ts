@@ -28,6 +28,9 @@ import { BalancesheetComponent } from "./components/balancesheet/balancesheet.co
 import { TripListComponent } from "./components/trip-list/trip-list.component";
 import { ScheduleListComponent } from "./components/schedule-list/schedule-list.component";
 import { CargoReportComponent } from "./components/cargo-report/cargo-report.component";
+import { DistrictComponent } from "./components/district/district.component";
+import { SubdistrictComponent } from "./components/subdistrict/subdistrict.component";
+import { PropertyTypeComponent } from "./components/property-type/property-type.component";
 
 const routes: Routes = [
   {
@@ -134,6 +137,18 @@ const routes: Routes = [
   {
     path: "cargo-report",
     component: CargoReportComponent,
+  },
+  {
+    path: "district",
+    component: DistrictComponent,
+  },
+  {
+    path: "Sub_District",
+    component: SubdistrictComponent,
+  },
+  {
+    path: "Property_Type",
+    component: PropertyTypeComponent,
   },
 ];
 

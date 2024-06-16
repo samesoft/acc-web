@@ -39,6 +39,8 @@
         "IMPORTTRANSACTION": "Import Transactions",
         "BALANCESHEET": " Balance sheet",
         "TRIP": "Trip",
+        "DISTRICT": "District",
+        "SUBDISTRICT": "Sub District",
         "POSTPONEDINCOME": "postpond income",
         "INCOMESTATMENT": " Income statement",
         "ACCOUNTSTATEMENTS": "Account statemt",
