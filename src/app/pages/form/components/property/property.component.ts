@@ -68,8 +68,8 @@ export class PropertyComponent {
       amount: ["", Validators.required],
       P_Period: ["", Validators.required],
       P_Year: ["", Validators.required],
-      Pro_Is_Mon: ["", Validators.required],
-      Pro_Is_Apr: ["", Validators.required],
+      Pro_Is_Mon: false,
+      Pro_Is_Apr:false,
       longitude: ["", Validators.required],
       latitude: ["", Validators.required],
     });
@@ -132,23 +132,38 @@ export class PropertyComponent {
   }
 
   getSubdistrictByDistrict(Id: any) {
-    this.service
-      .getSubdistrictByDistrict(Id)
-      .subscribe((data) => {
+    this.http.get<any[]>(`${environment.url}SubDistrict/` + Id).subscribe((data) => {
         this.subdistrict = data;
         console.log(this.subdistrict);
       });
   }
 
-  createDistrict(): void {
-    this.isPosting = true;
+  createProperty(): void {
+    // this.isPosting = true;
     this.PropertyForm.markAllAsTouched();
     if (this.PropertyForm.valid) {
       this.isLoading = true;
-      const url = `${environment.url}district`;
+      const url = `${environment.url}property`;
       const data = {
-        District_Name: this.PropertyForm.value.District_Name,
-       
+        Party_Type: this.PropertyForm.value.Party_Type,
+        Property_No: this.PropertyForm.value.Property_No,
+        Property_Name: this.PropertyForm.value.Property_Name,
+        House_Nbr: this.PropertyForm.value.House_Nbr,
+        Property_Type: this.PropertyForm.value.Property_Type,
+        Property_usage: this.PropertyForm.value.Property_usage,
+        Tenant_Name: this.PropertyForm.value.Tenant_Name,
+        Mobile: this.PropertyForm.value.Mobile,
+        Property_Owner: this.PropertyForm.value.Property_Owner,
+        Owner_Mobile: this.PropertyForm.value.Owner_Mobile,
+        District: this.PropertyForm.value.District,
+        Sub_District: this.PropertyForm.value.Sub_District,
+        amount: this.PropertyForm.value.amount,
+        P_Period: this.PropertyForm.value.P_Period,
+        P_Year: this.PropertyForm.value.P_Year,
+        Pro_Is_Mon: this.PropertyForm.value.Pro_Is_Mon,
+        Pro_Is_Apr: this.PropertyForm.value.Pro_Is_Apr,
+        longitude: this.PropertyForm.value.longitude,
+        latitude: this.PropertyForm.value.latitude,
       };
       this.http.post(url, data).subscribe((response) => {
         this.isLoading = false;
@@ -157,7 +172,7 @@ export class PropertyComponent {
           classname: "bg-success text-center text-white",
           delay: 5000,
         });
-        this.isPosting = false;
+        this.isLoading = false;
         this.ngOnInit();
       });
     } else {

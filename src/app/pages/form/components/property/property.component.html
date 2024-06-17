@@ -249,7 +249,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">House_Nbr</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
-                        formControlName="Tenant_Name"
+                        formControlName="House_Nbr"
                         [ngClass]="{ 'is-invalid': submitted && form['House_Nbr'].errors }" />
                     @if(submitted && form['House_Nbr'].errors){
                     <div class="invalid-feedback">
@@ -370,7 +370,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">Mobile</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
-                        formControlName="Tenant_Name"
+                        formControlName="Mobile"
                         [ngClass]="{ 'is-invalid': submitted && form['Mobile'].errors }" />
                     @if(submitted && form['Mobile'].errors){
                     <div class="invalid-feedback">
@@ -398,7 +398,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">P_Period</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
-                        formControlName="Tenant_Name"
+                        formControlName="P_Period"
                         [ngClass]="{ 'is-invalid': submitted && form['P_Period'].errors }" />
                     @if(submitted && form['P_Period'].errors){
                     <div class="invalid-feedback">
@@ -414,7 +414,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">P_Year</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter P_Year" required
-                        formControlName="amount" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
+                        formControlName="P_Year" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
                     @if(submitted && form['P_Year'].errors){
                     <div class="invalid-feedback">
                         @if(form['P_Year'].errors['required']){
@@ -426,7 +426,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">Pro_Is_Mon</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter Pro_Is_Mon" required
-                        formControlName="Tenant_Name"
+                        formControlName="Pro_Is_Mon"
                         [ngClass]="{ 'is-invalid': submitted && form['Pro_Is_Mon'].errors }" />
                     @if(submitted && form['Pro_Is_Mon'].errors){
                     <div class="invalid-feedback">
@@ -442,7 +442,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">Pro_Is_Apr</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter Pro_Is_Apr" required
-                        formControlName="amount" [ngClass]="{ 'is-invalid': submitted && form['Pro_Is_Apr'].errors }" />
+                        formControlName="Pro_Is_Apr" [ngClass]="{ 'is-invalid': submitted && form['Pro_Is_Apr'].errors }" />
                     @if(submitted && form['Pro_Is_Apr'].errors){
                     <div class="invalid-feedback">
                         @if(form['Pro_Is_Apr'].errors['required']){
@@ -454,7 +454,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">longitude</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter longitude" required
-                        formControlName="Tenant_Name"
+                        formControlName="longitude"
                         [ngClass]="{ 'is-invalid': submitted && form['longitude'].errors }" />
                     @if(submitted && form['longitude'].errors){
                     <div class="invalid-feedback">
@@ -472,7 +472,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">latitude</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
-                        formControlName="amount" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
+                        formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
                     @if(submitted && form['latitude'].errors){
                     <div class="invalid-feedback">
                         @if(form['latitude'].errors['required']){
@@ -482,21 +482,23 @@
                     }
                 </div>
 
-            </div>
+         
 
 
 
 
 
-        </div>
+       
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end" [ngClass]="{ 'disabled': isLoading }">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal"
                     (click)="modal.close('Close click')">Close</button>
-                <button type="submit" class="btn btn-success" id="add-btn" (click)="createDistrict()"
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="createProperty()"
                     [disabled]="isLoading"> {{ !isPosting ? 'Save' : 'Saving' }}</button>
             </div>
         </div>
+    </div>
+</div>
     </form>
 </ng-template>
 <ng-template #deleteModel let-modal="modal" let-journal="journal">
