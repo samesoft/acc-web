@@ -98,10 +98,11 @@ export class PropertyTypeComponent {
       this.http.post(url, data).subscribe((response) => {
         this.isLoading = false;
         this.modalService.dismissAll();
-        this.toastService.show("Successfully.", {
-          classname: "bg-success text-center text-white",
-          delay: 5000,
-        });
+        // this.toastService.show("Successfully.", {
+        //   classname: "bg-success text-center text-white",
+        //   delay: 5000,
+        // });
+        this.showAddToast = true;
         this.isPosting = false;
         this.ngOnInit();
       });
@@ -131,6 +132,7 @@ export class PropertyTypeComponent {
           (response) => {
             console.log(response);
             this.modalService.dismissAll();
+            this.showAddToast = true;
             this.showEditToast = true;
             this.isPosting = false;
             this.ngOnInit();

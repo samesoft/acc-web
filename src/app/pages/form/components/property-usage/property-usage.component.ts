@@ -104,6 +104,7 @@ export class PropertyUsageComponent {
           classname: "bg-success text-center text-white",
           delay: 5000,
         });
+        this.showAddToast = true;
         this.isPosting = false;
         this.ngOnInit();
       });
