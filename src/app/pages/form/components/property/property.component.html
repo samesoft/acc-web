@@ -5,7 +5,7 @@
 </ngb-toast>
 <ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
     <div class="toast-body">
-        Your Party has been Added successfully.
+        Property has been Added successfully.
     </div>
 </ngb-toast>
 <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
@@ -410,43 +410,36 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="phone-field" class="form-label">P_Year</label>
-                    <input type="text" id="phone-field" class="form-control" placeholder="Enter P_Year" required
-                        formControlName="P_Year" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
-                    @if(submitted && form['P_Year'].errors){
-                    <div class="invalid-feedback">
-                        @if(form['P_Year'].errors['required']){
-                        <span>P_Year is required</span>
-                        }
-                    </div>
-                    }
+            
+                <!-- <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="formCheck1">
+                    <label class="form-check-label" for="formCheck1">
+                        Default checkbox
+                    </label>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label for="phone-field" class="form-label">Pro_Is_Mon</label>
-                    <input type="text" id="phone-field" class="form-control" placeholder="Enter Pro_Is_Mon" required
-                        formControlName="Pro_Is_Mon"
-                        [ngClass]="{ 'is-invalid': submitted && form['Pro_Is_Mon'].errors }" />
-                    @if(submitted && form['Pro_Is_Mon'].errors){
-                    <div class="invalid-feedback">
-                        @if(form['Pro_Is_Mon'].errors['required']){
-                        <span>Pro_Is_Mon is required</span>
-                        }
-                    </div>
-                    }
-                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formCheck2" checked>
+                    <label class="form-check-label" for="formCheck2">
+                        Checked checkbox
+                    </label>
+                </div> -->
+                <!-- <div class="col-md-6 mb-3">
+                    <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
+                    <label class="form-check-label" for="formCheck1">
+                        Pro_Is_Mon
+                    </label>
+                </div> -->
             </div>
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="phone-field" class="form-label">Pro_Is_Apr</label>
-                    <input type="text" id="phone-field" class="form-control" placeholder="Enter Pro_Is_Apr" required
-                        formControlName="Pro_Is_Apr" [ngClass]="{ 'is-invalid': submitted && form['Pro_Is_Apr'].errors }" />
-                    @if(submitted && form['Pro_Is_Apr'].errors){
+                    <label for="phone-field" class="form-label">latitude</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
+                        formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
+                    @if(submitted && form['latitude'].errors){
                     <div class="invalid-feedback">
-                        @if(form['Pro_Is_Apr'].errors['required']){
-                        <span>Pro_Is_Apr is required</span>
+                        @if(form['latitude'].errors['required']){
+                        <span>latitude is required</span>
                         }
                     </div>
                     }
@@ -468,7 +461,7 @@
 
 
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">latitude</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
@@ -480,7 +473,35 @@
                         }
                     </div>
                     }
+                </div> -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="phone-field" class="form-label">P_Year</label>
+                        <input type="text" id="phone-field" class="form-control" placeholder="Enter P_Year" required
+                            formControlName="P_Year" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
+                        @if(submitted && form['P_Year'].errors){
+                        <div class="invalid-feedback">
+                            @if(form['P_Year'].errors['required']){
+                            <span>P_Year is required</span>
+                            }
+                        </div>
+                        }
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                    <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
+                    <label class="form-check-label" for="formCheck1">
+                        Pro_Is_Mon
+                    </label>
                 </div>
+                       
+                        <div class="col-md-6 mb-3">
+                            <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Apr">
+                            <label class="form-check-label" for="formCheck1">
+                                Pro_Is_Apr
+                            </label>
+                        </div>
+                    </div>
 
          
 
@@ -498,7 +519,7 @@
             </div>
         </div>
     </div>
-</div>
+
     </form>
 </ng-template>
 <ng-template #deleteModel let-modal="modal" let-journal="journal">

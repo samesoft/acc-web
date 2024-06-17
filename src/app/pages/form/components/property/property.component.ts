@@ -168,10 +168,7 @@ export class PropertyComponent {
       this.http.post(url, data).subscribe((response) => {
         this.isLoading = false;
         this.modalService.dismissAll();
-        this.toastService.show("Successfully.", {
-          classname: "bg-success text-center text-white",
-          delay: 5000,
-        });
+        this.showAddToast = true;
         this.isLoading = false;
         this.ngOnInit();
       });
