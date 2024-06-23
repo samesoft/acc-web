@@ -15,6 +15,7 @@ import {
 import { Router } from "@angular/router";
 import { AccountSubTypeService } from "../service/accountSubType.service";
 import { ToastService } from "src/app/pages/icons/toast-service";
+import { DistrictService } from "../service/district.service";
 
 @Component({
   selector: "app-property-usage",
@@ -62,7 +63,7 @@ export class PropertyUsageComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private modalService: NgbModal,
-    public service: AccountSubTypeService,
+    public service: DistrictService,
     public toastService: ToastService
   ) {}
 
@@ -112,11 +113,11 @@ export class PropertyUsageComponent {
       this.isLoading = false;
     }
   }
-  property: any;
-  confirm(property: any, id: any) {
-    this.property = id;
-    console.log(this.property);
-    this.modalService.open(property, { centered: true });
+  party: any;
+  confirm(party: any, id: any) {
+    this.party = id;
+    console.log(this.party);
+    this.modalService.open(party, { centered: true });
   }
 
   EditPropertyUsage(): void {
@@ -187,22 +188,22 @@ export class PropertyUsageComponent {
     }
   }
   checkedValGet: any[] = [];
-  deleteId: any;
-  delete(property: any) {
-    if (property) {
+  PropertyTypeId: any;
+  deleteUsage(party: any) {
+    if (party) {
       var listData = this.propertys.filter(
-        (data: { id: any }) => data.id === this.property
+        (data: { Pro_Usage_ID: any }) => data.Pro_Usage_ID === this.party
       );
 
       if (listData.length > 0) {
         const rowData = listData[0];
-        const editFormFieldValue = rowData.id;
+        const editFormFieldValue = rowData.Pro_Usage_ID;
         console.log(editFormFieldValue);
 
-        this.property = editFormFieldValue;
-        console.log(this.property);
+        this.PropertyTypeId = editFormFieldValue;
+        console.log(this.PropertyTypeId);
         this.service
-          .deletePropertyUsage(this.property)
+          .deletePropertyUsage(this.PropertyTypeId)
           .subscribe((response) => {
             this.modalService.dismissAll();
             this.showSuccessToast = true;

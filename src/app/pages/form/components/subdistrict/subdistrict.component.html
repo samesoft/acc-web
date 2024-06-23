@@ -5,7 +5,7 @@
 </ngb-toast>
 <ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
     <div class="toast-body">
-       Sub district has been Added successfully.
+       Subdistrict has been Added successfully.
     </div>
 </ngb-toast>
 <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
@@ -15,7 +15,7 @@
       <small>06 mins ago</small>
     </ng-template> -->
     <div class="toast-body">
-        Party has been Deleted successfully.
+        Subdistrict has been Deleted successfully.
     </div>
 </ngb-toast>
 <div class="row">
@@ -95,6 +95,7 @@
                                                 <!-- (click)="confirm(deleteModel,data.id)" -->
                                                 <button class="btn btn-sm btn-success remove-item-btn"
                                                     data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
+                                                    (click)="confirm(deleteModel,data.ID)"
                                                     >Remove</button>
                                             </div>
                                         </div>
@@ -261,7 +262,7 @@
                 <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
                     (click)="modal?.close('Close click')"><i class="ri-close-line me-1 align-middle"></i> Close</button>
                 <button type="button" class="btn w-sm btn-danger" id="delete-product"
-                    (click)="modal?.close('Close click')" >Yes, Delete It!</button>
+                    (click)="modal?.close('Close click')" (click)="deleteSubdistrict(party)" >Yes, Delete It!</button>
             </div>
         </div>
     </div>

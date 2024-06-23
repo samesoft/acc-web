@@ -7,6 +7,7 @@ import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from 'src/app/pages/icons/toast-service';
 import { environment } from 'src/environments/environment';
 import { AccountSubTypeService } from '../service/accountSubType.service';
+import { DistrictService } from '../service/district.service';
 
 @Component({
   selector: 'app-property',
@@ -48,7 +49,7 @@ export class PropertyComponent {
     private router: Router,
     private modalService: NgbModal,
     public toastService: ToastService,
-    public service : AccountSubTypeService
+    public service : DistrictService
   ) {}
 
   ngOnInit(): void {
@@ -241,31 +242,34 @@ export class PropertyComponent {
       console.error("No data found for the specified ScheduleID");
     }
   }
+propertyID : any;
   checkedValGet: any[] = [];
-  deleteId: any;
-  // delete(party: any) {
-  //   if (party) {
-  //     var listData = this.districties.filter(
-  //       (data: { Party_ID: any }) => data.Party_ID === party
-  //     );
-  //     if (listData.length > 0) {
-  //       const rowData = listData[0];
-  //       const editFormFieldValue = rowData.Party_ID;
-  //       console.log(editFormFieldValue);
-  //       this.partyId = editFormFieldValue;
-  //       console.log(this.partyId);
-  //       this.service.delete(this.partyId).subscribe((response) => {
-  //         this.modalService.dismissAll();
-  //         this.showSuccessToast = true;
-  //         this.ngOnInit();
-  //       });
-  //     } else {
-  //       this.checkedValGet.forEach((item: any) => {
-  //         document.getElementById("lj_" + item)?.remove();
-  //       });
-  //     }
-  //   }
-  // }
+  deleteProperty(party: any) {
+    if (party) {
+      var listData = this.properties.filter(
+        (data: { Party_ID: any }) => data.Party_ID === this.party
+      );
+
+      if (listData.length > 0) {
+        const rowData = listData[0];
+        const editFormFieldValue = rowData.Party_ID;
+        console.log(editFormFieldValue);
+
+        this.propertyID = editFormFieldValue;
+        console.log(this.propertyID);
+        this.service.deleteProperty(this.propertyID).subscribe((response) => {
+          this.modalService.dismissAll();
+          this.showSuccessToast = true;
+          this.ngOnInit();
+        });
+      } else {
+        this.checkedValGet.forEach((item: any) => {
+          document.getElementById("lj_" + item)?.remove();
+        });
+      }
+    }
+  }
+ 
   loadPage() {
     this.startIndex = (this.page - 1) * this.pageSize + 1;
     this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;

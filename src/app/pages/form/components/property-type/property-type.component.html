@@ -1,19 +1,11 @@
-<ngb-toast
-  type="success"
-  *ngIf="showEditToast"
-  (hidden)="showEditToast = false"
->
+<ngb-toast type="success" *ngIf="showEditToast" (hidden)="showEditToast = false">
   <div class="toast-body">Your Property has been edited successfully.</div>
 </ngb-toast>
 <ngb-toast type="success" *ngIf="showAddToast" (hidden)="showAddToast = false">
   <div class="toast-body">Your Property has been Added successfully.</div>
 </ngb-toast>
-<ngb-toast
-  type="success"
-  *ngIf="showSuccessToast"
-  (hidden)="showSuccessToast = false"
->
-  <div class="toast-body">Property has been Deleted successfully.</div>
+<ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
+  <div class="toast-body">Property Type has been Deleted successfully.</div>
 </ngb-toast>
 <div class="row">
   <div class="col-lg-12">
@@ -28,14 +20,8 @@
           <div class="row g-4 mb-3">
             <div class="col-sm-auto">
               <div class="d-flex gap-1">
-                <button
-                  type="button"
-                  class="btn btn-primary add-btn"
-                  data-bs-toggle="modal"
-                  id="create-btn"
-                  data-bs-target="#showModal"
-                  (click)="openModal(Add)"
-                >
+                <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn"
+                  data-bs-target="#showModal" (click)="openModal(Add)">
                   <i class="ri-add-line align-bottom me-1"></i> Add
                 </button>
               </div>
@@ -44,15 +30,8 @@
 
           <div class="table-responsive table-card mt-3 mb-1">
             <div *ngIf="isLoading">
-              <div
-                class="d-flex justify-content-center align-items-center"
-                style="height: 200px"
-              >
-                <div
-                  class="spinner-border"
-                  role="status"
-                  style="width: 3rem; height: 3rem"
-                >
+              <div class="d-flex justify-content-center align-items-center" style="height: 200px">
+                <div class="spinner-border" role="status" style="width: 3rem; height: 3rem">
                   <span class="visually-hidden">Loading...</span>
                 </div>
               </div>
@@ -71,22 +50,14 @@
                   <td>
                     <div class="d-flex gap-2">
                       <div class="edit">
-                        <button
-                          class="btn btn-sm btn-primary edit-item-btn"
-                          data-bs-toggle="modal"
-                          data-bs-target="#showModal"
-                         
-                        >
+                        <button class="btn btn-sm btn-primary edit-item-btn" data-bs-toggle="modal"
+                          data-bs-target="#showModal">
                           Edit
                         </button>
                       </div>
                       <div class="remove">
-                        <button
-                          class="btn btn-sm btn-success remove-item-btn"
-                          data-bs-toggle="modal"
-                          data-bs-target="#deleteRecordModal"
-                        
-                        >
+                        <button class="btn btn-sm btn-success remove-item-btn" data-bs-toggle="modal"
+                          data-bs-target="#deleteRecordModal" (click)="confirm(deleteModel,data.Pro_Type_ID)">
                           Remove
                         </button>
                       </div>
@@ -97,12 +68,8 @@
             </table>
             <div class="d-flex justify-content-center" *ngIf="!isLoading">
               <div class="text-sm-right float-sm-end listjs-pagination gap-2">
-                <ngb-pagination
-                  [collectionSize]="propertys.length"
-                  [(page)]="currentPage"
-                  [pageSize]="pageSize"
-                  (pageChange)="loadPage()"
-                >
+                <ngb-pagination [collectionSize]="propertys.length" [(page)]="currentPage" [pageSize]="pageSize"
+                  (pageChange)="loadPage()">
                 </ngb-pagination>
               </div>
             </div>
@@ -117,30 +84,17 @@
 <ng-template #content role="document" let-modal>
   <div class="modal-header bg-light p-3">
     <h5 class="modal-title" id="exampleModalLabel">Property</h5>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="modal"
-      aria-label="Close"
-      id="close-modal"
-      (click)="modal.dismiss('Cross click')"
-    ></button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+      (click)="modal.dismiss('Cross click')"></button>
   </div>
   <form [formGroup]="propertyForm" class="tablelist-form" autocomplete="off">
     <div class="modal-body">
       <div class="mb-3">
         <label for="phone-field" class="form-label">Property</label>
-        <input
-          type="text"
-          id="phone-field"
-          class="form-control"
-          placeholder="Enter Property Type"
-          required
-          formControlName="Property_Type"
-          [ngClass]="{
+        <input type="text" id="phone-field" class="form-control" placeholder="Enter Property Type" required
+          formControlName="Property_Type" [ngClass]="{
             'is-invalid': submitted && form['Property_Type'].errors
-          }"
-        />
+          }" />
         @if(submitted && form['Property_Type'].errors){
         <div class="invalid-feedback">
           @if(form['Property_Type'].errors['required']){
@@ -152,20 +106,10 @@
     </div>
     <div class="modal-footer">
       <div class="hstack gap-2 justify-content-end">
-        <button
-          type="button"
-          class="btn btn-light"
-          data-bs-dismiss="modal"
-          (click)="modal.close('Close click')"
-        >
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="modal.close('Close click')">
           Close
         </button>
-        <button
-          type="submit"
-          class="btn btn-success"
-          id="add-btn"
-          (click)="EditProperty()"
-        >
+        <button type="submit" class="btn btn-success" id="add-btn" (click)="EditProperty()">
           {{ !isPosting ? "Update" : "Updating" }}
         </button>
       </div>
@@ -176,30 +120,17 @@
 <ng-template #Add role="document" let-modal>
   <div class="modal-header bg-light p-3">
     <h5 class="modal-title" id="exampleModalLabel">Property</h5>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="modal"
-      aria-label="Close"
-      id="close-modal"
-      (click)="modal.dismiss('Cross click')"
-    ></button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+      (click)="modal.dismiss('Cross click')"></button>
   </div>
   <form [formGroup]="propertyForm" class="tablelist-form" autocomplete="off">
     <div class="modal-body">
       <div class="mb-3">
         <label for="phone-field" class="form-label">Property</label>
-        <input
-          type="text"
-          id="phone-field"
-          class="form-control"
-          placeholder="Enter Property Type"
-          required
-          formControlName="Property_Type"
-          [ngClass]="{
+        <input type="text" id="phone-field" class="form-control" placeholder="Enter Property Type" required
+          formControlName="Property_Type" [ngClass]="{
             'is-invalid': submitted && form['Property_Type'].errors
-          }"
-        />
+          }" />
         @if(submitted && form['Property_Type'].errors){
         <div class="invalid-feedback">
           @if(form['Property_Type'].errors['required']){
@@ -210,25 +141,11 @@
       </div>
     </div>
     <div class="modal-footer">
-      <div
-        class="hstack gap-2 justify-content-end"
-        [ngClass]="{ disabled: isLoading }"
-      >
-        <button
-          type="button"
-          class="btn btn-light"
-          data-bs-dismiss="modal"
-          (click)="modal.close('Close click')"
-        >
+      <div class="hstack gap-2 justify-content-end" [ngClass]="{ disabled: isLoading }">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="modal.close('Close click')">
           Close
         </button>
-        <button
-          type="submit"
-          class="btn btn-success"
-          id="add-btn"
-          (click)="createProperty()"
-          [disabled]="isLoading"
-        >
+        <button type="submit" class="btn btn-success" id="add-btn" (click)="createProperty()" [disabled]="isLoading">
           {{ !isPosting ? "Save" : "Saving" }}
         </button>
       </div>
@@ -238,14 +155,8 @@
 <ng-template #deleteModel let-modal="modal" let-journal="journal">
   <div class="modal-content">
     <div class="modal-header">
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="modal"
-        aria-label="Close"
-        id="btn-close"
-        (click)="modal?.dismiss('Cross click')"
-      ></button>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"
+        (click)="modal?.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
       <div class="mt-2 text-center">
@@ -257,20 +168,12 @@
         </div>
       </div>
       <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-        <button
-          class="btn btn-link link-success fw-medium text-decoration-none"
-          data-bs-dismiss="modal"
-          (click)="modal?.close('Close click')"
-        >
+        <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
+          (click)="modal?.close('Close click')">
           <i class="ri-close-line me-1 align-middle"></i> Close
         </button>
-        <button
-          type="button"
-          class="btn w-sm btn-danger"
-          id="delete-product"
-          (click)="modal?.close('Close click')"
-          (click)="delete(property)"
-        >
+        <button type="button" class="btn w-sm btn-danger" id="delete-product" (click)="modal?.close('Close click')"
+          (click)="deletePartyType(party)">
           Yes, Delete It!
         </button>
       </div>

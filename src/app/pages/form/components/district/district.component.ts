@@ -6,6 +6,8 @@ import { Router } from "@angular/router";
 import { NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ToastService } from "src/app/pages/icons/toast-service";
 import { environment } from "src/environments/environment";
+import { AccountSubTypeService } from "../service/accountSubType.service";
+import { DistrictService } from "../service/district.service";
 
 @Component({
   selector: "app-district",
@@ -21,25 +23,26 @@ export class DistrictComponent {
   submitted = false;
   isPosting = false;
   showEditToast = false;
-
+  selectedParty: any
   showAddToast = false;
   editFormFieldValue: any;
   currentPage = 1;
   pageSize = 10;
   totalPages!: number;
   page: any = 1;
-
+  DistrictId: any;
   paginationDatas: any;
 
   showSuccessToast = false;
   startIndex: number = 0;
   endIndex: number = 10;
   totalRecords: number = 0;
-
+  district: any;
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private router: Router,
+    public service: DistrictService,
     private modalService: NgbModal,
     public toastService: ToastService
   ) {}
@@ -89,29 +92,89 @@ export class DistrictComponent {
     this.modalService.open(party, { centered: true });
   }
 
-  EditParty(): void {
-    this.isPosting = true;
+  // EditParty(): void {
+  //   this.isPosting = true;
+  //   this.DistrictForm.markAllAsTouched();
+  //   if (this.DistrictForm.valid) {
+  //     const url = `${environment.url}party/edit`;
+  //     const data = {
+  //       Party_ID: this.DistrictForm.value.Party_ID,
+  //       Name: this.DistrictForm.value.Name,
+  //       Party_Type: this.DistrictForm.value.Party_Type,
+  //       Salary: this.DistrictForm.value.Salary,
+  //     };
+  //     this.http.post(url, data).subscribe((response) => {
+  //       console.log(response);
+  //       this.modalService.dismissAll();
+  //       this.showEditToast = true;
+  //       this.isPosting = false;
+  //       this.ngOnInit();
+  //     });
+  //   } else {
+  //     // Handle form validation errors here, e.g., display an error message.
+  //   }
+  // }
+
+  editDistrict(){
     this.DistrictForm.markAllAsTouched();
     if (this.DistrictForm.valid) {
-      const url = `${environment.url}party/edit`;
-      const data = {
-        Party_ID: this.DistrictForm.value.Party_ID,
-        Name: this.DistrictForm.value.Name,
-        Party_Type: this.DistrictForm.value.Party_Type,
-        Salary: this.DistrictForm.value.Salary,
-      };
-      this.http.post(url, data).subscribe((response) => {
-        console.log(response);
-        this.modalService.dismissAll();
-        this.showEditToast = true;
-        this.isPosting = false;
-        this.ngOnInit();
-      });
-    } else {
-      // Handle form validation errors here, e.g., display an error message.
-    }
+
+      this.isPosting = true;
+        var listData = this.districties.filter(
+          (data: { DistrictID: any }) => data.DistrictID === this.party
+        );
+  
+        if (listData.length > 0) {
+          const rowData = listData[0];
+          const editFormFieldValue = rowData.DistrictID;
+          console.log(editFormFieldValue);
+  
+          this.DistrictId = editFormFieldValue;
+          this.service.put(this.DistrictForm.value, this.DistrictId).subscribe((response) => {
+            this.modalService.dismissAll();
+            this.showSuccessToast = true;
+            this.ngOnInit();
+          });}
+         else {
+          this.isPosting = false;
+        }
+      
+        
+          // (error) => {
+          //   console.error(error);
+          //   this.toastService.remove("An error occurred!"); // Optional error notification
+          // }
+   
+  
+  }
   }
 
+  checkedValGet: any[] = [];
+  deleteDistrict(party: any) {
+    if (party) {
+      var listData = this.districties.filter(
+        (data: { DistrictID: any }) => data.DistrictID === this.party
+      );
+
+      if (listData.length > 0) {
+        const rowData = listData[0];
+        const editFormFieldValue = rowData.DistrictID;
+        console.log(editFormFieldValue);
+
+        this.DistrictId = editFormFieldValue;
+        console.log(this.DistrictId);
+        this.service.delete(this.DistrictId).subscribe((response) => {
+          this.modalService.dismissAll();
+          this.showSuccessToast = true;
+          this.ngOnInit();
+        });
+      } else {
+        this.checkedValGet.forEach((item: any) => {
+          document.getElementById("lj_" + item)?.remove();
+        });
+      }
+    }
+  }
   getVisibleSchedules(): any[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.districties.slice(startIndex, startIndex + this.pageSize);
@@ -131,14 +194,14 @@ export class DistrictComponent {
 
     // Filter the row data based on the ScheduleID
     var listData = this.districties.filter(
-      (data: { Party_ID: any }) => data.Party_ID === id
+      (data: { DistrictID: any }) => data.DistrictID === id
     );
 
     // Assuming listData has only one row matching the ScheduleID
     if (listData.length > 0) {
       // Access the row data to set the value in the edit form field
       const rowData = listData[0]; // Get the first (and only) element
-      const editFormFieldValue = rowData.Party_ID; // Replace YOUR_FIELD_NAME with the actual field name
+      const editFormFieldValue = rowData.DistrictID; // Replace YOUR_FIELD_NAME with the actual field name
 
       // Set the value of the edit form field, e.g., assigning to a variable or updating a form control
       this.editFormFieldValue = editFormFieldValue; // Update the value of editFormFieldValue with the actual form field variable
@@ -148,31 +211,7 @@ export class DistrictComponent {
       console.error("No data found for the specified ScheduleID");
     }
   }
-  checkedValGet: any[] = [];
-  deleteId: any;
-  // delete(party: any) {
-  //   if (party) {
-  //     var listData = this.districties.filter(
-  //       (data: { Party_ID: any }) => data.Party_ID === party
-  //     );
-  //     if (listData.length > 0) {
-  //       const rowData = listData[0];
-  //       const editFormFieldValue = rowData.Party_ID;
-  //       console.log(editFormFieldValue);
-  //       this.partyId = editFormFieldValue;
-  //       console.log(this.partyId);
-  //       this.service.delete(this.partyId).subscribe((response) => {
-  //         this.modalService.dismissAll();
-  //         this.showSuccessToast = true;
-  //         this.ngOnInit();
-  //       });
-  //     } else {
-  //       this.checkedValGet.forEach((item: any) => {
-  //         document.getElementById("lj_" + item)?.remove();
-  //       });
-  //     }
-  //   }
-  // }
+ 
   loadPage() {
     this.startIndex = (this.page - 1) * this.pageSize + 1;
     this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;

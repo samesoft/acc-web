@@ -15,7 +15,7 @@
       <small>06 mins ago</small>
     </ng-template> -->
     <div class="toast-body">
-        Party has been Deleted successfully.
+        Property has been Deleted successfully.
     </div>
 </ngb-toast>
 <div class="row">
@@ -94,14 +94,13 @@
                                         <div class="d-flex gap-2">
                                             <div class="edit">
                                                 <button class="btn btn-sm btn-primary edit-item-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#showModal"
-                                                   >Edit</button>
+                                                    data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
                                             </div>
                                             <div class="remove">
                                                 <!-- (click)="confirm(deleteModel,data.id)" -->
                                                 <button class="btn btn-sm btn-success remove-item-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
-                                                    >Remove</button>
+                                                    data-bs-toggle="modal" data-bs-target="#deleteRecordModal" (click)="confirm(deleteModel,data.Party_ID
+                                                    )">Remove</button>
                                             </div>
                                         </div>
                                     </td>
@@ -266,7 +265,8 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">Property_Type</label>
                     <select id="Party_ID" placeholder="Enter Name" formControlName="Property_Type" class="form-control">
-                        <option *ngFor="let type of propertyType" [value]="type.Pro_Type_ID">{{ type.Property_Type }}</option>
+                        <option *ngFor="let type of propertyType" [value]="type.Pro_Type_ID">{{ type.Property_Type }}
+                        </option>
                     </select>
                     @if(submitted && form['Property_Type'].errors){
                     <div class="invalid-feedback">
@@ -278,7 +278,8 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">Property_usage</label>
-                    <select id="Party_ID" placeholder="Enter Name" formControlName="Property_usage" class="form-control">
+                    <select id="Party_ID" placeholder="Enter Name" formControlName="Property_usage"
+                        class="form-control">
                         <option *ngFor="let type of propertyUsage" [value]="type.Pro_Usage_ID">{{ type.Usage }}</option>
                     </select>
                     @if(submitted && form['Property_usage'].errors){
@@ -287,7 +288,7 @@
                         <span>Property_usage is required</span>
                         }
                     </div>
-                }
+                    }
                 </div>
             </div>
 
@@ -324,8 +325,10 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">District</label>
-                    <select id="Party_ID" placeholder="Enter Name" formControlName="District" class="form-control" (ngModelChange)="getSubdistrictByDistrict($event)">
-                        <option *ngFor="let type of district" [value]="type.DistrictID">{{ type.District_Name }}</option>
+                    <select id="Party_ID" placeholder="Enter Name" formControlName="District" class="form-control"
+                        (ngModelChange)="getSubdistrictByDistrict($event)">
+                        <option *ngFor="let type of district" [value]="type.DistrictID">{{ type.District_Name }}
+                        </option>
                     </select>
                     @if(submitted && form['District'].errors){
                     <div class="invalid-feedback">
@@ -370,8 +373,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">Mobile</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
-                        formControlName="Mobile"
-                        [ngClass]="{ 'is-invalid': submitted && form['Mobile'].errors }" />
+                        formControlName="Mobile" [ngClass]="{ 'is-invalid': submitted && form['Mobile'].errors }" />
                     @if(submitted && form['Mobile'].errors){
                     <div class="invalid-feedback">
                         @if(form['Mobile'].errors['required']){
@@ -398,8 +400,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">P_Period</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
-                        formControlName="P_Period"
-                        [ngClass]="{ 'is-invalid': submitted && form['P_Period'].errors }" />
+                        formControlName="P_Period" [ngClass]="{ 'is-invalid': submitted && form['P_Period'].errors }" />
                     @if(submitted && form['P_Period'].errors){
                     <div class="invalid-feedback">
                         @if(form['P_Period'].errors['required']){
@@ -410,8 +411,8 @@
                 </div>
             </div>
 
-            
-                <!-- <div class="form-check mb-2">
+
+            <!-- <div class="form-check mb-2">
                     <input class="form-check-input" type="checkbox" id="formCheck1">
                     <label class="form-check-label" for="formCheck1">
                         Default checkbox
@@ -423,102 +424,101 @@
                         Checked checkbox
                     </label>
                 </div> -->
-                <!-- <div class="col-md-6 mb-3">
+            <!-- <div class="col-md-6 mb-3">
                     <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
                     <label class="form-check-label" for="formCheck1">
                         Pro_Is_Mon
                     </label>
                 </div> -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="phone-field" class="form-label">latitude</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
+                    formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
+                @if(submitted && form['latitude'].errors){
+                <div class="invalid-feedback">
+                    @if(form['latitude'].errors['required']){
+                    <span>latitude is required</span>
+                    }
+                </div>
+                }
             </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="phone-field" class="form-label">latitude</label>
-                    <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
-                        formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
-                    @if(submitted && form['latitude'].errors){
-                    <div class="invalid-feedback">
-                        @if(form['latitude'].errors['required']){
-                        <span>latitude is required</span>
-                        }
-                    </div>
+            <div class="col-md-6 mb-3">
+                <label for="phone-field" class="form-label">longitude</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter longitude" required
+                    formControlName="longitude" [ngClass]="{ 'is-invalid': submitted && form['longitude'].errors }" />
+                @if(submitted && form['longitude'].errors){
+                <div class="invalid-feedback">
+                    @if(form['longitude'].errors['required']){
+                    <span>longitude is required</span>
                     }
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label for="phone-field" class="form-label">longitude</label>
-                    <input type="text" id="phone-field" class="form-control" placeholder="Enter longitude" required
-                        formControlName="longitude"
-                        [ngClass]="{ 'is-invalid': submitted && form['longitude'].errors }" />
-                    @if(submitted && form['longitude'].errors){
-                    <div class="invalid-feedback">
-                        @if(form['longitude'].errors['required']){
-                        <span>longitude is required</span>
-                        }
-                    </div>
-                    }
-                </div>
-            </div>
-
-
-
-            <!-- <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="phone-field" class="form-label">latitude</label>
-                    <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
-                        formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
-                    @if(submitted && form['latitude'].errors){
-                    <div class="invalid-feedback">
-                        @if(form['latitude'].errors['required']){
-                        <span>latitude is required</span>
-                        }
-                    </div>
-                    }
-                </div> -->
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="phone-field" class="form-label">P_Year</label>
-                        <input type="text" id="phone-field" class="form-control" placeholder="Enter P_Year" required
-                            formControlName="P_Year" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
-                        @if(submitted && form['P_Year'].errors){
-                        <div class="invalid-feedback">
-                            @if(form['P_Year'].errors['required']){
-                            <span>P_Year is required</span>
-                            }
-                        </div>
-                        }
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                    <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
-                    <label class="form-check-label" for="formCheck1">
-                        Pro_Is_Mon
-                    </label>
-                </div>
-                       
-                        <div class="col-md-6 mb-3">
-                            <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Apr">
-                            <label class="form-check-label" for="formCheck1">
-                                Pro_Is_Apr
-                            </label>
-                        </div>
-                    </div>
-
-         
-
-
-
-
-
-       
-        <div class="modal-footer">
-            <div class="hstack gap-2 justify-content-end" [ngClass]="{ 'disabled': isLoading }">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
-                    (click)="modal.close('Close click')">Close</button>
-                <button type="submit" class="btn btn-success" id="add-btn" (click)="createProperty()"
-                    [disabled]="isLoading"> {{ !isPosting ? 'Save' : 'Saving' }}</button>
+                }
             </div>
         </div>
-    </div>
+
+
+
+        <!-- <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">latitude</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
+                        formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
+                    @if(submitted && form['latitude'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['latitude'].errors['required']){
+                        <span>latitude is required</span>
+                        }
+                    </div>
+                    }
+                </div> -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="phone-field" class="form-label">P_Year</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter P_Year" required
+                    formControlName="P_Year" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
+                @if(submitted && form['P_Year'].errors){
+                <div class="invalid-feedback">
+                    @if(form['P_Year'].errors['required']){
+                    <span>P_Year is required</span>
+                    }
+                </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
+                    <label class="form-check-label" for="formCheck1">
+                        Pro_Is_Mon
+                    </label>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Apr">
+                    <label class="form-check-label" for="formCheck1">
+                        Pro_Is_Apr
+                    </label>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end" [ngClass]="{ 'disabled': isLoading }">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                        (click)="modal.close('Close click')">Close</button>
+                    <button type="submit" class="btn btn-success" id="add-btn" (click)="createProperty()"
+                        [disabled]="isLoading"> {{ !isPosting ? 'Save' : 'Saving' }}</button>
+                </div>
+            </div>
+        </div>
 
     </form>
 </ng-template>
@@ -540,7 +540,9 @@
                 <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
                     (click)="modal?.close('Close click')"><i class="ri-close-line me-1 align-middle"></i> Close</button>
                 <button type="button" class="btn w-sm btn-danger" id="delete-product"
-                    (click)="modal?.close('Close click')">Yes, Delete It!</button>
+                    (click)="modal?.close('Close click')"
+                    (click)="deleteProperty(party)"
+                    >Yes, Delete It!</button>
             </div>
         </div>
     </div>

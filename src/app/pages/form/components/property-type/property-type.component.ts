@@ -15,6 +15,7 @@ import {
 import { Router } from "@angular/router";
 import { AccountSubTypeService } from "../service/accountSubType.service";
 import { ToastService } from "src/app/pages/icons/toast-service";
+import { DistrictService } from "../service/district.service";
 
 @Component({
   selector: "app-property-type",
@@ -62,7 +63,7 @@ export class PropertyTypeComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private modalService: NgbModal,
-    public service: AccountSubTypeService,
+    public service: DistrictService,
     public toastService: ToastService
   ) {}
 
@@ -110,11 +111,12 @@ export class PropertyTypeComponent {
       this.isLoading = false;
     }
   }
-  property: any;
-  confirm(property: any, Pro_Type_ID: any) {
-    this.property = Pro_Type_ID;
-    console.log(this.property);
-    this.modalService.open(property, { centered: true });
+  party: any;
+  // property: any;
+  confirm(party: any, Pro_Type_ID: any) {
+    this.party = Pro_Type_ID;
+    console.log(this.party);
+    this.modalService.open(party, { centered: true });
   }
 
   EditProperty(): void {
@@ -187,12 +189,12 @@ export class PropertyTypeComponent {
       console.error("No data found for the specified Property Type");
     }
   }
+  PartyTypeId: any
   checkedValGet: any[] = [];
-  deleteId: any;
-  delete(property: any) {
-    if (property) {
+  deletePartyType(party: any) {
+    if (party) {
       var listData = this.propertys.filter(
-        (data: { Pro_Type_ID: any }) => data.Pro_Type_ID === this.property
+        (data: { Pro_Type_ID: any }) => data.Pro_Type_ID === this.party
       );
 
       if (listData.length > 0) {
@@ -200,9 +202,9 @@ export class PropertyTypeComponent {
         const editFormFieldValue = rowData.Pro_Type_ID;
         console.log(editFormFieldValue);
 
-        this.property = editFormFieldValue;
-        console.log(this.property);
-        this.service.deleteProperty(this.property).subscribe((response) => {
+        this.PartyTypeId = editFormFieldValue;
+        console.log(this.PartyTypeId);
+        this.service.deletePropertyTypes(this.PartyTypeId).subscribe((response) => {
           this.modalService.dismissAll();
           this.showSuccessToast = true;
           this.ngOnInit();

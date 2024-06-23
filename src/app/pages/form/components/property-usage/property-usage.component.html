@@ -87,7 +87,7 @@
                           class="btn btn-sm btn-success remove-item-btn"
                           data-bs-toggle="modal"
                           data-bs-target="#deleteRecordModal"
-                         
+                          (click)="confirm(deleteModel,data.Pro_Usage_ID)"
                         >
                           Remove
                         </button>
@@ -267,7 +267,7 @@
           class="btn w-sm btn-danger"
           id="delete-product"
           (click)="modal?.close('Close click')"
-          (click)="delete(property)"
+          (click)="deleteUsage(party)"
         >
           Yes, Delete It!
         </button>

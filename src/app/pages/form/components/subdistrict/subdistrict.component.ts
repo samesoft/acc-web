@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from 'src/app/pages/icons/toast-service';
 import { environment } from 'src/environments/environment';
+import { DistrictService } from '../service/district.service';
 
 @Component({
   selector: 'app-subdistrict',
@@ -41,6 +42,7 @@ export class SubdistrictComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private modalService: NgbModal,
+    private service : DistrictService,
     public toastService: ToastService
   ) {}
 
@@ -122,6 +124,7 @@ export class SubdistrictComponent {
     }
   }
 
+
   getVisibleSchedules(): any[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.districties.slice(startIndex, startIndex + this.pageSize);
@@ -183,6 +186,33 @@ export class SubdistrictComponent {
   //     }
   //   }
   // }
+
+  SUbDistrictId: any;
+  deleteSubdistrict(party: any) {
+    if (party) {
+      var listData = this.Subdistricties.filter(
+        (data: { ID: any }) => data.ID === this.party
+      );
+
+      if (listData.length > 0) {
+        const rowData = listData[0];
+        const editFormFieldValue = rowData.ID;
+        console.log(editFormFieldValue);
+
+        this.SUbDistrictId = editFormFieldValue;
+        console.log(this.SUbDistrictId);
+        this.service.deleteSubDistrict(this.SUbDistrictId).subscribe((response) => {
+          this.modalService.dismissAll();
+          this.showSuccessToast = true;
+          this.ngOnInit();
+        });
+      } else {
+        this.checkedValGet.forEach((item: any) => {
+          document.getElementById("lj_" + item)?.remove();
+        });
+      }
+    }
+  }
   loadPage() {
     this.startIndex = (this.page - 1) * this.pageSize + 1;
     this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;

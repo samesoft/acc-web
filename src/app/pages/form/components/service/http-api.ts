@@ -9,9 +9,12 @@ export class HttpApi {
   static journal = "transaction/journal-statement/";
   static journalDelete = "transaction/delete-journal";
   static PartyDelete = "party/";
+  static PropertyDelete = "property/";
+  static DistrictDelete = "district/";
+  static SubdistrictDelete = "subDistrict/";
   static JournalDelete = "transaction/delete-journal/";
   static ImportJournal = "transaction/import-journal/";
   static CargoDelete = "trips/delete";
-  static PropertyDelete = "propertyType/";
-  static PropertyUsageDelete = "/propertyUsage";
+  static PropertyTypeDelete = "propertyType/";
+  static PropertyUsageDelete = "propertyUsage/";
 }

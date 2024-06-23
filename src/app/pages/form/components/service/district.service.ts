@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
-export class AccountSubTypeService {
+export class DistrictService {
   AccountSubTypeList: any[] = [];
   loading = false;
   constructor(private http: HttpClient) {}
@@ -28,18 +28,40 @@ export class AccountSubTypeService {
   //       this.loading=false
   //     })
   //   }
-  put(data: any, id: number) {
-    return this.http.put<any>(
-      `${environment.url}${HttpApi.subType}` + id,
-      data
-    );
-  }
+//   put(data: any, id: number) {
+//     return this.http.put<any>(
+//       `${environment.url}${HttpApi.subType}` + id,
+//       data
+//     );
+//   }
   delete(id: number) {
     return this.http.delete<any>(
-      `${environment.url}${HttpApi.PartyDelete}` + id
+      `${environment.url}${HttpApi.DistrictDelete}` + id
     );
   }
-  
+  deleteSubDistrict(id: number) {
+    return this.http.delete<any>(
+      `${environment.url}${HttpApi.SubdistrictDelete}` + id
+    );
+  }
+  deletePropertyTypes(id: number) {
+    return this.http.delete<any>(
+      `${environment.url}${HttpApi.PropertyTypeDelete}` + id
+    );
+  }
+  deletePropertyUsage(id: number) {
+    return this.http.delete<any>(
+      `${environment.url}${HttpApi.PropertyUsageDelete}` + id
+    );
+  }
+  put( id: number, data: any) {
+    return this.http.put<any>( `${environment.url}${HttpApi.DistrictDelete}` + id, data);
+  }
+  deleteProperty(id: number) {
+    return this.http.delete<any>(
+      `${environment.url}${HttpApi.PropertyDelete}` + id
+    );
+  }
   deleteJournal(data: any) {
     return this.http.post<any>(
       `${environment.url}${HttpApi.JournalDelete}`,
@@ -65,6 +87,8 @@ export class AccountSubTypeService {
       `${environment.url}${HttpApi.CargoDelete}` + id
     );
   }
+
+  
   getSubdistrictByDistrict(id: string){
     return this.http.get<any>(HttpApi.GetSubdistrictByDistrict + id); 
   }
