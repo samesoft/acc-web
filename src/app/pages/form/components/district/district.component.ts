@@ -1,7 +1,12 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
 import { Router } from "@angular/router";
 import { NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { ToastService } from "src/app/pages/icons/toast-service";
@@ -23,7 +28,7 @@ export class DistrictComponent {
   submitted = false;
   isPosting = false;
   showEditToast = false;
-  selectedParty: any
+  selectedParty: any;
   showAddToast = false;
   editFormFieldValue: any;
   currentPage = 1;
@@ -49,6 +54,7 @@ export class DistrictComponent {
 
   ngOnInit(): void {
     this.DistrictForm = this.formBuilder.group({
+      DistrictID: [""],
       District_Name: ["", Validators.required],
     });
 
@@ -73,7 +79,6 @@ export class DistrictComponent {
       const url = `${environment.url}district`;
       const data = {
         District_Name: this.DistrictForm.value.District_Name,
-       
       };
       this.http.post(url, data).subscribe((response) => {
         this.isLoading = false;
@@ -115,39 +120,71 @@ export class DistrictComponent {
   //   }
   // }
 
-  editDistrict(){
+  editDistrict(): void {
+    this.isPosting = true;
+    this.submitted = true;
     this.DistrictForm.markAllAsTouched();
-    if (this.DistrictForm.valid) {
 
-      this.isPosting = true;
-        var listData = this.districties.filter(
-          (data: { DistrictID: any }) => data.DistrictID === this.party
-        );
-  
-        if (listData.length > 0) {
-          const rowData = listData[0];
-          const editFormFieldValue = rowData.DistrictID;
-          console.log(editFormFieldValue);
-  
-          this.DistrictId = editFormFieldValue;
-          this.service.put(this.DistrictForm.value, this.DistrictId).subscribe((response) => {
+    if (this.DistrictForm.valid) {
+      const districtId = this.DistrictForm.value.DistrictID; // Assuming the ID is stored in the form's 'id' field
+
+      if (districtId) {
+        const url = `${environment.url}district/${districtId}`; // Construct URL with ID path segment
+
+        this.http.put(url, this.DistrictForm.value).subscribe(
+          (response) => {
+            console.log(response);
             this.modalService.dismissAll();
-            this.showSuccessToast = true;
+            this.showAddToast = true;
+            this.showEditToast = true;
+            this.isPosting = false;
             this.ngOnInit();
-          });}
-         else {
-          this.isPosting = false;
-        }
-      
-        
-          // (error) => {
-          //   console.error(error);
-          //   this.toastService.remove("An error occurred!"); // Optional error notification
-          // }
-   
-  
+          },
+          (error) => {
+            // Handle error response from delete request
+            console.error("Error deleting Property Type:", error);
+          }
+        );
+      } else {
+        // Handle case where ID is not present in the form
+        console.error("Property Type ID is required for deletion.");
+      }
+    } else {
+      // Handle form validation errors here, e.g., display an error message.
+    }
   }
-  }
+
+  // editDistrict() {
+  //   this.DistrictForm.markAllAsTouched();
+  //   if (this.DistrictForm.valid) {
+  //     this.isPosting = true;
+  //     var listData = this.districties.filter(
+  //       (data: { DistrictID: any }) => data.DistrictID === this.party
+  //     );
+
+  //     if (listData.length > 0) {
+  //       const rowData = listData[0];
+  //       const editFormFieldValue = rowData.DistrictID;
+  //       console.log(editFormFieldValue);
+
+  //       this.DistrictId = editFormFieldValue;
+  //       this.service
+  //         .put(this.DistrictForm.value, this.DistrictId)
+  //         .subscribe((response) => {
+  //           this.modalService.dismissAll();
+  //           this.showSuccessToast = true;
+  //           this.ngOnInit();
+  //         });
+  //     } else {
+  //       this.isPosting = false;
+  //     }
+
+  //     // (error) => {
+  //     //   console.error(error);
+  //     //   this.toastService.remove("An error occurred!"); // Optional error notification
+  //     // }
+  //   }
+  // }
 
   checkedValGet: any[] = [];
   deleteDistrict(party: any) {
@@ -211,7 +248,7 @@ export class DistrictComponent {
       console.error("No data found for the specified ScheduleID");
     }
   }
- 
+
   loadPage() {
     this.startIndex = (this.page - 1) * this.pageSize + 1;
     this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;
