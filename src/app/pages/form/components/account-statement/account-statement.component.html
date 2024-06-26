@@ -51,10 +51,10 @@
                   <thead>
                     <tr class="bg-light text-muted">
 
-                      <th class="sort" listsortable="customer_name">Tran_Date</th>
-                      <th class="sort" listsortable="email">Memo</th>
-                      <th class="sort" listsortable="phone">Dr</th>
-                      <th class="sort" listsortable="date">Cr</th>
+                      <th >Tran_Date</th>
+                      <th >Memo</th>
+                      <th >Dr</th>
+                      <th >Cr</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -79,7 +79,7 @@
                     }
                   </tbody>
                 </table>
-                <button class="btn btn-primary" (click)="downloadPdf()" >Export to PDF</button>
+                <button class="btn btn-primary" (click)="downloadPdf()">Export to PDF</button>
               </div>
               <div class="row" *ngIf="statements.length>0">
                 <div class="col-lg-12">
@@ -97,9 +97,9 @@
                               <thead>
                                 <tr class="bg-light text-muted">
 
-                                  <th class="sort" listsortable="customer_name">Total Dr</th>
-                                  <th class="sort" listsortable="email">Total Cr</th>
-                                  <th class="sort" listsortable="phone">Balance</th>
+                                  <th >Total Dr</th>
+                                  <th >Total Cr</th>
+                                  <th >Balance</th>
 
                                 </tr>
                               </thead>
@@ -125,6 +125,6 @@
 
                               </tbody>
                             </table>
-                            <button class="btn btn-primary" (click)="downloadTotalPdf()" >Export to PDF</button>
-                          
+                            <button class="btn btn-primary" (click)="downloadTotalPdf()">Export to PDF</button>
+
                           </div>
