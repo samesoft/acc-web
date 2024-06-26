@@ -94,7 +94,8 @@
                                         <div class="d-flex gap-2">
                                             <div class="edit">
                                                 <button class="btn btn-sm btn-primary edit-item-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#showModal">Edit</button>
+                                                    data-bs-toggle="modal" data-bs-target="#showModal" (click)="editModa(content, data.Party_ID
+                                                    )">Edit</button>
                                             </div>
                                             <div class="remove">
                                                 <!-- (click)="confirm(deleteModel,data.id)" -->
@@ -152,38 +153,326 @@
     </div>
     <form [formGroup]="PropertyForm" class="tablelist-form" autocomplete="off">
         <div class="modal-body">
-
-            <div class="mb-3">
-                <label for="phone-field" class="form-label">Name</label>
-                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone name" required
-                    formControlName="Party_Type" [ngClass]="{ 'is-invalid': submitted && form['Name'].errors }" />
-                @if(submitted && form['Name'].errors){
-                <div class="invalid-feedback">
-                    @if(form['Name'].errors['required']){
-                    <span>Name is required</span>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label for="Party_ID">Party Type:</label>
+                        <select id="Party_ID" placeholder="Enter Name" formControlName="Party_Type"
+                            class="form-control">
+                            <option *ngFor="let type of partyTypes" [value]="type">{{ type }}</option>
+                        </select>
+                        @if(submitted && form['Party_Type'].errors){
+                        <div class="invalid-feedback">
+                            @if(form['Party_Type'].errors['required']){
+                            <span>Party is required</span>
+                            }
+                        </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">Property_No</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                        formControlName="Property_No"
+                        [ngClass]="{ 'is-invalid': submitted && form['Property_No'].errors }" />
+                    @if(submitted && form['Property_No'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['Property_No'].errors['required']){
+                        <span>Property_No is required</span>
+                        }
+                    </div>
                     }
-                </div>}
+                </div>
+
             </div>
 
-            <!-- <div class="form-group">
-                <label for="Party_ID">Party Type:</label>
-                <select id="Party_ID" formControlName="Party_Type" class="form-control">
-                    <option *ngFor="let type of partyTypes" [value]="type">{{ type}}</option>
-                </select>
-            </div> -->
-
-            <div class="mb-3">
-                <label for="phone-field" class="form-label">Salary</label>
-                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone salary" required
-                    formControlName="Salary" [ngClass]="{ 'is-invalid': submitted && form['Salary'].errors }" />
-                <div class="invalid-feedback">Please enter a salary.</div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">Property_Name</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                        formControlName="Property_Name"
+                        [ngClass]="{ 'is-invalid': submitted && form['Property_Name'].errors }" />
+                    @if(submitted && form['Property_Name'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['Property_Name'].errors['required']){
+                        <span>Property_Name is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">House_Nbr</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                        formControlName="House_Nbr"
+                        [ngClass]="{ 'is-invalid': submitted && form['House_Nbr'].errors }" />
+                    @if(submitted && form['House_Nbr'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['House_Nbr'].errors['required']){
+                        <span>House_Nbr is required</span>
+                        }
+                    </div>
+                    }
+                </div>
             </div>
+
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">Property_Type</label>
+                    <select id="Party_ID" placeholder="Enter Name" formControlName="Property_Type" class="form-control">
+                        <option *ngFor="let type of propertyType" [value]="type.Pro_Type_ID">{{ type.
+                            Property_Type
+                            }}
+                        </option>
+                    </select>
+                    @if(submitted && form['Property_Type'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['Property_Type'].errors['required']){
+                        <span>Property_Type is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">Property_usage</label>
+                    <select id="Party_ID" placeholder="Enter Name" formControlName="Property_usage"
+                        class="form-control">
+                        <option *ngFor="let type of propertyUsage" [value]="type.Pro_Usage_ID">{{ type.Usage }}</option>
+                    </select>
+                    @if(submitted && form['Property_usage'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['Property_usage'].errors['required']){
+                        <span>Property_usage is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">Property_Owner</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter Property_Owner" required
+                        formControlName="Property_Owner"
+                        [ngClass]="{ 'is-invalid': submitted && form['Property_Owner'].errors }" />
+                    @if(submitted && form['Property_Owner'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['Property_Owner'].errors['required']){
+                        <span>Property_Owner is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">Owner_Mobile</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter Owner_Mobile" required
+                        formControlName="Owner_Mobile"
+                        [ngClass]="{ 'is-invalid': submitted && form['Owner_Mobile'].errors }" />
+                    @if(submitted && form['Owner_Mobile'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['Owner_Mobile'].errors['required']){
+                        <span>Owner_Mobile is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">District</label>
+                    <select id="Party_ID" placeholder="Enter Name" formControlName="District" class="form-control"
+                        (ngModelChange)="getSubdistrictByDistrict($event)">
+                        <option *ngFor="let type of district" [value]="type.DistrictID">{{ type.District_Name }}
+                        </option>
+                    </select>
+                    @if(submitted && form['District'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['District'].errors['required']){
+                        <span>District is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">Sub_District</label>
+                    <select id="Party_ID" placeholder="Enter Name" formControlName="Sub_District" class="form-control">
+                        <option *ngFor="let type of subdistrict" [value]="type.ID">{{ type.Sub_District }}</option>
+                    </select>
+                    @if(submitted && form['Sub_District'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['Sub_District'].errors['required']){
+                        <span>Sub_District is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">Tenant_Name</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                        formControlName="Tenant_Name"
+                        [ngClass]="{ 'is-invalid': submitted && form['House_Nbr'].errors }" />
+                    @if(submitted && form['Tenant_Name'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['Tenant_Name'].errors['required']){
+                        <span>Tenant_Name is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">Mobile</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                        formControlName="Mobile" [ngClass]="{ 'is-invalid': submitted && form['Mobile'].errors }" />
+                    @if(submitted && form['Mobile'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['Mobile'].errors['required']){
+                        <span>Mobile is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">amount</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter amount" required
+                        formControlName="amount" [ngClass]="{ 'is-invalid': submitted && form['amount'].errors }" />
+                    @if(submitted && form['amount'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['amount'].errors['required']){
+                        <span>amount is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">P_Period</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter District" required
+                        formControlName="P_Period" [ngClass]="{ 'is-invalid': submitted && form['P_Period'].errors }" />
+                    @if(submitted && form['P_Period'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['P_Period'].errors['required']){
+                        <span>P_Period is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+
+
+
+                <!-- <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="formCheck1">
+                    <label class="form-check-label" for="formCheck1">
+                        Default checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formCheck2" checked>
+                    <label class="form-check-label" for="formCheck2">
+                        Checked checkbox
+                    </label>
+                </div> -->
+                <!-- <div class="col-md-6 mb-3">
+                    <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
+                    <label class="form-check-label" for="formCheck1">
+                        Pro_Is_Mon
+                    </label>
+                </div> -->
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">latitude</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
+                        formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
+                    @if(submitted && form['latitude'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['latitude'].errors['required']){
+                        <span>latitude is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">longitude</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter longitude" required
+                        formControlName="longitude"
+                        [ngClass]="{ 'is-invalid': submitted && form['longitude'].errors }" />
+                    @if(submitted && form['longitude'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['longitude'].errors['required']){
+                        <span>longitude is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+            </div>
+
+
+
+            <!-- <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">latitude</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
+                        formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
+                    @if(submitted && form['latitude'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['latitude'].errors['required']){
+                        <span>latitude is required</span>
+                        }
+                    </div>
+                    }
+                </div> -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">P_Year</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter P_Year" required
+                        formControlName="P_Year" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
+                    @if(submitted && form['P_Year'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['P_Year'].errors['required']){
+                        <span>P_Year is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
+                        <label class="form-check-label" for="formCheck1">
+                            Pro_Is_Mon
+                        </label>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Apr">
+                        <label class="form-check-label" for="formCheck1">
+                            Pro_Is_Apr
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+
+
+
+
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal"
                     (click)="modal.close('Close click')">Close</button>
-                <button type="submit" class="btn btn-success" id="add-btn" (click)="EditParty()">{{ !isPosting ?
+                <button type="submit" class="btn btn-success" id="add-btn"  (click)="editProperty()">{{ !isPosting ?
                     'Update' : 'Updating' }}</button>
             </div>
         </div>
@@ -409,10 +698,10 @@
                     </div>
                     }
                 </div>
-            </div>
 
 
-            <!-- <div class="form-check mb-2">
+
+                <!-- <div class="form-check mb-2">
                     <input class="form-check-input" type="checkbox" id="formCheck1">
                     <label class="form-check-label" for="formCheck1">
                         Default checkbox
@@ -424,44 +713,45 @@
                         Checked checkbox
                     </label>
                 </div> -->
-            <!-- <div class="col-md-6 mb-3">
+                <!-- <div class="col-md-6 mb-3">
                     <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
                     <label class="form-check-label" for="formCheck1">
                         Pro_Is_Mon
                     </label>
                 </div> -->
-        </div>
+            </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="phone-field" class="form-label">latitude</label>
-                <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
-                    formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
-                @if(submitted && form['latitude'].errors){
-                <div class="invalid-feedback">
-                    @if(form['latitude'].errors['required']){
-                    <span>latitude is required</span>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">latitude</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
+                        formControlName="latitude" [ngClass]="{ 'is-invalid': submitted && form['latitude'].errors }" />
+                    @if(submitted && form['latitude'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['latitude'].errors['required']){
+                        <span>latitude is required</span>
+                        }
+                    </div>
                     }
                 </div>
-                }
-            </div>
-            <div class="col-md-6 mb-3">
-                <label for="phone-field" class="form-label">longitude</label>
-                <input type="text" id="phone-field" class="form-control" placeholder="Enter longitude" required
-                    formControlName="longitude" [ngClass]="{ 'is-invalid': submitted && form['longitude'].errors }" />
-                @if(submitted && form['longitude'].errors){
-                <div class="invalid-feedback">
-                    @if(form['longitude'].errors['required']){
-                    <span>longitude is required</span>
+                <div class="col-md-6 mb-3">
+                    <label for="phone-field" class="form-label">longitude</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter longitude" required
+                        formControlName="longitude"
+                        [ngClass]="{ 'is-invalid': submitted && form['longitude'].errors }" />
+                    @if(submitted && form['longitude'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['longitude'].errors['required']){
+                        <span>longitude is required</span>
+                        }
+                    </div>
                     }
                 </div>
-                }
             </div>
-        </div>
 
 
 
-        <!-- <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="phone-field" class="form-label">latitude</label>
                     <input type="text" id="phone-field" class="form-control" placeholder="Enter latitude" required
@@ -474,36 +764,36 @@
                     </div>
                     }
                 </div> -->
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="phone-field" class="form-label">P_Year</label>
-                <input type="text" id="phone-field" class="form-control" placeholder="Enter P_Year" required
-                    formControlName="P_Year" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
-                @if(submitted && form['P_Year'].errors){
-                <div class="invalid-feedback">
-                    @if(form['P_Year'].errors['required']){
-                    <span>P_Year is required</span>
-                    }
-                </div>
-                }
-            </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
-                    <label class="form-check-label" for="formCheck1">
-                        Pro_Is_Mon
-                    </label>
+                    <label for="phone-field" class="form-label">P_Year</label>
+                    <input type="text" id="phone-field" class="form-control" placeholder="Enter P_Year" required
+                        formControlName="P_Year" [ngClass]="{ 'is-invalid': submitted && form['P_Year'].errors }" />
+                    @if(submitted && form['P_Year'].errors){
+                    <div class="invalid-feedback">
+                        @if(form['P_Year'].errors['required']){
+                        <span>P_Year is required</span>
+                        }
+                    </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Mon">
+                        <label class="form-check-label" for="formCheck1">
+                            Pro_Is_Mon
+                        </label>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Apr">
+                        <label class="form-check-label" for="formCheck1">
+                            Pro_Is_Apr
+                        </label>
+                    </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <input class="form-check-input" type="checkbox" formControlName="Pro_Is_Apr">
-                    <label class="form-check-label" for="formCheck1">
-                        Pro_Is_Apr
-                    </label>
-                </div>
             </div>
-
-
 
 
 
@@ -540,9 +830,7 @@
                 <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
                     (click)="modal?.close('Close click')"><i class="ri-close-line me-1 align-middle"></i> Close</button>
                 <button type="button" class="btn w-sm btn-danger" id="delete-product"
-                    (click)="modal?.close('Close click')"
-                    (click)="deleteProperty(party)"
-                    >Yes, Delete It!</button>
+                    (click)="modal?.close('Close click')" (click)="deleteProperty(party)">Yes, Delete It!</button>
             </div>
         </div>
     </div>

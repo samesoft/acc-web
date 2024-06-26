@@ -1,28 +1,33 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ToastService } from 'src/app/pages/icons/toast-service';
-import { environment } from 'src/environments/environment';
-import { AccountSubTypeService } from '../service/accountSubType.service';
-import { DistrictService } from '../service/district.service';
+import { Component } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
+import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import { NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { ToastService } from "src/app/pages/icons/toast-service";
+import { environment } from "src/environments/environment";
+import { AccountSubTypeService } from "../service/accountSubType.service";
+import { DistrictService } from "../service/district.service";
 
 @Component({
-  selector: 'app-property',
+  selector: "app-property",
   standalone: true,
   imports: [CommonModule, NgbModule, ReactiveFormsModule],
-  templateUrl: './property.component.html',
-  styleUrl: './property.component.scss'
+  templateUrl: "./property.component.html",
+  styleUrl: "./property.component.scss",
 })
 export class PropertyComponent {
   PropertyForm!: FormGroup;
   properties: any[] = [];
-  propertyType: any[]= [];
-  propertyUsage: any[]= [];
-  district: any[]= [];
-  subdistrict: any[]= [];
+  propertyType: any[] = [];
+  propertyUsage: any[] = [];
+  district: any[] = [];
+  subdistrict: any[] = [];
   partyTypes: string[] = ["Employee", "Customer", "Vendor"];
   isLoading = false;
   submitted = false;
@@ -49,11 +54,12 @@ export class PropertyComponent {
     private router: Router,
     private modalService: NgbModal,
     public toastService: ToastService,
-    public service : DistrictService
+    public service: DistrictService
   ) {}
 
   ngOnInit(): void {
     this.PropertyForm = this.formBuilder.group({
+      Party_ID: [""],
       Party_Type: ["", Validators.required],
       Property_No: ["", Validators.required],
       Property_Name: ["", Validators.required],
@@ -70,18 +76,16 @@ export class PropertyComponent {
       P_Period: ["", Validators.required],
       P_Year: ["", Validators.required],
       Pro_Is_Mon: false,
-      Pro_Is_Apr:false,
+      Pro_Is_Apr: false,
       longitude: ["", Validators.required],
       latitude: ["", Validators.required],
     });
 
-   
     this.fetchPropertyList();
     this.fetchPropertyTypeList();
     this.fetchPropertyUsageList();
     this.fetchDistrictList();
     this.fetchSubdistrictList();
-
   }
 
   fetchPropertyList(): void {
@@ -106,11 +110,13 @@ export class PropertyComponent {
   fetchPropertyUsageList(): void {
     this.isLoading = true;
     // setTimeout(() => {
-    this.http.get<any[]>(`${environment.url}propertyUsage`).subscribe((data) => {
-      this.propertyUsage = data;
-      console.log(data);
-      this.isLoading = false;
-    });
+    this.http
+      .get<any[]>(`${environment.url}propertyUsage`)
+      .subscribe((data) => {
+        this.propertyUsage = data;
+        console.log(data);
+        this.isLoading = false;
+      });
   }
 
   fetchDistrictList(): void {
@@ -133,7 +139,9 @@ export class PropertyComponent {
   }
 
   getSubdistrictByDistrict(Id: any) {
-    this.http.get<any[]>(`${environment.url}SubDistrict/` + Id).subscribe((data) => {
+    this.http
+      .get<any[]>(`${environment.url}SubDistrict/` + Id)
+      .subscribe((data) => {
         this.subdistrict = data;
         console.log(this.subdistrict);
       });
@@ -183,24 +191,34 @@ export class PropertyComponent {
     this.modalService.open(party, { centered: true });
   }
 
-  EditParty(): void {
+  editProperty(): void {
     this.isPosting = true;
+    this.submitted = true;
     this.PropertyForm.markAllAsTouched();
     if (this.PropertyForm.valid) {
-      const url = `${environment.url}party/edit`;
-      const data = {
-        Party_ID: this.PropertyForm.value.Party_ID,
-        Name: this.PropertyForm.value.Name,
-        Party_Type: this.PropertyForm.value.Party_Type,
-        Salary: this.PropertyForm.value.Salary,
-      };
-      this.http.post(url, data).subscribe((response) => {
-        console.log(response);
-        this.modalService.dismissAll();
-        this.showEditToast = true;
-        this.isPosting = false;
-        this.ngOnInit();
-      });
+      const propertyId = this.PropertyForm.value.Party_ID; // Assuming the ID is stored in the form's 'id' field
+
+      if (propertyId) {
+        const url = `${environment.url}property/${propertyId}`; // Construct URL with ID path segment
+
+        this.http.put(url, this.PropertyForm.value).subscribe(
+          (response) => {
+            console.log(response);
+            this.modalService.dismissAll();
+            // this.showAddToast = true;
+            this.showEditToast = true;
+            this.isPosting = false;
+            this.ngOnInit();
+          },
+          (error) => {
+            // Handle error response from delete request
+            console.error("Error deleting Property Type:", error);
+          }
+        );
+      } else {
+        // Handle case where ID is not present in the form
+        console.error("Property Type ID is required for deletion.");
+      }
     } else {
       // Handle form validation errors here, e.g., display an error message.
     }
@@ -221,7 +239,7 @@ export class PropertyComponent {
 
   editModa(content: any, id: any) {
     this.submitted = false;
-    this.modalService.open(content, { size: "md", centered: true });
+    this.modalService.open(content, { size: "lg", centered: true });
 
     // Filter the row data based on the ScheduleID
     var listData = this.properties.filter(
@@ -242,7 +260,7 @@ export class PropertyComponent {
       console.error("No data found for the specified ScheduleID");
     }
   }
-propertyID : any;
+  propertyID: any;
   checkedValGet: any[] = [];
   deleteProperty(party: any) {
     if (party) {
@@ -269,7 +287,7 @@ propertyID : any;
       }
     }
   }
- 
+
   loadPage() {
     this.startIndex = (this.page - 1) * this.pageSize + 1;
     this.endIndex = (this.page - 1) * this.pageSize + this.pageSize;

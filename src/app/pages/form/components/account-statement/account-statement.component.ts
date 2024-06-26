@@ -8,7 +8,8 @@ import {
 } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-
+import jsPDF from 'jspdf'; // Import jsPDF library
+import autoTable from 'jspdf-autotable';
 @Component({
   selector: "app-account-statement",
   standalone: true,
@@ -18,6 +19,7 @@ import { environment } from "src/environments/environment";
 })
 export class AccountStatementComponent {
   public form: UntypedFormGroup;
+  
   accounts: any[] = [];
   statements: any[] = [];
   totalDr: number = 0;
@@ -79,6 +81,26 @@ export class AccountStatementComponent {
       }
     );
   }
+  exportPDF() {
+    const doc = new jsPDF();
+    const tableElem = document.getElementById('customerList');
+
+    // Header
+    const header = `Statement Report (Generated: ${new Date().toLocaleString()})`;
+  }
+
+  downloadPdf(){
+    var doc = new jsPDF()
+    autoTable(doc, {html : "#test"});
+    doc.save("Account statement pdf");
+  }
+  downloadTotalPdf(){
+    var doc = new jsPDF()
+    autoTable(doc, {html : "#test2"});
+    doc.save("Total pdf");
+  }
+  
+  
   calculateAnalytics(): void {
     this.totalDr = 0;
     this.totalCr = 0;

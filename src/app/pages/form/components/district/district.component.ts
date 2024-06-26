@@ -135,7 +135,7 @@ export class DistrictComponent {
           (response) => {
             console.log(response);
             this.modalService.dismissAll();
-            this.showAddToast = true;
+            // this.showAddToast = true;
             this.showEditToast = true;
             this.isPosting = false;
             this.ngOnInit();
