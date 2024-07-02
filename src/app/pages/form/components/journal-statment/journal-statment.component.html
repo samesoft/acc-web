@@ -161,7 +161,9 @@
             <div class="form-group">
                 <label for="Account_code">Account</label>
                 <select id="Account_code" formControlName="Account_code" class="form-control">
-                    <option *ngFor="let item of accounts" [value]="item.Account_Name">{{ item.Account_Name }}</option>
+                    <option *ngFor="let account of accounts" [value]="account.
+                    Name
+                    ">{{ account.Account_Name }}</option>
                 </select>
             </div>
             <div class="form-group">
