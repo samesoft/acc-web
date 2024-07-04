@@ -4,8 +4,8 @@
 
 export const environment = {
   production: true,
-  url: "http://64.23.234.105:4111/",
-  defaultauth: "http://64.23.234.105:4111/",
+  url: " https://hayat-api.samesoft.app/",
+  defaultauth: "https://hayat-api.samesoft.app/",
   // production: true,
   // url: 'https://acc-api.samesoft.app/',
   // defaultauth: 'https://acc-api.samesoft.app/',
