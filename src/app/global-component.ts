@@ -5,8 +5,9 @@ export const GlobalComponent = {
 
   // Auth Api
   // AUTH_API: "https://api-node.themesbrand.website/auth/",
-  AUTH_API: "http://64.23.234.105:4111/",
-  // AUTH_API: "https://acc-api.samesoft.app/",
+  // AUTH_API: "http://64.23.234.105:4111/",
+  AUTH_API: "https://hayat-api.samesoft.app/",
+  // https://hayat-api.samesoft.app
   // Products Api
   product: "apps/product",
   productDelete: "apps/product/",
