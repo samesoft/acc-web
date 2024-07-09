@@ -3,9 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  // production: true,
+  // url: "http://64.23.234.105:4111/",
+  // defaultauth: "http://64.23.234.105:4111/",
   production: true,
-  url: "http://64.23.234.105:4111/",
-  defaultauth: "http://64.23.234.105:4111/",
+  url: "hhttps://mgs-api.samesoft.app/",
+  defaultauth: "https://mgs-api.samesoft.app/",
   // production: true,
   // url: 'https://acc-api.samesoft.app/',
   // defaultauth: 'https://acc-api.samesoft.app/',
