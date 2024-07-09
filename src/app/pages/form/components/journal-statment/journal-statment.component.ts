@@ -34,12 +34,12 @@ import { AccountSubTypeService } from "../service/accountSubType.service";
 export class JournalStatmentComponent {
   breadCrumbItems!: Array<{}>;
   submitted = false;
-  listJsForm!: UntypedFormGroup;
+  listJsForm!: FormGroup;
   ListJsData!: ListJsModel[];
   checkedList: any;
   masterSelected!: boolean;
   ListJsDatas: any;
-
+  isPosting = false;
   page: any = 1;
   // pageSize: any = 3;
   startIndex: number = 0;
@@ -71,10 +71,11 @@ export class JournalStatmentComponent {
   totalPages!: number;
   @ViewChildren(NgbdOrdersSortableHeader)
   headers!: QueryList<NgbdOrdersSortableHeader>;
-  journalStatementForm: FormGroup;
+  journalStatementForm!: FormGroup;
   journalStatementData: any[] = [];
   loading = false;
   editFormFieldValue: any;
+  accounts: any[] = [];
 
   isLoading = false;
   constructor(
@@ -84,26 +85,32 @@ export class JournalStatmentComponent {
     public toastService: ToastService,
     public service: AccountSubTypeService
   ) {
-    this.journalStatementForm = new FormGroup({
-      fromDate: new FormControl("", Validators.required),
-      toDate: new FormControl("", Validators.required),
-    });
+    // this.journalStatementForm = new FormGroup({
+    //   fromDate: new FormControl("", Validators.required),
+    //   toDate: new FormControl("", Validators.required),
+    // });
   }
 
   ngOnInit(): void {
     this.fetchAccounts();
 
     this.listJsForm = this.formBuilder.group({
-      Journal_id: "",
-      Journal_Date: ["", Validators.required],
-      Account_code: ["", Validators.required],
-      Debit: ["", Validators.required],
-      Credit: ["", Validators.required],
-      memo: ["", Validators.required],
+      Journal_id: [""],
+      Journal_Date: [""],
+      Account_code: [""],
+      Description: [""],
+      Debit: [""],
+      Credit: [""],
+      // memo: [""],
     });
-  }
 
-  accounts: any[] = [];
+    this.journalStatementForm = this.formBuilder.group({
+      fromDate: ["", Validators.required],
+     toDate: ["", Validators.required]
+  })
+}
+
+  
   fetchAccounts() {
     const url = `${environment.url}accounts`;
     this.http.get<any[]>(url).subscribe((response) => {
@@ -143,35 +150,36 @@ export class JournalStatmentComponent {
     return this.listJsForm.controls;
   }
 
-  editModa(content: any, id: any) {
+  editModa(Edit: any, id: any) {
     this.submitted = false;
-    this.modalService.open(content, { size: "md", centered: true });
+    this.modalService.open(Edit, { size: "md", centered: true });
 
-    // Filter the row data based on the ScheduleID
     var listData = this.journalStatementData.filter(
       (data: { Journal_id: any }) => data.Journal_id === id
     );
 
-    // Assuming listData has only one row matching the ScheduleID
     if (listData.length > 0) {
-      // Access the row data to set the value in the edit form field
-      const rowData = listData[0]; // Get the first (and only) element
-      const editFormFieldValue = rowData.Journal_id; // Replace YOUR_FIELD_NAME with the actual field name
-
-      // Set the value of the edit form field, e.g., assigning to a variable or updating a form control
-      this.editFormFieldValue = editFormFieldValue; // Update the value of editFormFieldValue with the actual form field variable
+      const rowData = listData[0];
       const formattedDate = this.formatDate(rowData.Journal_Date);
       const matchingAccount = this.accounts.find(
         (account) => account.Account_Name === rowData.Account_code
       );
-      // Patch the values using a spread operator for clarity:
+      const editFormFieldValue = rowData.Journal_id;
+
+      this.editFormFieldValue = editFormFieldValue;
+      // this.listJsForm.patchValue(rowData);
+
       this.listJsForm.patchValue({
-        ...rowData,
+        // ...rowData,
+        Journal_id: rowData.Journal_id,
         Journal_Date: formattedDate,
         Account_code: matchingAccount,
-       
+        Debit: rowData.Debit,
+        Description: rowData.Description,
+        Credit: rowData.Credit,
+        memo: rowData.memo,
       });
-      console.log(rowData); // Log the row data for verification
+      console.log(rowData);
     } else {
       console.error("No data found for the specified ScheduleID");
     }
@@ -180,9 +188,9 @@ export class JournalStatmentComponent {
   formatDate(dateString: string) {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero for single-digit months
-    const day = String(date.getDate()).padStart(2, '0');  // Add leading zero for single-digit days
-  
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Add leading zero for single-digit months
+    const day = String(date.getDate()).padStart(2, "0"); // Add leading zero for single-digit days
+
     return `${year}-${month}-${day}`;
   }
   journal: any;
@@ -209,7 +217,7 @@ export class JournalStatmentComponent {
   editSchedule(): void {
     if (this.listJsForm.valid) {
       const formData = this.listJsForm.value;
-
+      this.listJsForm.markAsDirty();
       // Prepare data in the desired format
       const journalData = {
         // Assuming you have a way to determine the journal ID
@@ -225,7 +233,7 @@ export class JournalStatmentComponent {
         ],
       };
       this.http
-        .put<any>(
+        .post<any>(
           `${environment.url}transaction/update-entry-account`,
           journalData
         )
@@ -242,6 +250,34 @@ export class JournalStatmentComponent {
           }
         );
     }
+  }
+  EditJournal(): void {
+    this.isPosting = true;
+    this.listJsForm.markAllAsTouched();
+    if (this.listJsForm.valid) {
+      const url = `${environment.url}transaction/update-journal`;
+      // this.listJsForm.value
+      const formData = this.transformFormData(this.listJsForm.value);
+      this.http.post(url, this.transformFormData(this.listJsForm.value)).subscribe((response) => {
+        console.log(response);
+        this.modalService.dismissAll();
+        // this.showEditToast = true;
+        this.isPosting = false;
+        this.ngOnInit();
+      });
+    } else {
+      // Handle form validation errors here, e.g., display an error message.
+    }
+  }
+  private transformFormData(data: any): any {
+    return {
+      journal_detail_id: data.Journal_id,
+      account_number: data.Account_code,
+      debit: data.Debit,
+      credit: data.Credit,
+      description: data.Description,
+      journal_date: data.Journal_Date
+    };
   }
   // {
   //   "journal_id":1,

@@ -23,34 +23,33 @@
         
       </form> -->
 <ngb-toast type="success" *ngIf="showSuccessToast" (hidden)="showSuccessToast = false">
-    <div class="toast-body">
-        Journal has been Deleted successfully.
-    </div>
+    <div class="toast-body">Journal has been Deleted successfully.</div>
 </ngb-toast>
 
 <h2>Account Statement</h2>
 <div class="live-preview">
-
     <form [formGroup]="journalStatementForm" class="row g-3 align-items-center">
         <div class="col-md-4">
             <label for="exampleInputdate" class="form-label">From Date:</label>
-            <input type="date" class="form-control" id="exampleInputdate" formControlName="fromDate">
+            <input type="date" class="form-control" id="exampleInputdate" formControlName="fromDate" />
         </div>
 
         <div class="col-md-4">
             <label for="exampleInputdate" class="form-label">To Date:</label>
-            <input type="date" class="form-control" id="exampleInputdate" formControlName="toDate">
+            <input type="date" class="form-control" id="exampleInputdate" formControlName="toDate" />
         </div>
 
-        <div class="col-md-4" style="margin-top: 38px;"> <button class="btn btn-primary" type="submit"
-                (click)="getJournalStatementData()">Get Journal</button>
+        <div class="col-md-4" style="margin-top: 38px">
+            <button class="btn btn-primary" type="submit" (click)="getJournalStatementData()">
+                Get Journal
+            </button>
         </div>
     </form>
 </div>
 
 <div *ngIf="isLoading">
-    <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
-        <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+    <div class="d-flex justify-content-center align-items-center" style="height: 200px">
+        <div class="spinner-border" role="status" style="width: 3rem; height: 3rem">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
@@ -59,16 +58,11 @@
 <div class="row" *ngIf="journalStatementData.length > 0 && !isLoading">
     <div class="col-lg-12">
         <div class="card">
-
-
             <div class="card-body">
                 <div id="customerList">
                     <div class="row g-4 mb-3">
-
                         <div class="col-sm">
-                            <div class="d-flex justify-content-sm-end">
-
-                            </div>
+                            <div class="d-flex justify-content-sm-end"></div>
                         </div>
                     </div>
 
@@ -76,7 +70,6 @@
                         <table class="table">
                             <thead>
                                 <tr class="bg-light text-muted">
-
                                     <th>Journal ID</th>
                                     <th>Journal Date</th>
                                     <th>Account Name</th>
@@ -85,11 +78,10 @@
                                     <th>Credit</th>
                                     <th>Memo</th>
                                     <th>Action</th>
-
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let data of getVisibleSchedules(); ">
+                                <tr *ngFor="let data of getVisibleSchedules()">
                                     <!-- <th scope="row">
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="checkAll" value="{{data.id}}" [(ngModel)]="data.state">
@@ -109,17 +101,20 @@
                                             <div class="edit">
                                                 <button class="btn btn-sm btn-primary edit-item-btn"
                                                     data-bs-toggle="modal" data-bs-target="#showModal"
-                                                    (click)="editModa(content,data.Journal_id)">Edit</button>
+                                                    (click)="editModa(content, data.Journal_id)">
+                                                    Edit
+                                                </button>
                                             </div>
                                             <div class="remove">
                                                 <button class="btn btn-sm btn-success remove-item-btn"
                                                     data-bs-toggle="modal" data-bs-target="#deleteRecordModal"
-                                                    (click)="confirm(deleteModel,data.Journal_id)">Remove</button>
+                                                    (click)="confirm(deleteModel, data.Journal_id)">
+                                                    Remove
+                                                </button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-
                             </tbody>
                         </table>
 
@@ -131,18 +126,16 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-        </div><!-- end card -->
+        </div>
+        <!-- end card -->
     </div>
     <!-- end col -->
 </div>
 <!-- end col -->
 
 <!-- end row -->
-
 
 <ng-template #content role="document" let-modal>
     <div class="modal-header bg-light p-3">
@@ -152,49 +145,60 @@
     </div>
     <form [formGroup]="listJsForm" class="tablelist-form" autocomplete="off">
         <div class="modal-body">
-
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="exampleInputdate" class="form-label">Journal Date:</label>
-                <input type="date" class="form-control" formControlName="Journal_Date">
+                <input type="date" class="form-control" formControlName="Journal_Date" />
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="Account_code">Account</label>
                 <select id="Account_code" formControlName="Account_code" class="form-control">
                     <option *ngFor="let account of accounts" [value]="account.
-                    Name
-                    ">{{ account.Account_Name }}</option>
+                    AccountId
+                    ">
+                        {{ account.Account_Name }}
+                    </option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="phone-field" class="form-label">Debit</label>
-                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone salary" required
-                    formControlName="Debit" [ngClass]="{ 'is-invalid': submitted && form['Debit'].errors }" />
-                <div class="invalid-feedback">Please enter a Debit.</div>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Debit" required
+                    formControlName="Debit" />
+
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="phone-field" class="form-label">Credit</label>
-                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone salary" required
-                    formControlName="Credit" [ngClass]="{ 'is-invalid': submitted && form['Credit'].errors }" />
-                <div class="invalid-feedback">Please enter a Debit.</div>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Credit" required
+                    formControlName="Credit" />
+
             </div>
-            <div class="form-group">
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Description</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Debit" required
+                    formControlName="Description"
+                    [ngClass]="{ 'is-invalid': submitted && form['Description'].errors }" />
+                <div class="invalid-feedback">Please enter a Description.</div>
+            </div>
+            <!-- <div class="mb-3">
                 <label for="phone-field" class="form-label">Memo</label>
-                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone salary" required
-                    formControlName="memo" [ngClass]="{ 'is-invalid': submitted && form['memo'].errors }" />
-                <div class="invalid-feedback">Please enter a Debit.</div>
-            </div>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Memo" required
+                    formControlName="memo" />
+
+            </div> -->
         </div>
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal"
-                    (click)="modal.close('Close click')">Close</button>
-                <button type="submit" class="btn btn-success" id="add-btn" (click)="editSchedule()">Update</button>
+                    (click)="modal.close('Close click')">
+                    Close
+                </button>
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="EditJournal()">
+                    Update
+                </button>
             </div>
         </div>
     </form>
 </ng-template>
-
 
 <ng-template #deleteModel let-modal="modal" let-journal="journal">
     <div class="modal-content">
@@ -204,20 +208,85 @@
         </div>
         <div class="modal-body">
             <div class="mt-2 text-center">
-
                 <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
                     <h4>Are you Sure ?</h4>
-                    <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Journal ?</p>
+                    <p class="text-muted mx-4 mb-0">
+                        Are you Sure You want to Remove this Journal ?
+                    </p>
                 </div>
             </div>
             <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                 <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal"
-                    (click)="modal?.close('Close click')"><i class="ri-close-line me-1 align-middle"></i>
-                    Close</button>
+                    (click)="modal?.close('Close click')">
+                    <i class="ri-close-line me-1 align-middle"></i> Close
+                </button>
                 <button type="button" class="btn w-sm btn-danger" id="delete-product" (click)="elete(deleteId)"
-                    (click)="modal?.close('Close click')">Yes, Delete It!</button>
+                    (click)="modal?.close('Close click')">
+                    Yes, Delete It!
+                </button>
             </div>
-
         </div>
     </div>
 </ng-template>
+<!-- <ng-template #Edit role="document" let-modal>
+    <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="exampleModalLabel">Journal </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+            (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form [formGroup]="listJsForm" class="tablelist-form" autocomplete="off">
+        <div class="modal-body">
+
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Journal_Date</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Phone name" required
+                    formControlName="Journal_Date" [ngClass]="{ 'is-invalid': submitted && form['Journal_Date'].errors }" />
+                @if(submitted && form['Journal_Date'].errors){
+                <div class="invalid-feedback">
+                    @if(form['Journal_Date'].errors['required']){
+                    <span>Journal_Date is required</span>
+                    }
+                </div>}
+            </div>
+            <div class="mb-3">
+                <label for="Account_code">Account</label>
+                <select id="Account_code" formControlName="Account_code" class="form-control">
+                    <option *ngFor="let account of accounts" [value]="account.Account_Name">
+                        {{ account.Account_Name }}
+                    </option>
+                </select>
+            </div>          
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Debit</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Debit" required
+                    formControlName="Debit" [ngClass]="{ 'is-invalid': submitted && form['Debit'].errors }" />
+                <div class="invalid-feedback">Please enter a Debit.</div>
+            </div>
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Credit</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Debit" required
+                    formControlName="Credit" [ngClass]="{ 'is-invalid': submitted && form['Credit'].errors }" />
+                <div class="invalid-feedback">Please enter a Credit.</div>
+            </div>
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">Description</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter Debit" required
+                    formControlName="Description" [ngClass]="{ 'is-invalid': submitted && form['Description'].errors }" />
+                <div class="invalid-feedback">Please enter a Description.</div>
+            </div>
+            <div class="mb-3">
+                <label for="phone-field" class="form-label">memo</label>
+                <input type="text" id="phone-field" class="form-control" placeholder="Enter memo" required
+                    formControlName="memo" [ngClass]="{ 'is-invalid': submitted && form['memo'].errors }" />
+                <div class="invalid-feedback">Please enter a Credit.</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                    (click)="modal.close('Close click')">Close</button>
+                <button type="submit" class="btn btn-success" id="add-btn" (click)="EditJournal()"> Update</button>
+            </div>
+        </div>
+    </form>
+</ng-template> -->
